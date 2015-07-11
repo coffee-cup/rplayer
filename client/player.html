@@ -1,12 +1,42 @@
 <template name='player'>
 
+  <script type="text/javascript" src="//www.youtube.com/iframe_api"></script>
+
   <div id="wrapper">
+
     <div class="units-row">
       <div class="unit-centered unit-70">
         <div class="units-row">
           <h1>{{subreddit}}</h1>
         </div>
       </div>
+    </div>
+
+    <div class="units-row">
+      <div class="unit-centered unit-70">
+
+        {{#each posts}}
+          {{> song}}
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+
+</template>
+
+
+<template name='song'>
+
+  <div class="units-row">
+    <div class="unit-centered unit-100">
+      {{url}}
+      <div id='{{name}}' class='player'>
+
+      </div>
+      <!-- <div id="{{name}}" class="js-video widescreen">
+        <iframe width="560" height="315" src="http://www.youtube.com/v/1PDhDpHqoXA" frameborder="0" allowfullscreen></iframe>
+      </div> -->
     </div>
   </div>
 

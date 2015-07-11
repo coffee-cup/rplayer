@@ -23,3 +23,7 @@ Template.player.rendered = function() {
     Session.set('posts', data);
   });
 }
+
+function onYouTubePlayerAPIReady() {
+  console.log('test');
+}
