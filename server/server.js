@@ -3,8 +3,8 @@ var REDDIT = 'https://www.reddit.com/r/'
 // new RegExp('^https?://soundcloud.com/')
 
 var MATCH_URLS = [
-  new RegExp('^https?://www.youtube.com/'),
-  new RegExp('^https?://youtu.be/')
+new RegExp('^https?://www.youtube.com/'),
+new RegExp('^https?://youtu.be/')
 ]
 
 Meteor.startup(function () {
@@ -21,20 +21,35 @@ Meteor.methods({
     return false;
   },
 
+  getYoutubeId: function(url) {
+    // var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match&&match[7].length==11){
+      return match[7];
+    } else {
+      return null;
+    }
+  },
+
   parseSubreddits: function(data) {
     data = JSON.parse(data.content);
 
     var posts = [];
     data.data.children.forEach(function(obj, i) {
       var p = obj.data;
-      if (Meteor.call('isMusic', p.url)) {
+
+      var youtubeId = Meteor.call('getYoutubeId', p.url);
+      if (youtubeId) {
         var post = {
           author: p.author,
           score: p.score,
           title: p.title,
           ups: p.ups,
           url: p.url,
-          name: p.name
+          name: p.name,
+          videoId: youtubeId,
+          thumbnail: '//i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
         }
         posts.push(post);
       }

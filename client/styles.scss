@@ -1,3 +1,5 @@
+$max-width: 1280px;
+
 #wrapper {
   margin-top: 3em;
 }
@@ -13,6 +15,24 @@
   }
 }
 
+.thumbnail {
+  width: 100%;
+  max-width: $max-width;
+}
+
+.video-col {
+  max-width: $max-width;
+}
+
+div.play-button {
+  height: 100px;
+  width: 100px;
+  left: 50%;
+  top: 50%;
+  margin-left: -36px;
+  margin-top: 36px;
+  position: absolute;
+  background: url("http://i.imgur.com/TxzC70f.png") no-repeat; }
 
 .js-video {
   height: 0;
