@@ -1,7 +1,51 @@
+// font
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700);
+
+// https://github.com/sass-mq/sass-mq
+$mq-responsive: true;
+$mq-breakpoints: (
+  mobile:  320px,
+  tablet:  740px,
+  desktop: 980px,
+  wide:    1300px,
+  );
+$mq-static-breakpoint: desktop;
+$mq-show-breakpoints: (mobile, tablet, desktop, wide);
+@import 'lib/css/mq';
+
+// variables
 $max-width: 1280px;
+$footer-height: 50px;
+
+$main-colour: #B9121B;
+$grey-colour: #BABABA
+$darkgrey-colour: #999999;
+
+// mixins
+@mixin under_color($value) {
+  -moz-text-decoration-color: $value; /* Code for Firefox */
+  text-decoration-color: $value;
+}
+
+@mixin rotateall($value) {
+  -ms-transform: rotate($value); /* IE 9 */
+  -webkit-transform: rotate($value); /* Safari */
+  transform: rotate($value);
+}
+
+* {
+  margin: 0;
+}
+
+html, body {
+  width: 100%;
+  font-family: 'Josefin Sans', sans-serif;
+}
 
 #wrapper {
   margin-top: 3em;
+  padding-bottom: 1em;
+  margin-bottom: -$footer-height;
 }
 
 #subreddit-search {
@@ -15,6 +59,33 @@ $max-width: 1280px;
   }
 }
 
+#post-bar {
+  @include mq($from: tablet) {
+    margin-top: 6%;
+    position: absolute;
+    right: 1em;
+  }
+
+  @include mq($until: tablet) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+#name-bar {
+
+  @include mq($until: tablet) {
+    padding-left: 1em;
+  }
+
+  @include mq($from: tablet) {
+    padding-left: 1em;
+    position: fixed;
+    top: 6%;
+    left: 3%;
+  }
+}
+
 .thumbnail {
   width: 100%;
   max-width: $max-width;
@@ -24,41 +95,24 @@ $max-width: 1280px;
   max-width: $max-width;
 }
 
-div.play-button {
-  height: 100px;
-  width: 100px;
-  left: 50%;
-  top: 50%;
-  margin-left: -36px;
-  margin-top: 36px;
-  position: absolute;
-  background: url("http://i.imgur.com/TxzC70f.png") no-repeat; }
-
-.js-video {
-  height: 0;
-  padding-top: 25px;
-  padding-bottom: 67.5%;
-  margin-bottom: 10px;
-  position: relative;
-  overflow: hidden;
-}
-.js-video.vimeo {
-  padding-top: 0;
-}
-.js-video.widescreen {
-  padding-bottom: 56.34%;
-}
-.js-video embed, .js-video iframe, .js-video object, .js-video video {
-  top: 0;
+#player-controls {
+  background-color: red;
+  height: $footer-height;
+  position: fixed;
+  bottom: 0;
   left: 0;
+  right: 0;
   width: 100%;
-  height: 100%;
-  position: absolute;
 }
 
-/* Responsive */
-@media (max-width: 767px) {
-  .js-video {
-    padding-top: 0;
-  }
+.sub-link {
+  text-decoration: underline;
+  color: #373737;
+  font-size: 2.5em;
+  font-weight: 700;
 }
+
+.song-line {
+  border-bottom: solid 2em grey;
+}
+

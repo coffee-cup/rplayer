@@ -13,8 +13,10 @@ var current_player = null; // the youtube player that user is currently using
 var posts = [];
 
 Router.route('/:subreddit', function() {
-  subreddit = this.params.subreddit;
+  var subreddit = this.params.subreddit;
+  var subreddit_link = 'https://reddit.com/r/' + subreddit;
   Session.set('subreddit', subreddit);
+  Session.set('subreddit_link', subreddit_link);
 
   Meteor.call('fetchSubreddit', subreddit, function(err, data) {
     Session.set('posts', data);
@@ -30,13 +32,21 @@ Router.route('/:subreddit', function() {
 });
 
 Template.player.helpers({
+  subreddit_title: function() {
+    return 'r/' + Session.get('subreddit');
+  },
+
   subreddit: function() {
     return Session.get('subreddit');
   },
 
+  subreddit_link: function() {
+    return Session.get('subreddit_link');
+  },
+
   posts: function() {
     return Session.get('posts');
-  }
+  },
 });
 
 Template.player.events({
@@ -87,6 +97,11 @@ var stateChange = function(event, post_name) {
     var player = players[playing_index];
   } else if (event.data == YT.PlayerState.ENDED) {
     console.log('stopped playing ' + post.name);
+
+    // stop playing current video
+    if (post.player) {
+      post.player.stopVideo();
+    }
 
     // if there is a next video to play
     if (post_index + 1 < posts.length) {

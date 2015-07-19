@@ -4,24 +4,28 @@
 
   <div id="wrapper">
 
-    <div class="units-container">
-      <div class="units-row">
-        <div class="unit-centered unit-70">
-          <div class="units-row">
-            <h1>{{subreddit}}</h1>
-          </div>
-        </div>
-      </div>
+    <div class="units-row">
 
-      <div class="units-row">
-        <div class="unit-centered unit-70">
+      <div id='name-bar' class="unit-20">
+        <div class="units-row">
 
-          {{#each posts}}
-            {{> song}}
-          {{/each}}
+          <a class='sub-link' href="{{subreddit_link}}">
+            {{subreddit_title}}
+          </a>
 
         </div>
       </div>
+
+      <div id='post-bar' class="unit-70">
+        {{#each posts}}
+          {{> song}}
+        {{/each}}
+      </div>
+
+    </div>
+
+    <div id="player-controls">
+
     </div>
 
   </div>
@@ -31,22 +35,38 @@
 
 <template name='song'>
 
-  <div class="units-row">
+  <div id='song' class="units-row">
     <div class="video-col unit-centered unit-100">
+
+      <img id='video-{{name}}' class='thumbnail' src='{{thumbnail}}'>
+
+      <!-- Holder for the youtube video -->
+      <div id='thumbnail-{{name}}' class='player'></div>
+
+        <div class="units-row">
+          <div class="units-100">
+            <p class="post-title">
+              {{title}}
+            </p>
+          </div>
+        </div>
+
+      <div class="untis-row">
+        div.units-70d
+      </div>
+
       {{url}}
       <br>
       {{thumbnail}}
       <br>
       {{title}}
-
       <br>
 
-      <img id='video-{{name}}' class='thumbnail' src='{{thumbnail}}'>
-
-      <div id='thumbnail-{{name}}' class='player'>
-      </div>
-
     </div>
+  </div>
+
+  <div class="units-row">
+    <div class="song-line unit-centered unit-90"></div>
   </div>
 
 </template>

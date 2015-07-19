@@ -49,7 +49,7 @@ Meteor.methods({
           url: p.url,
           name: p.name,
           videoId: youtubeId,
-          thumbnail: '//i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
+          thumbnail: '//i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg'
         }
         posts.push(post);
       }
