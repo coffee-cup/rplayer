@@ -8,6 +8,8 @@ var loaded_index = -1;
 var playing = false; // if we are playing or not
 var current_player = null; // the youtube player that user is currently using
 
+// var ct = new ColorThief();
+
 // the posts from the server
 // a seperate copy from the one in Session
 var posts = [];
@@ -18,9 +20,18 @@ Router.route('/:subreddit', function() {
   Session.set('subreddit', subreddit);
   Session.set('subreddit_link', subreddit_link);
 
+  // get subreddit data from server
   Meteor.call('fetchSubreddit', subreddit, function(err, data) {
     Session.set('posts', data);
     posts = data;
+
+    // for (var i=0;i<posts.length;i++) {
+    //   var i = $('#thumbnail-' + posts[i].name);
+    //   var main_colour = colorThief.getColor(i);
+    //   console.log(main_colour);
+    // }
+
+    // console.log(data);
 
     loadedPosts = true;
     if (loadedYoutube) {
@@ -46,13 +57,16 @@ Template.player.helpers({
 
   posts: function() {
     return Session.get('posts');
-  },
+  }
 });
+
+Template.player.rendered = function() {
+}
 
 Template.player.events({
   'click .thumbnail': function(event) {
     var id = event.currentTarget.id;
-    var post_name = id.substring(6);
+    var post_name = id.substring(10);
     var post_index = getPostIndexForName(post_name);
 
     loadVideoForIndex(post_index);
@@ -124,15 +138,16 @@ var stateChange = function(event, post_name) {
 var onReady = function(event, post_name) {
   // event.target.playVideo();
   console.log('video ' + post_name + ' is ready')
-
-  // hide thumbnail after video has been loaded
-  $('#' + 'thumbnail-' + post_name).hide();
 }
 
 var loadVideoForIndex = function(index) {
 
   if (index >= 0 && index < posts.length) {
     var p = posts[index];
+
+    // hide thumbnail after video has been loaded
+    $('#' + 'thumbnail-' + p.name).hide();
+
     if (!p.player) {
       p.player = new YT.Player('video-' + p.name, {
         videoId: p.videoId,

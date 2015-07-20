@@ -52,8 +52,8 @@ Meteor.methods({
           user_name: 'u/' + p.author,
           user_link: 'https://reddit.com/u/' + p.author,
           comment_link: 'https://reddit.com' + p.permalink,
-          thumbnail: '//i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg',
-          alt_image: '//i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
+          thumbnail: 'https://i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg',
+          alt_image: 'https://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
         }
         posts.push(post);
       }

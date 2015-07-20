@@ -38,35 +38,37 @@
   <div id='song' class="units-row">
     <div class="video-col unit-centered unit-100">
 
-      <img id='video-{{name}}' class='thumbnail' src='{{thumbnail}}'>
+      <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}" onerror='console.log("test")'/>
 
       <!-- Holder for the youtube video -->
-      <div id='thumbnail-{{name}}' class='player'></div>
+      <div id='video-{{name}}' class='player'></div>
 
-        <div class="units-row">
-          <div class="units-100">
-            <p class="post-title">
+        <div id='post-row' class="units-row">
+          <div class="post-title unit-100">
+            <a href="{{url}}" target='_blank'>
               {{title}}
-            </p>
+            </a>
           </div>
         </div>
 
-      <div class="untis-row">
-        div.units-70d
-      </div>
-
-      {{url}}
-      <br>
-      {{thumbnail}}
-      <br>
-      {{title}}
-      <br>
+      <ul id="info-row" class='blocks-2 blocks-mobile-2'>
+        <li class="post-user">
+          <a href="{{user_link}}" target='_blank'>
+            {{user_name}}
+          </a>
+        </li>
+        <li class="post-user">
+          <a href="{{comment_link}}" target='_blank'>
+            comments
+          </a>
+        </li>
+      </ul>
 
     </div>
   </div>
 
   <div class="units-row">
-    <div class="song-line unit-centered unit-90"></div>
+    <div class="song-line unit-centered unit-100"></div>
   </div>
 
 </template>

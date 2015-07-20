@@ -18,8 +18,8 @@ $max-width: 1280px;
 $footer-height: 50px;
 
 $main-colour: #B9121B;
-$grey-colour: #BABABA
-$darkgrey-colour: #999999;
+$grey-colour: #BABABA;
+$darkgrey-colour: #333333;
 
 // mixins
 @mixin under_color($value) {
@@ -95,6 +95,45 @@ html, body {
   max-width: $max-width;
 }
 
+#post-row {
+  margin-bottom: 0;
+  padding-top: 0.5em;
+}
+
+.post-title {
+  a {
+    font-size: 2em;
+    color: $darkgrey-colour;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $main-colour;
+    text-decoration: underline;
+  }
+}
+
+.post-user {
+  a {
+    font-size: 1.5em;
+    color: $darkgrey-colour;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $main-colour;
+    text-decoration: underline;
+  }
+}
+
+#info-row {
+  margin-bottom: 0;
+
+  div {
+    margin-bottom: 0;
+  }
+}
+
 #player-controls {
   background-color: red;
   height: $footer-height;
@@ -113,6 +152,6 @@ html, body {
 }
 
 .song-line {
-  border-bottom: solid 2em grey;
+  border-bottom: solid 2px $main-colour;
 }
 
