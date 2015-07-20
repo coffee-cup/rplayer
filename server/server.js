@@ -49,7 +49,11 @@ Meteor.methods({
           url: p.url,
           name: p.name,
           videoId: youtubeId,
-          thumbnail: '//i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg'
+          user_name: 'u/' + p.author,
+          user_link: 'https://reddit.com/u/' + p.author,
+          comment_link: 'https://reddit.com' + p.permalink,
+          thumbnail: '//i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg',
+          alt_image: '//i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
         }
         posts.push(post);
       }
