@@ -33,8 +33,6 @@ Router.route('/:subreddit', function() {
 
   // get subreddit data from server
   Meteor.call('fetchSubreddit', subreddit, function(err, data) {
-    data = data.splice(13);
-
     Session.set('posts', data);
     posts = data;
 
@@ -233,6 +231,18 @@ var stateChange = function(event, post_name) {
     }
     playing_index = post_index;
     var player = players[playing_index];
+
+    if (playing_index <= 0) {
+      Session.set('canPrev', false);
+    } else {
+      Session.set('canPrev', true);
+    }
+
+    if (playing_index >= posts.length - 1) {
+      Session.set('canNext', false);
+    } else {
+      Session.set('canNext', true);
+    }
 
     Session.set('playing', true);
   } else if (event.data == YT.PlayerState.ENDED) {
