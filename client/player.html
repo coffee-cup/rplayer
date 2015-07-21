@@ -25,7 +25,31 @@
     </div>
 
     <div id="player-controls">
+      {{#if canPrev}}
+      <img id='prev-button' class='can pointer' src="/icons/prev.svg">
+      {{else}}
+      <img class='cant' src="/icons/prev_cant.svg">
+      {{/if}}
 
+      {{#if playing}}
+        {{#if canPause}}
+        <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
+        {{else}}
+        <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
+        {{/if}}
+      {{else}}
+        {{#if canPlay}}
+        <img id='play-button' class='pointer' src="/icons/play.svg">
+        {{else}}
+        <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
+        {{/if}}
+      {{/if}}
+
+      {{#if canNext}}
+      <img id='next-button' class='pointer' src="/icons/next.svg">
+      {{else}}
+      <img class='cant' src="/icons/next_cant.svg">
+      {{/if}}
     </div>
 
   </div>
@@ -67,8 +91,8 @@
     </div>
   </div>
 
-  <div class="units-row">
+  <!-- <div class="units-row">
     <div class="song-line unit-centered unit-100"></div>
-  </div>
+  </div> -->
 
 </template>

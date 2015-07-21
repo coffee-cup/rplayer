@@ -10,12 +10,12 @@ $mq-breakpoints: (
   wide:    1300px,
   );
 $mq-static-breakpoint: desktop;
-$mq-show-breakpoints: (mobile, tablet, desktop, wide);
+// $mq-show-breakpoints: (mobile, tablet, desktop, wide);
 @import 'lib/css/mq';
 
 // variables
 $max-width: 1280px;
-$footer-height: 50px;
+$footer-height: 60px;
 
 $main-colour: #B9121B;
 $grey-colour: #BABABA;
@@ -89,6 +89,7 @@ html, body {
 .thumbnail {
   width: 100%;
   max-width: $max-width;
+  cursor: pointer;
 }
 
 .video-col {
@@ -109,7 +110,7 @@ html, body {
 
   a:hover {
     color: $main-colour;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 }
 
@@ -122,7 +123,7 @@ html, body {
 
   a:hover {
     color: $main-colour;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 }
 
@@ -135,13 +136,35 @@ html, body {
 }
 
 #player-controls {
-  background-color: red;
+  background-color: $main-colour;
   height: $footer-height;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
+  text-align: center;
+
+  img {
+    height: $footer-height;
+    padding: 20px 1em;
+  }
+
+  #play-button {
+    padding: 13px 1em;
+  }
+
+  #pause-button {
+    @extend#play-button;
+  }
+
+  #play-button-cant {
+    @extend#play-button;
+  }
+
+  #pause-button-cant {
+    @extend#play-button;
+  }
 }
 
 .sub-link {
@@ -151,7 +174,18 @@ html, body {
   font-weight: 700;
 }
 
+#song {
+  border-bottom: solid 2px $main-colour;
+}
+
+ #song:last-of-type {
+  margin-bottom: 5em;
+ }
+
 .song-line {
   border-bottom: solid 2px $main-colour;
 }
 
+.pointer {
+  cursor: pointer;
+}
