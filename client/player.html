@@ -33,7 +33,7 @@
 
 <template name='song'>
 
-  <div id='song' class="units-row">
+  <div id='song-{{name}}' class="song units-row">
     <div class="video-col unit-centered unit-100">
 
       <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}" onerror='console.log("test")'/>
@@ -93,6 +93,12 @@
       <img id='next-button' class='pointer' src="/icons/next.svg">
     {{else}}
       <img class='cant' src="/icons/next_cant.svg">
+    {{/if}}
+
+    {{#if canEye}}
+      <img id='eye-button' class='pointer' src="/icons/eye.svg">
+    {{else}}
+      <img class='cant' src="/icons/eye_cant.svg">
     {{/if}}
   </div>
 </template>
