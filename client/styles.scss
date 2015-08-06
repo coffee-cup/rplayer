@@ -268,6 +268,8 @@ html, body {
 
 
 #cats {
+  margin-bottom: 0;
+
   ul {
     font-size: 1.2em;
     /*margin-left: 2em;*/
@@ -280,4 +282,8 @@ html, body {
   a:hover {
     color: $grey-colour;
   }
+}
+
+#random-button {
+  width: 0.9em;
 }

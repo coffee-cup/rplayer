@@ -87,7 +87,6 @@ Meteor.methods({
   checkImage: function(post) {
     try {
       var result = Meteor.http.get(post.thumbnail, {timeout: 2000});
-      console.log(result.statusCode);
       if (result.statusCode != 200) {
         return [false, post];
       }
