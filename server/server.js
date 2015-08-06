@@ -78,9 +78,23 @@ Meteor.methods({
       console.log('fetchSubreddit success');
       return Meteor.call('parseSubreddits', result);
     } else {
-      // console.log(result);
       console.log('error fetching subreddits');
+      return 'error fetching subreddits';
       // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
     }
+  },
+
+  checkImage: function(post) {
+    try {
+      var result = Meteor.http.get(post.thumbnail, {timeout: 2000});
+      console.log(result.statusCode);
+      if (result.statusCode != 200) {
+        return [false, post];
+      }
+    } catch(err) {
+      return [false, post];
+    }
+
+    return [true, post];
   }
 });

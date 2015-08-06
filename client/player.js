@@ -37,13 +37,17 @@ Router.route('/:subreddit', function() {
     Session.set('posts', data);
     posts = data;
 
-    // for (var i=0;i<posts.length;i++) {
-    //   var i = $('#thumbnail-' + posts[i].name);
-    //   var main_colour = colorThief.getColor(i);
-    //   console.log(main_colour);
-    // }
-
-    // console.log(data);
+    for (var i=0;i<posts.length;i++) {
+      Meteor.call('checkImage', posts[i], function(err, results) {
+        if (results) {
+          var isSuccess = results[0];
+          var post = results[1];
+          if (!isSuccess) {
+            $('#thumbnail-' + post.name).attr('src', post.alt_image);
+          }
+        }
+      });
+    }
 
     if (!posts) {
       return;

@@ -93,7 +93,7 @@ html, body {
 
 .video-col {
   max-width: $max-width;
-  padding-top: 0.4em;
+  padding-top: 0.5em;
 }
 
 #post-row {
@@ -112,6 +112,10 @@ html, body {
     color: $main-colour;
     // text-decoration: underline;
   }
+}
+
+#post-bar {
+  padding-right: 1em;
 }
 
 .post-user {
