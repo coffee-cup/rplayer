@@ -1,37 +1,61 @@
 <template name="index">
 
-  <div id="wrapper">
-    {{> subreddit_search}}
-  </div>
+  {{> subreddit_search}}
 
 </template>
 
 
 <template name='subreddit_search'>
 
-  <div class="units-row">
-    <div class="unit-centered unit-70">
-      <div class="units-row">
-        <div id='subreddit-search' class="unit-centered unit-80">
+  <div id="search-wrapper">
 
-          <form id='subreddit-form' class="forms">
-            <label>
-              enter music subreddit
-              <div class="input-groups width-80">
+    <div class="units-row">
+      <div id='title' class="unit-20 unit-push-10">
+        rplayer
+      </div>
 
-                <span class="input-prepend">r/</span>
-                <input type="text" name='sub_name'>
-                <span class="btn-append">
-                  <button class="btn">Go</button>
-                </span>
+      <div id='desc-bar' class="unit-push-right unit-70">
+        <form id='search-form' class="forms">
+          <label>
+            Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
+            <input type="text" name='sub_name' class="width-100" />
+          </label>
+          <p>
+            <button id='search-button' class="btn btn-red">Search</button>
+          </p>
+        </form>
 
-              </div>
-            </label>
-          </form>
+        <div id='cats' class="units-row">
+          <div id='popular-cat' class="search-cat unit-50">
+            <p class='cat-title'>Popular</p>
+
+            <ul>
+              <li><a href="/listentothis">listentothis</a></li>
+              <li><a href="/woahtunes">woahtunes</a></li>
+              <li><a href="/edm">edm</a></li>
+              <li><a href="/psytrance">psytrance</a></li>
+            </ul>
+
+          </div>
+
+          <div id='random-cat' class="search-cat unit-50">
+            <p class='cat-title'>Random</p>
+
+            <ul>
+              <li><a href="/listentothis">listentothis</a></li>
+              <li><a href="/woahtunes">woahtunes</a></li>
+              <li><a href="/edm">edm</a></li>
+              <li><a href="/psytrance">psytrance</a></li>
+            </ul>
+
+          </div>
 
         </div>
+
       </div>
+
     </div>
+
   </div>
 
 </template>

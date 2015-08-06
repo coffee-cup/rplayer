@@ -43,7 +43,7 @@ html, body {
 }
 
 #wrapper {
-  margin-top: 3em;
+  margin-top: 4em;
   padding-bottom: 1em;
   margin-bottom: -$footer-height;
 }
@@ -61,9 +61,8 @@ html, body {
 
 #post-bar {
   @include mq($from: tablet) {
-    margin-top: 6%;
-    position: absolute;
-    right: 1em;
+    // position: absolute;
+    // right: 1em;
   }
 
   @include mq($until: tablet) {
@@ -79,10 +78,10 @@ html, body {
   }
 
   @include mq($from: tablet) {
-    padding-left: 1em;
-    position: fixed;
-    top: 6%;
-    left: 3%;
+    // padding-left: 1em;
+    // position: fixed;
+    // top: 6%;
+    // left: 3%;
   }
 }
 
@@ -178,9 +177,9 @@ html, body {
   border-bottom: solid 2px $main-colour;
 }
 
- #song:last-of-type {
+#song:last-of-type {
   margin-bottom: 5em;
- }
+}
 
 .song-line {
   border-bottom: solid 2px $main-colour;
@@ -188,4 +187,92 @@ html, body {
 
 .pointer {
   cursor: pointer;
+}
+
+#search-button {
+  background-color: $darkgrey-colour;
+}
+
+#search-wrapper {
+  margin-top: 4em;
+
+  @include mq($from: tablet) {
+
+  }
+}
+
+#search-form {
+  width: 100%;
+
+  button {
+    width: 100%;
+    height: 40px;
+  }
+
+  label {
+    font-size: 1.7em;
+    font-weight: 400;
+    margin-bottom: 0.3em;
+  }
+
+  input {
+    margin-top: 0.4em;
+  }
+}
+
+#desc-bar {
+  background-color: $main-colour;
+  padding: 3em 6em;
+  color: white;
+  margin-top: 4em;
+  margin-right: 2em;
+}
+
+#title {
+  color: $darkgrey-colour;
+  font-size: 2.5em;
+  text-decoration: underline;
+  font-weight: 700;
+
+  @include mq($until: tablet) {
+    padding-left: 1em;
+  }
+}
+
+#title:hover {
+  color: $main-colour;
+}
+
+.search-link {
+  color: $grey-colour;
+  text-decoration: underline;
+}
+
+.search-link:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.search-cat {
+  p {
+    padding-left: 0.4em;
+    font-size: 1.6em;
+    margin-bottom: 0;
+  }
+}
+
+
+#cats {
+  ul {
+    font-size: 1.2em;
+    /*margin-left: 2em;*/
+  }
+
+  a {
+    color: white;
+  }
+
+  a:hover {
+    color: $grey-colour;
+  }
 }

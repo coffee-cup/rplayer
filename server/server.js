@@ -63,8 +63,15 @@ Meteor.methods({
     return posts;
   },
 
-  fetchSubreddit: function(sub_name) {
-    var url = REDDIT + sub_name + '/.json';
+
+  // returns url based on given user search input
+  parseInput: function(input) {
+    var url = REDDIT + input + '/.json?limit=100';
+    return url;
+  },
+
+  fetchSubreddit: function(url) {
+    var url = Meteor.call('parseInput', url);
     console.log('making request to ' + url);
     var result = Meteor.http.get(url, {timeout:30000});
     if (result.statusCode == 200) {

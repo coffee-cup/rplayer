@@ -6,51 +6,25 @@
 
     <div class="units-row">
 
-      <div id='name-bar' class="unit-20">
+      <div id='name-bar' class="unit-30 unit-push-10">
         <div class="units-row">
 
-          <a class='sub-link' href="{{subreddit_link}}">
+          <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
             {{subreddit_title}}
           </a>
 
         </div>
       </div>
 
-      <div id='post-bar' class="unit-70">
+      <div id='post-bar' class="unit-60 unit-push-right">
         {{#each posts}}
-          {{> song}}
+        {{> song}}
         {{/each}}
       </div>
 
     </div>
 
-    <div id="player-controls">
-      {{#if canPrev}}
-      <img id='prev-button' class='can pointer' src="/icons/prev.svg">
-      {{else}}
-      <img class='cant' src="/icons/prev_cant.svg">
-      {{/if}}
-
-      {{#if playing}}
-        {{#if canPause}}
-        <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
-        {{else}}
-        <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
-        {{/if}}
-      {{else}}
-        {{#if canPlay}}
-        <img id='play-button' class='pointer' src="/icons/play.svg">
-        {{else}}
-        <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
-        {{/if}}
-      {{/if}}
-
-      {{#if canNext}}
-      <img id='next-button' class='pointer' src="/icons/next.svg">
-      {{else}}
-      <img class='cant' src="/icons/next_cant.svg">
-      {{/if}}
-    </div>
+    {{> controls}}
 
   </div>
 
@@ -67,13 +41,13 @@
       <!-- Holder for the youtube video -->
       <div id='video-{{name}}' class='player'></div>
 
-        <div id='post-row' class="units-row">
-          <div class="post-title unit-100">
-            <a href="{{url}}" target='_blank'>
-              {{title}}
-            </a>
-          </div>
+      <div id='post-row' class="units-row">
+        <div class="post-title unit-100">
+          <a href="{{url}}" target='_blank'>
+            {{title}}
+          </a>
         </div>
+      </div>
 
       <ul id="info-row" class='blocks-2 blocks-mobile-2'>
         <li class="post-user">
@@ -91,8 +65,34 @@
     </div>
   </div>
 
-  <!-- <div class="units-row">
-    <div class="song-line unit-centered unit-100"></div>
-  </div> -->
+</template>
 
+<template name='controls'>
+  <div id="player-controls">
+    {{#if canPrev}}
+      <img id='prev-button' class='can pointer' src="/icons/prev.svg">
+    {{else}}
+      <img class='cant' src="/icons/prev_cant.svg">
+    {{/if}}
+
+    {{#if playing}}
+      {{#if canPause}}
+        <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
+      {{else}}
+        <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
+      {{/if}}
+    {{else}}
+      {{#if canPlay}}
+        <img id='play-button' class='pointer' src="/icons/play.svg">
+      {{else}}
+        <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
+      {{/if}}
+    {{/if}}
+
+    {{#if canNext}}
+      <img id='next-button' class='pointer' src="/icons/next.svg">
+    {{else}}
+      <img class='cant' src="/icons/next_cant.svg">
+    {{/if}}
+  </div>
 </template>

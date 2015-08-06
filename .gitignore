@@ -47,3 +47,4 @@ packages/
 .remote-sync.json
 .sftp-config.json
 smart.lock
+sftp-config.json

@@ -44,61 +44,66 @@ Router.route('/:subreddit', function() {
 
     // console.log(data);
 
+    if (!posts) {
+      return;
+    }
+
     if (posts.length >= 1) {
       Session.set('canPlay', true);
       Session.set('canPause', true);
-    }
+  }
 
-    if (posts.length >= 2) {
-      Session.set('canNext', true);
-    }
+  if (posts.length >= 2) {
+    Session.set('canNext', true);
+  }
 
-    loadedPosts = true;
-    if (loadedYoutube) {
-      loadPlayers();
-    }
-  });
+  loadedPosts = true;
+  if (loadedYoutube) {
+    loadPlayers();
+  }
+});
 
   this.render('player');
+});
+
+Template.controls.helpers({
+    playing: function() {
+        return Session.get('playing');
+    },
+
+    canPlay: function() {
+        return Session.get('canPlay');
+    },
+
+    canPrev: function() {
+        return Session.get('canPrev');
+    },
+
+    canNext: function() {
+        return Session.get('canNext');
+    },
+
+    canPause: function() {
+        return Session.get('canPause');
+    }
 });
 
 Template.player.helpers({
   subreddit_title: function() {
     return 'r/' + Session.get('subreddit');
-  },
+},
 
-  subreddit: function() {
+subreddit: function() {
     return Session.get('subreddit');
-  },
+},
 
-  subreddit_link: function() {
+subreddit_link: function() {
     return Session.get('subreddit_link');
-  },
+},
 
-  posts: function() {
+posts: function() {
     return Session.get('posts');
-  },
-
-  playing: function() {
-    return Session.get('playing');
-  },
-
-  canPlay: function() {
-    return Session.get('canPlay');
-  },
-
-  canPrev: function() {
-    return Session.get('canPrev');
-  },
-
-  canNext: function() {
-    return Session.get('canNext');
-  },
-
-  canPause: function() {
-    return Session.get('canPause');
-  },
-
+}
 });
 
 Template.player.rendered = function() {
@@ -111,48 +116,48 @@ Template.player.events({
     var post_index = getPostIndexForName(post_name);
 
     loadVideoForIndex(post_index);
-  },
+},
 
-  'click #play-button': function(event) {
+'click #play-button': function(event) {
     playVideo();
-  },
+},
 
-  'click #pause-button': function(event) {
+'click #pause-button': function(event) {
     pauseVideo();
-  },
+},
 
-  'click #next-button': function(event) {
+'click #next-button': function(event) {
     nextVideo();
-  },
+},
 
-  'click #prev-button': function(event) {
+'click #prev-button': function(event) {
     prevVideo();
-  },
+},
 });
 
 var currentPost = function() {
   if (playing_index < 0) {
     playing_index = 0;
-  }
-  return posts[playing_index];
+}
+return posts[playing_index];
 }
 
 var getPostForName = function(post_name) {
   for (var i=0;i<posts.length;i++) {
     if (posts[i].name == post_name) {
       return posts[i];
-    }
   }
-  return null;
+}
+return null;
 }
 
 var getPostIndexForName = function(post_name) {
   for(var i=0;i<posts.length;i++) {
     if (posts[i].name == post_name) {
       return i;
-    }
   }
-  return -1;
+}
+return -1;
 }
 
 var playVideo = function() {
@@ -161,17 +166,17 @@ var playVideo = function() {
   var cp = currentPost();
   if (cp && cp.player) {
     cp.player.playVideo();
-  } else {
+} else {
     if (!cp.player) {
       $('#' + 'thumbnail-' + cp.name).hide();
       play_when_loaded = true;
       Session.set('playing', true);
       cp.player = initPlayer(cp);
       $('#wrapper').fitVids();
-    } else {
+  } else {
       cp.player.playVideo();
-    }
   }
+}
 }
 
 var pauseVideo = function() {
@@ -180,7 +185,7 @@ var pauseVideo = function() {
   var cp = currentPost();
   if (cp && cp.player) {
     cp.player.pauseVideo();
-  }
+}
 }
 
 var nextVideo = function() {
@@ -188,14 +193,14 @@ var nextVideo = function() {
     var cp = currentPost();
     if (cp && cp.player) {
       cp.player.pauseVideo();
-    }
-    playing_index++;
-    playVideo();
-    Session.set('canPrev', true);
-    if (playing_index >= posts.length - 1) {
-      Session.set('canNext', false);
-    }
   }
+  playing_index++;
+  playVideo();
+  Session.set('canPrev', true);
+  if (playing_index >= posts.length - 1) {
+      Session.set('canNext', false);
+  }
+}
 }
 
 var prevVideo = function() {
@@ -203,55 +208,55 @@ var prevVideo = function() {
     var cp = currentPost();
     if (cp && cp.player) {
       cp.player.pauseVideo();
-    }
-    playing_index--;
-    playVideo();
-    Session.set('canNext', true);
-    if (playing_index <= 0) {
-      Session.set('canPrev', false);
-    }
   }
+  playing_index--;
+  playVideo();
+  Session.set('canNext', true);
+  if (playing_index <= 0) {
+      Session.set('canPrev', false);
+  }
+}
 }
 
 var stateChange = function(event, post_name) {
   var post_index = getPostIndexForName(post_name);
   if (post_index < 0) {
     return;
-  }
+}
 
-  var post = posts[post_index];
+var post = posts[post_index];
 
-  if (event.data == YT.PlayerState.PLAYING) {
+if (event.data == YT.PlayerState.PLAYING) {
     // console.log('started playing ' + post.name);
 
     // stop other video playing
     if (playing_index >= 0 && playing_index != post_index && posts[playing_index].player) {
       // players[playing_index].stopVideo();
       posts[playing_index].player.stopVideo();
-    }
-    playing_index = post_index;
-    var player = players[playing_index];
+  }
+  playing_index = post_index;
+  var player = players[playing_index];
 
-    if (playing_index <= 0) {
+  if (playing_index <= 0) {
       Session.set('canPrev', false);
-    } else {
+  } else {
       Session.set('canPrev', true);
-    }
+  }
 
-    if (playing_index >= posts.length - 1) {
+  if (playing_index >= posts.length - 1) {
       Session.set('canNext', false);
-    } else {
+  } else {
       Session.set('canNext', true);
-    }
+  }
 
-    Session.set('playing', true);
-  } else if (event.data == YT.PlayerState.ENDED) {
+  Session.set('playing', true);
+} else if (event.data == YT.PlayerState.ENDED) {
     // console.log('stopped playing ' + post.name);
 
     // stop playing current video
     if (post.player) {
       post.player.stopVideo();
-    }
+  }
 
     // if there is a next video to play
     if (post_index + 1 < posts.length) {
@@ -261,23 +266,23 @@ var stateChange = function(event, post_name) {
       // if we have already created the youtube player
       if (post.player) {
         post.player.playVideo();
-      } else {
-        loadVideoForIndex(post_index);
-      }
-
-      Session.set('canPrev', true);
-      if (playing_index >= posts.length) {
-        Session.set('canNext', false);
-      }
     } else {
-      Session.set('playing', false);
+        loadVideoForIndex(post_index);
     }
-  } else if (event.data == YT.PlayerState.PAUSED) {
+
+    Session.set('canPrev', true);
+    if (playing_index >= posts.length) {
+        Session.set('canNext', false);
+    }
+} else {
+  Session.set('playing', false);
+}
+} else if (event.data == YT.PlayerState.PAUSED) {
     // console.log('paused ' + post.name);
 
     Session.set('playing', false);
-  } else if (event.data == YT.PlayerState.UNSTARTED) {
-  }
+} else if (event.data == YT.PlayerState.UNSTARTED) {
+}
 }
 
 var onReady = function(event, post_name) {
@@ -287,7 +292,7 @@ var onReady = function(event, post_name) {
   if (play_when_loaded && currentPost() && currentPost().player) {
     currentPost().player.playVideo();
     play_when_loaded = false;
-  }
+}
 }
 
 var loadVideoForIndex = function(index) {
@@ -306,16 +311,16 @@ var loadVideoForIndex = function(index) {
         events: {
           onReady: function(event) {
             onReady(event, p.name);
-          },
+        },
 
-          onStateChange: function(event) {
+        onStateChange: function(event) {
             stateChange(event, p.name);
-          }
         }
-      });
-      $('#wrapper').fitVids();
     }
+});
+      $('#wrapper').fitVids();
   }
+}
 }
 
 var initPlayer = function(post) {
@@ -324,13 +329,13 @@ var initPlayer = function(post) {
     events: {
       onReady: function(event) {
         onReady(event, post.name);
-      },
+    },
 
-      onStateChange: function(event) {
+    onStateChange: function(event) {
         stateChange(event, post.name);
-      }
     }
-  });
+}
+});
 }
 
 // called when posts are loaded and youtube player ready
@@ -344,7 +349,7 @@ onYouTubeIframeAPIReady = function() {
   loadedYoutube = true;
   if (loadedPosts) {
     loadPlayers();
-  }
+}
 
   // player = new YT.Player('player', {
   //   videoId: "LdH1hSWGFGU",
