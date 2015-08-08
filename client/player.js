@@ -20,6 +20,8 @@ Router.route('/:subreddit', function() {
   var subreddit = this.params.subreddit;
   var subreddit_link = '/r/' + subreddit;
 
+  Session.set('multiuser', '');
+
   var re = /(\w+)-(\w+)/;
   var m;
   if ((m = re.exec(subreddit)) !== null) {
