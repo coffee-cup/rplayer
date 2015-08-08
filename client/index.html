@@ -1,11 +1,11 @@
 <template name="index">
 
-  {{> subreddit_search}}
+  {{> subredditSearch}}
 
 </template>
 
 
-<template name='subreddit_search'>
+<template name='subredditSearch'>
 
   <div id="search-wrapper">
 
@@ -15,9 +15,12 @@
       </div>
 
       <div id='desc-bar' class="unit-push-right unit-70">
+
         <form id='search-form' class="forms">
           <label>
             Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
+            <br>
+            <span id="searchError">{{errorMessage}}</span>
             <input type="text" name='sub_name' class="width-100" />
           </label>
           <p>
@@ -25,34 +28,7 @@
           </p>
         </form>
 
-        <div id='cats' class="units-row">
-          <div id='popular-cat' class="search-cat unit-50">
-            <p class='cat-title'>Popular</p>
-
-            <ul>
-              <li><a href="/listentothis">listentothis</a></li>
-              <li><a href="/woahtunes">woahtunes</a></li>
-              <li><a href="/edm">edm</a></li>
-              <li><a href="/MusicForConcentration">MusicForConcentration</a></li>
-              <li><a href="/futurebeats">futurebeats</a></li>
-            </ul>
-
-          </div>
-
-          <div id='random-cat' class="search-cat unit-50">
-          <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
-
-            <ul>
-              <li><a href="/listentothis">listentothis</a></li>
-              <li><a href="/woahtunes">woahtunes</a></li>
-              <li><a href="/edm">edm</a></li>
-              <li><a href="/MusicForConcentration">MusicForConcentration</a></li>
-              <li><a href="/futurebeats">futurebeats</a></li>
-            </ul>
-
-          </div>
-
-        </div>
+      {{> catBar}}
 
       </div>
 
@@ -60,4 +36,37 @@
 
   </div>
 
+</template>
+
+<template name='catBar'>
+
+  <div id='cats' class="units-row">
+    <div id='popular-cat' class="search-cat unit-50">
+      <p class='cat-title'>Popular</p>
+
+      <ul>
+        <li><a href="/listentothis">listentothis</a></li>
+        <li><a href="/woahtunes">woahtunes</a></li>
+        <li><a href="/edm">edm</a></li>
+        <li><a href="/MusicForConcentration">MusicForConcentration</a></li>
+        <li><a href="/futurebeats">futurebeats</a></li>
+      </ul>
+
+    </div>
+
+    <div id='random-cat' class="search-cat unit-50">
+    <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
+
+      <ul>
+        <li><a href="/listentothis">listentothis</a></li>
+        <li><a href="/woahtunes">woahtunes</a></li>
+        <li><a href="/edm">edm</a></li>
+        <li><a href="/MusicForConcentration">MusicForConcentration</a></li>
+        <li><a href="/futurebeats">futurebeats</a></li>
+      </ul>
+
+    </div>
+
+
+  </div>
 </template>

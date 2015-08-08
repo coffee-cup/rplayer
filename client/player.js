@@ -15,8 +15,30 @@ var play_when_loaded = false;
 var posts = [];
 
 Router.route('/:subreddit', function() {
+  this.render('player');
+
   var subreddit = this.params.subreddit;
-  var subreddit_link = 'https://reddit.com/r/' + subreddit;
+  var subreddit_link = '/r/' + subreddit;
+
+  var re = /(\w+)-(\w+)/;
+  var m;
+  if ((m = re.exec(subreddit)) !== null) {
+    if (m.index === re.lastIndex) {
+        re.lastIndex++;
+    }
+
+    if (m.length == 3) {
+      var username = m[1];
+      var multiname = m[2];
+      subreddit_link = '/user/' + username + '/m/' + multiname;
+      subreddit = multiname;
+
+      Session.set('multiuser', username);
+    }
+  }
+
+  console.log('fetching from ' + subreddit_link);
+
   Session.set('subreddit', subreddit);
   Session.set('subreddit_link', subreddit_link);
 
@@ -33,9 +55,24 @@ Router.route('/:subreddit', function() {
   Session.set('playing', false);
 
   // get subreddit data from server
-  Meteor.call('fetchSubreddit', subreddit, function(err, data) {
-    Session.set('posts', data);
-    posts = data;
+  Meteor.call('fetchSubreddit', subreddit_link, function(err, data) {
+
+    if (!data.success) {
+      Session.set('displayMessage', 'There was an error calling reddit');
+      Session.set('pageError', true);
+      return;
+    }
+
+    posts = data.posts;
+
+    if (posts.length <= 0) {
+      Session.set('displayMessage', 'Could not find media to play at')
+      Session.set('displayLink', 'https://www.reddit.com' + subreddit_link);
+      Session.set('pageError', true);
+      return;
+    }
+
+    Session.set('posts', posts);
 
     for (var i=0;i<posts.length;i++) {
       Meteor.call('checkImage', posts[i], function(err, results) {
@@ -68,8 +105,6 @@ Router.route('/:subreddit', function() {
       loadPlayers();
     }
   });
-
-  this.render('player');
 });
 
 Template.controls.helpers({
@@ -99,6 +134,18 @@ Template.controls.helpers({
 });
 
 Template.player.helpers({
+  pageError: function() {
+    return Session.get('pageError');
+  },
+
+  displayMessage: function() {
+    return Session.get('displayMessage');
+  },
+
+  displayLink: function() {
+    return Session.get('displayLink');
+  },
+
   subreddit_title: function() {
     return 'r/' + Session.get('subreddit');
   },
@@ -107,8 +154,16 @@ Template.player.helpers({
     return Session.get('subreddit');
   },
 
+  mutliuser: function() {
+    return 'multireddit by u/' + Session.get('multiuser');
+  },
+
+  mutliuserLink: function() {
+    return 'https://www.reddit.com/u/' + Session.get('multiuser');
+  },
+
   subreddit_link: function() {
-    return Session.get('subreddit_link');
+    return 'https://www.reddit.com' + Session.get('subreddit_link');
   },
 
   posts: function() {

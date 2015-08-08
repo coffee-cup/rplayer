@@ -63,6 +63,7 @@ html, body {
   @include mq($from: tablet) {
     // position: absolute;
     // right: 1em;
+    margin-top: 4em;
   }
 
   @include mq($until: tablet) {
@@ -249,13 +250,8 @@ html, body {
 }
 
 .search-link {
-  color: $grey-colour;
-  text-decoration: underline;
-}
-
-.search-link:hover {
-  color: white;
-  cursor: pointer;
+  /*font-weight: 500;*/
+  /*text-decoration: underline;*/
 }
 
 .search-cat {
@@ -266,9 +262,9 @@ html, body {
   }
 }
 
-
 #cats {
   margin-bottom: 0;
+  font-size: 1rem;
 
   ul {
     font-size: 1.2em;
@@ -286,4 +282,44 @@ html, body {
 
 #random-button {
   width: 0.9em;
+}
+
+#page-error {
+  font-size: 2em;
+  background-color: $main-colour;
+  color: white;
+  padding: 2em;
+  margin-top: 5em;
+}
+
+#displayMessage {
+  border-bottom: solid 1px $darkgrey-colour;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#displayLink {
+  margin-bottom: 0;
+  font-size: 0.7em;
+  margin-top: -0.5em;
+
+  a {
+    color: white;
+    font-size: 1em;
+  }
+
+  a:hover {
+    color: $grey-colour;
+  }
+}
+
+.multi-link {
+  font-size: 1.1em;
+  color: $darkgrey-colour;
+}
+
+#searchError {
+  font-size: 0.8em;
+  color: black;
+  font-weight: 600;
 }

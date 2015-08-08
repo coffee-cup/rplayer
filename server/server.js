@@ -1,10 +1,10 @@
-var REDDIT = 'https://www.reddit.com/r/'
+var REDDIT = 'https://www.reddit.com'
 
 // new RegExp('^https?://soundcloud.com/')
 
 var MATCH_URLS = [
-new RegExp('^https?://www.youtube.com/'),
-new RegExp('^https?://youtu.be/')
+  new RegExp('^https?://www.youtube.com/'),
+  new RegExp('^https?://youtu.be/')
 ]
 
 Meteor.startup(function () {
@@ -47,6 +47,7 @@ Meteor.methods({
           title: p.title,
           ups: p.ups,
           url: p.url,
+          num_comments: p.num_comments,
           name: p.name,
           videoId: youtubeId,
           user_name: 'u/' + p.author,
@@ -60,7 +61,10 @@ Meteor.methods({
       }
     });
 
-    return posts;
+    return {
+      posts: posts,
+      success: true
+    };
   },
 
 
@@ -79,7 +83,7 @@ Meteor.methods({
       return Meteor.call('parseSubreddits', result);
     } else {
       console.log('error fetching subreddits');
-      return 'error fetching subreddits';
+      return {success: false, message: 'Error fetching subreddits'};
       // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
     }
   },

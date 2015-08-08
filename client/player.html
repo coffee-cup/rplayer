@@ -13,13 +13,40 @@
             {{subreddit_title}}
           </a>
 
+          <a href="{{mutliuserLink}}" target='__blank' class="multi-link">
+            <br>
+            {{mutliuser}}
+          </a>
+
         </div>
       </div>
 
       <div id='post-bar' class="unit-60 unit-push-right">
+
+      {{#if pageError}}
+
+        <div id="page-error" class='units-row'>
+          <div class="unit-80 unit-centered">
+
+            <p id="displayMessage">
+              {{displayMessage}}
+              <p id="displayLink">
+                <a href="{{displayLink}}">{{displayLink}}</a>
+              </p>
+            </p>
+
+            {{> catBar}}
+          </div>
+        </div>
+
+      {{else}}
+
         {{#each posts}}
-        {{> song}}
+          {{> song}}
         {{/each}}
+
+      {{/if}}
+
       </div>
 
     </div>
@@ -29,7 +56,6 @@
   </div>
 
 </template>
-
 
 <template name='song'>
 
@@ -57,7 +83,7 @@
         </li>
         <li class="post-user">
           <a href="{{comment_link}}" target='_blank'>
-            comments
+            {{num_comments}} comments
           </a>
         </li>
       </ul>
