@@ -155,7 +155,10 @@ Template.player.helpers({
   },
 
   mutliuser: function() {
-    return 'multireddit by u/' + Session.get('multiuser');
+    var mutliuser = Session.get('multiuser');
+    if (mutliuser && mutliuser != '')
+      return 'multireddit by u/' + Session.get('multiuser');
+    return '';
   },
 
   mutliuserLink: function() {
