@@ -6,7 +6,13 @@ var players = [];
 var playing_index = -1; // -1 for nothing loaded yet
 var loaded_index = -1;
 
-var play_when_loaded = false;
+var play_when_loaded =false;
+
+// if we are currently scrolling because of animatescroll
+var scrolling = false;
+
+// keep track of last time we animated scrolled
+var lastAnimateScroll = null;
 
 // var ct = new ColorThief();
 
@@ -95,7 +101,6 @@ Router.route('/:subreddit', function() {
     if (posts.length >= 1) {
       Session.set('canPlay', true);
       Session.set('canPause', true);
-      Session.set('canEye', true);
     }
 
     if (posts.length >= 2) {
@@ -149,6 +154,10 @@ Template.player.helpers({
   },
 
   subreddit_title: function() {
+    var multiuser = Session.get('multiuser');
+    if (multiuser && multiuser != '') {
+      return 'm/' + Session.get('subreddit');
+    }
     return 'r/' + Session.get('subreddit');
   },
 
@@ -204,13 +213,36 @@ Template.player.events({
     prevVideo();
   },
 
-  'click #eye-button': function(event) {
-    var post = currentPost();
-    $('#song-' + post.name).animatescroll({
-      easing: 'easeInOutQuart'
-    });
+  'click #eye-button-cant': function(event) {
+    scrollToCurrent();
+    Session.set('canEye', true);
   }
 });
+
+$(window).scroll(function() {
+  var n = (new Date()).getTime();
+  if (!scrolling && lastAnimateScroll && (n - lastAnimateScroll) / 1000 > 0.2) {
+    Session.set('canEye', false);
+  }
+});
+
+var scrollToCurrent = function(p) {
+  var post = p || currentPost();
+  console.log(post.title);
+  $('#song-' + post.name).animatescroll({
+    easing: 'easeInOutQuart',
+    onScrollStart: function() {
+      scrolling = true;
+    },
+
+    onScrollEnd: function() {
+      scrolling = false;
+      lastAnimateScroll = (new Date()).getTime();
+      Session.set('canEye', true);
+    }
+  });
+  Session.set('canEye', true);
+}
 
 var currentPost = function() {
   if (playing_index < 0) {
@@ -326,13 +358,23 @@ var stateChange = function(event, post_name) {
       Session.set('canNext', true);
     }
 
+    // if the canEye is true
+    // scroll to new video
+    if (Session.get('canEye')) {
+      scrollToCurrent();
+    }
+
     Session.set('playing', true);
   } else if (event.data == YT.PlayerState.ENDED) {
     // console.log('stopped playing ' + post.name);
 
     // stop playing current video
     if (post.player) {
+      // set current time of video back to 0
+      // so it can be played again
+      post.player.seekTo(0);
       post.player.stopVideo();
+      post.player.clearVideo();
     }
 
     // if there is a next video to play
