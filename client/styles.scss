@@ -21,6 +21,9 @@ $main-colour: #B9121B;
 $grey-colour: #BABABA;
 $darkgrey-colour: #333333;
 
+$selection-background: #00FFED;
+$selection-colour: $darkgrey-colour;
+
 // mixins
 @mixin under_color($value) {
   -moz-text-decoration-color: $value; /* Code for Firefox */
@@ -31,6 +34,17 @@ $darkgrey-colour: #333333;
   -ms-transform: rotate($value); /* IE 9 */
   -webkit-transform: rotate($value); /* Safari */
   transform: rotate($value);
+}
+
+/* selection colour */
+::-moz-selection { /* Code for Firefox */
+    color: $selection-colour;
+    background: $selection-background;
+}
+
+::selection {
+    color: $selection-colour;
+    background: $selection-background;
 }
 
 * {
