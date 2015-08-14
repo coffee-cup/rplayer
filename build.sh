@@ -1,10 +1,9 @@
 #!/bin/sh
 
-meteor build build_tmp
-cd build_tmp
+rm -rf build/
+meteor build build
+cd build
 tar -zxf rplayer.tar.gz
-cd bundle/programs/server/
+cd bundle/programs/server
 npm install
 cd ../../../..
-rm -rf build/
-mv build_tmp build/

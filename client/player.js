@@ -44,6 +44,7 @@ Router.route('/(.*)', function() {
   }
 
   var path = Router.current().location.get().path;
+  GAnalytics.pageview(path);
 
   // var subreddit = this.params.subreddit;
   var subreddit_link = path;
