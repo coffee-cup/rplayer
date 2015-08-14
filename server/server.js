@@ -47,6 +47,8 @@ Meteor.methods({
           title: p.title,
           ups: p.ups,
           url: p.url,
+          post_subreddit: p.subreddit,
+          post_sub_link: 'https://reddit.com/r/' + p.subreddit,
           num_comments: p.num_comments,
           name: p.name,
           videoId: youtubeId,
@@ -70,8 +72,12 @@ Meteor.methods({
 
   // returns url based on given user search input
   parseInput: function(input) {
-    var url = REDDIT + input + '/.json?limit=100';
-    return url;
+    console.log(input);
+    var query_pos = input.indexOf('?');
+    if (query_pos != -1) {
+      return REDDIT + input.substring(0, query_pos) + '.json' + input.substring(query_pos, input.length);
+    }
+    return REDDIT + input + '/.json?limit=100';
   },
 
   fetchSubreddit: function(url) {

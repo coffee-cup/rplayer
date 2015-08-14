@@ -20,34 +20,39 @@ var lastAnimateScroll = null;
 // a seperate copy from the one in Session
 var posts = [];
 
-Router.route('/:subreddit', function() {
+Router.route('/(.*)', function() {
   this.render('player');
 
-  var subreddit = this.params.subreddit;
-  var subreddit_link = '/r/' + subreddit;
+  var path = Router.current().location.get().path;
+
+  // var subreddit = this.params.subreddit;
+  var subreddit_link = path;
 
   Session.set('multiuser', '');
+  Session.set('isMulti', false);
 
-  var re = /(\w+)-(\w+)/;
-  var m;
-  if ((m = re.exec(subreddit)) !== null) {
-    if (m.index === re.lastIndex) {
-        re.lastIndex++;
+  var r;
+  r = utils.isLink(path);
+  if (r && r.subreddit) {
+    Session.set('subreddit', r.subreddit);
+    if (r.subreddit.indexOf('+') != -1) {
+      Session.set('isMulti', true);
     }
+  } else {
+    r = utils.isMulti(path);
+    if (r && r.username && r.multiname) {
+      Session.set('subreddit', r.multiname);
+      Session.set('multiuser', r.username);
 
-    if (m.length == 3) {
-      var username = m[1];
-      var multiname = m[2];
-      subreddit_link = '/user/' + username + '/m/' + multiname;
-      subreddit = multiname;
-
-      Session.set('multiuser', username);
+      console.log(r);
+      Session.set('isMulti', true);
+    } else {
+      Session.set('subreddit', 'unknown subreddit');
     }
   }
 
   console.log('fetching from ' + subreddit_link);
 
-  Session.set('subreddit', subreddit);
   Session.set('subreddit_link', subreddit_link);
 
   Session.set('canPrev', false);
@@ -137,6 +142,10 @@ Template.controls.helpers({
 
   canEye: function() {
     return Session.get('canEye');
+  },
+
+  isMulti: function() {
+    return Session.get('isMulti');
   }
 });
 
@@ -228,7 +237,6 @@ $(window).scroll(function() {
 
 var scrollToCurrent = function(p) {
   var post = p || currentPost();
-  console.log(post.title);
   $('#song-' + post.name).animatescroll({
     easing: 'easeInOutQuart',
     onScrollStart: function() {

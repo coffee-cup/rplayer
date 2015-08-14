@@ -75,7 +75,7 @@
         </div>
       </div>
 
-      <ul id="info-row" class='blocks-2 blocks-mobile-2'>
+      <ul id="info-row" class='blocks-3 blocks-mobile-3'>
         <li class="post-user">
           <a href="{{user_link}}" target='_blank'>
             {{user_name}}
@@ -85,6 +85,13 @@
           <a href="{{comment_link}}" target='_blank'>
             {{num_comments}} comments
           </a>
+        </li>
+        <li class="post-user">
+          {{#if isMulti}}
+          <a href="{{post_sub_link}}" target='_blank'>
+            posted to r/{{post_subreddit}}
+          </a>
+          {{/if}}
         </li>
       </ul>
 

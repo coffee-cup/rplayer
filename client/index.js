@@ -6,10 +6,6 @@ Router.route('/', function() {
 
 var example_string = 'https://www.reddit.com/r/listentothis';
 
-var link_reg = /r\/(\w+)/;;
-var name_reg = /(\w+)/;
-var multi_reg = /\/user\/(\w+)\/m\/(\w+)/;
-
 Template.subredditSearch.helpers({
   errorMessage: function() {
     return Session.get('errorMessage');
@@ -22,44 +18,24 @@ Template.index.events({
 
     var input = event.target.sub_name.value.trim();
 
-    var m;
-    if ((m = name_reg.exec(input)) !== null) {
-      if (m.index === name_reg.lastIndex) {
-        name_reg.lastIndex++;
-      }
-
-    if (m[0].length == input.length) {
-      // the input is a reddit name
-      console.log('redirect to /' + input);
-       Router.go('/' + input);
+    var r;
+    r = utils.isSubreddit(input);
+    if (r && r.subreddit) {
+      Router.go('/r/' + r.subreddit);
       return;
     }
-   }
 
-    if ((m = multi_reg.exec(input)) !== null) {
-      if (m.index === multi_reg.lastIndex) {
-          multi_reg.lastIndex++;
-      }
-
-      if (m.length == 3) {
-        var username = m[1];
-        var mutliname = m[2];
-        console.log('redirect to /' + username + '-' + mutliname);
-        Router.go('/' + username + '-' + mutliname);
-        return;
-      }
+    r = utils.isMulti(input);
+    console.log(r);
+    if (r && r.username && r.multiname) {
+      Router.go('/user/' + r.username + '/m/' + r.multiname);
+      return;
     }
 
-    if ((m = link_reg.exec(input)) !== null) {
-      if (m.index === link_reg.lastIndex) {
-          link_reg.lastIndex++;
-      }
-
-      if (m.length == 2) {
-        console.log('redirect to /' + m[1]);
-        Router.go('/' + m[1]);
-        return;
-      }
+    r = utils.isLink(input);
+    if (r && r.subreddit) {
+      Router.go('/r/' + r.subreddit);
+      return;
     }
 
     console.log('invalid input');
