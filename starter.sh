@@ -2,9 +2,15 @@
 
 if [ $(ps -e -o uid,cmd | grep $UID | grep node | grep -v grep | wc -l | tr -s "\n") -eq 0 ]
 then
-        export PATH=/usr/local/bin:$PATH
-        export ROOT_URL='http://rplayer.jakerunzer.me'
-        export PORT=7000
-        export METEOR_SETTINGS="$(cat config/settings.json)"
-        NODE_ENV=production forever start /var/www/rplayer/build/bundle/main.js >> /var/log/rplayer.txt 2>&1
+
+	APP_ENV="production"
+
+       	echo "Stopping current forever process"
+	forever stop build/bundle/main.js
+
+	echo "Loading environment variables"
+ 	source config/"$APP_ENV"/env.sh
+
+	echo "Starting forever process"
+	forever -l logs/forever.log -o logs/out.log -e logs/error.log -a start build/bundle/main.js
 fi
