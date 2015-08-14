@@ -1,3 +1,5 @@
+#!/bin/sh
+
 rm -rf build/
 meteor build build
 cd build
