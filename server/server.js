@@ -13,7 +13,7 @@ var popular_subs = [
   {subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
   {subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
   {subreddit: 'jazz', link: '/r/jazz'},
-  {subreddit: 'futurebeats', link: '/r/futurebeats'}
+  {subreddit: 'woahtunes', link: '/r/woahtunes'}
 ];
 
 Meteor.startup(function () {
