@@ -7,11 +7,45 @@ var MATCH_URLS = [
   new RegExp('^https?://youtu.be/')
 ]
 
+var music_subs = [];
+var popular_subs = [
+  {subreddit: 'ListenToThis', link: '/r/ListenToThis'},
+  {subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
+  {subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
+  {subreddit: 'jazz', link: '/r/jazz'},
+  {subreddit: 'futurebeats', link: '/r/futurebeats'}
+];
+
 Meteor.startup(function () {
   // code to run on server at startup
+  var data = JSON.parse(Assets.getText('music_subs.json')).music_subs;
+  data.forEach(function(obj) {
+    music_subs.push({subreddit: obj, link: '/r/' + obj});
+  });
 });
 
 Meteor.methods({
+  getPopularSubs: function() {
+    return popular_subs;
+  },
+
+  getRandomSubs: function() {
+
+    var random = [];
+    var success_counted = 0;
+    var nums = [];
+    while(success_counted < 5) {
+      var n = Math.floor(Math.random() * music_subs.length);
+      if (nums.indexOf(n) == -1) {
+        success_counted += 1;
+        nums.push(n);
+        random.push(music_subs[n]);
+      }
+    }
+
+    return random;
+  },
+
   isMusic: function(url) {
     for (var i=0;i<MATCH_URLS.length;i++) {
       if (url.match(MATCH_URLS[i])) {

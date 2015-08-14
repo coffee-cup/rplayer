@@ -45,11 +45,11 @@
       <p class='cat-title'>Popular</p>
 
       <ul>
-        <li><a href="/listentothis">listentothis</a></li>
-        <li><a href="/woahtunes">woahtunes</a></li>
-        <li><a href="/edm">edm</a></li>
-        <li><a href="/MusicForConcentration">MusicForConcentration</a></li>
-        <li><a href="/futurebeats">futurebeats</a></li>
+
+        {{#each popularSubs}}
+          <li><a href="{{link}}">{{subreddit}}</a></li>
+        {{/each}}
+
       </ul>
 
     </div>
@@ -58,15 +58,18 @@
     <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
 
       <ul>
-        <li><a href="/listentothis">listentothis</a></li>
-        <li><a href="/woahtunes">woahtunes</a></li>
-        <li><a href="/edm">edm</a></li>
-        <li><a href="/MusicForConcentration">MusicForConcentration</a></li>
-        <li><a href="/futurebeats">futurebeats</a></li>
+
+        {{#each randomSubs}}
+          <li><a href="{{link}}">{{subreddit}}</a></li>
+        {{/each}}
+
       </ul>
 
     </div>
 
+    <div id="music-list" class="unit-100">
+      <a href="https://www.reddit.com/r/Music/wiki/musicsubreddits">List of all music subreddits.</a>
+    </div>
 
   </div>
 </template>
