@@ -1,6 +1,8 @@
 Router.route('/', function() {
   Session.set('errorMessage', '');
 
+  GAnalytics.pageview();
+
   this.render('index');
 });
 
