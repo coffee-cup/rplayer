@@ -7,6 +7,7 @@
     <div class="units-row">
 
       <div id='name-bar' class="unit-30 unit-push-10">
+
         <div class="units-row">
 
           <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
@@ -19,33 +20,44 @@
           </a>
 
         </div>
+
       </div>
 
       <div id='post-bar' class="unit-60 unit-push-right">
 
-      {{#if pageError}}
+        {{#if loading}}
 
-        <div id="page-error" class='units-row'>
-          <div class="unit-80 unit-centered">
-
-            <p id="displayMessage">
-              {{displayMessage}}
-              <p id="displayLink">
-                <a href="{{displayLink}}">{{displayLink}}</a>
-              </p>
-            </p>
-
-            {{> catBar}}
+          <div id="loading" class="units-row">
+            <h1>Loading...</h1>
           </div>
-        </div>
 
-      {{else}}
+        {{else}}
 
-        {{#each posts}}
-          {{> song}}
-        {{/each}}
+          {{#if pageError}}
 
-      {{/if}}
+            <div id="page-error" class='units-row'>
+              <div class="unit-80 unit-centered">
+
+                <p id="displayMessage">
+                  {{displayMessage}}
+                  <p id="displayLink">
+                    <a href="{{displayLink}}">{{displayLink}}</a>
+                  </p>
+                </p>
+
+                {{> catBar}}
+              </div>
+            </div>
+
+          {{else}}
+
+            {{#each posts}}
+              {{> song}}
+            {{/each}}
+
+          {{/if}}
+
+        {{/if}}
 
       </div>
 

@@ -78,6 +78,7 @@ Router.route('/(.*)', function() {
   Session.set('canPlay', false);
   Session.set('canPause', false);
   Session.set('canEye', false);
+  Session.set('loading', false);
 
   // set posts to empty at start
   Session.set('posts', []);
@@ -85,8 +86,12 @@ Router.route('/(.*)', function() {
   // set playing to false
   Session.set('playing', false);
 
+  Session.set('loading', true);
+
   // get subreddit data from server
   Meteor.call('fetchSubreddit', subreddit_link, function(err, data) {
+
+    Session.set('loading', false);
 
     if (!data || !data.success) {
       Session.set('displayMessage', 'There was an error calling reddit');
@@ -205,6 +210,10 @@ Template.player.helpers({
 
   posts: function() {
     return Session.get('posts');
+  },
+
+  loading: function() {
+    return Session.get('loading');
   }
 });
 

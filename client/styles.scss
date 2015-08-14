@@ -337,3 +337,11 @@ html, body {
   color: black;
   font-weight: 600;
 }
+
+#loading {
+  padding: 2em;
+
+  h1 {
+    color: $darkgrey-colour;
+  }
+}
