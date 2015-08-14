@@ -105,6 +105,7 @@ Router.route('/(.*)', function() {
       Session.set('displayMessage', 'Could not find media to play at')
       Session.set('displayLink', 'https://www.reddit.com' + subreddit_link);
       Session.set('pageError', true);
+      Session.set('loading', false);
       return;
     }
 
