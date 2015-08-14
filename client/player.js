@@ -23,6 +23,25 @@ var posts = [];
 Router.route('/(.*)', function() {
   this.render('player');
 
+  var isMobile = utils.isMobile();
+  if (isMobile) {
+    var f_height = '12em';
+    var i_height = '8em';
+
+    $('#player-controls').css('height', f_height);
+
+    $("<style>")
+    .prop("type", "text/css")
+    .html("\
+    #player-controls img {\
+        height: " + i_height + ";\
+        margin-top: 2em;\
+        margin-right: 1.5em;\
+        margin-left: 1.5em;\
+    }")
+    .appendTo("head");
+  }
+
   var path = Router.current().location.get().path;
 
   // var subreddit = this.params.subreddit;
