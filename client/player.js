@@ -21,7 +21,7 @@ var lastAnimateScroll = null;
 // a seperate copy from the one in Session
 var posts = [];
 
-Router.route('/(.*)', {trackPageView: true}, function() {
+Router.route('/(.*)', function() {
   this.render('player');
 
   var isMobile = utils.isMobile();
