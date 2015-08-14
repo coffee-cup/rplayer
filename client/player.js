@@ -318,6 +318,11 @@ var nextVideo = function() {
       cp.player.pauseVideo();
     }
     playing_index++;
+
+    if (Session.get('canEye')) {
+      scrollToCurrent();
+    }
+
     playVideo();
     Session.set('canPrev', true);
     if (playing_index >= posts.length - 1) {
@@ -333,6 +338,11 @@ var prevVideo = function() {
       cp.player.pauseVideo();
     }
     playing_index--;
+
+    if (Session.get('canEye')) {
+      scrollToCurrent();
+    }
+
     playVideo();
     Session.set('canNext', true);
     if (playing_index <= 0) {
@@ -385,33 +395,17 @@ var stateChange = function(event, post_name) {
     if (post.player) {
       // set current time of video back to 0
       // so it can be played again
+      post.player.pauseVideo();
       post.player.seekTo(0);
       post.player.clearVideo();
     }
 
-    // if there is a next video to play
-    if (post_index + 1 < posts.length) {
-      post_index++;
-      post = posts[post_index];
-
-      if (Session.get('canEye')) {
-        scrollToCurrent(post);
-      }
-
-      // if we have already created the youtube player
-      if (post.player) {
-        post.player.playVideo();
-      } else {
-        loadVideoForIndex(post_index);
-      }
-
-      Session.set('canPrev', true);
-      if (playing_index >= posts.length) {
-        Session.set('canNext', false);
-      }
-    } else {
+    // if there is not another video to player
+    if (post_index + 1 >= posts.length) {
       Session.set('playing', false);
     }
+
+    nextVideo();
   } else if (event.data == YT.PlayerState.PAUSED) {
     // console.log('paused ' + post.name);
 
