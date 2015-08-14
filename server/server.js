@@ -48,7 +48,7 @@ Meteor.methods({
           ups: p.ups,
           url: p.url,
           post_subreddit: p.subreddit,
-          post_sub_link: 'https://reddit.com/r/' + p.subreddit,
+          post_sub_link: Meteor.absoluteUrl() + 'r/' + p.subreddit,
           num_comments: p.num_comments,
           name: p.name,
           videoId: youtubeId,

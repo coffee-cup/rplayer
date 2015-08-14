@@ -44,7 +44,6 @@ Router.route('/(.*)', function() {
       Session.set('subreddit', r.multiname);
       Session.set('multiuser', r.username);
 
-      console.log(r);
       Session.set('isMulti', true);
     } else {
       Session.set('subreddit', 'unknown subreddit');
@@ -70,7 +69,7 @@ Router.route('/(.*)', function() {
   // get subreddit data from server
   Meteor.call('fetchSubreddit', subreddit_link, function(err, data) {
 
-    if (!data.success) {
+    if (!data || !data.success) {
       Session.set('displayMessage', 'There was an error calling reddit');
       Session.set('pageError', true);
       return;
@@ -142,10 +141,6 @@ Template.controls.helpers({
 
   canEye: function() {
     return Session.get('canEye');
-  },
-
-  isMulti: function() {
-    return Session.get('isMulti');
   }
 });
 
@@ -194,6 +189,12 @@ Template.player.helpers({
   }
 });
 
+Template.song.helpers({
+  isMulti: function() {
+    return Session.get('isMulti');
+  }
+});
+
 Template.player.rendered = function() {
 }
 
@@ -223,6 +224,10 @@ Template.player.events({
   },
 
   'click #eye-button-cant': function(event) {
+    if (posts.length <= 0) {
+      return;
+    }
+
     scrollToCurrent();
     Session.set('canEye', true);
   }
@@ -236,6 +241,7 @@ $(window).scroll(function() {
 });
 
 var scrollToCurrent = function(p) {
+  console.log(p);
   var post = p || currentPost();
   $('#song-' + post.name).animatescroll({
     easing: 'easeInOutQuart',
@@ -376,12 +382,10 @@ var stateChange = function(event, post_name) {
   } else if (event.data == YT.PlayerState.ENDED) {
     // console.log('stopped playing ' + post.name);
 
-    // stop playing current video
     if (post.player) {
       // set current time of video back to 0
       // so it can be played again
       post.player.seekTo(0);
-      post.player.stopVideo();
       post.player.clearVideo();
     }
 
@@ -389,6 +393,10 @@ var stateChange = function(event, post_name) {
     if (post_index + 1 < posts.length) {
       post_index++;
       post = posts[post_index];
+
+      if (Session.get('canEye')) {
+        scrollToCurrent(post);
+      }
 
       // if we have already created the youtube player
       if (post.player) {
