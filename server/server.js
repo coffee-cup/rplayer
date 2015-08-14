@@ -12,7 +12,7 @@ var popular_subs = [
   {subreddit: 'ListenToThis', link: '/r/ListenToThis'},
   {subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
   {subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
-  {subreddit: 'jazz', link: '/r/jazz'},
+  {subreddit: 'chillmusic', link: '/r/chillmusic'},
   {subreddit: 'woahtunes', link: '/r/woahtunes'}
 ];
 
