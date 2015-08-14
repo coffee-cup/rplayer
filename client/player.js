@@ -95,6 +95,7 @@ Router.route('/(.*)', function() {
     if (!data || !data.success) {
       Session.set('displayMessage', 'There was an error calling reddit');
       Session.set('pageError', true);
+      Session.set('loading', false);
       return;
     }
 
@@ -125,6 +126,7 @@ Router.route('/(.*)', function() {
     Session.set('posts', posts);
 
     if (!posts) {
+      Session.set('loading', false);
       return;
     }
 
