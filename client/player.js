@@ -1,3 +1,4 @@
+
 // videos will only start to load when these are both true
 var loadedPosts = false;
 var loadedYoutube = false;
@@ -20,7 +21,7 @@ var lastAnimateScroll = null;
 // a seperate copy from the one in Session
 var posts = [];
 
-Router.route('/(.*)', function() {
+Router.route('/(.*)', {trackPageView: true}, function() {
   this.render('player');
 
   var isMobile = utils.isMobile();
