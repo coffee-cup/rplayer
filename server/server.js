@@ -30,7 +30,6 @@ Meteor.methods({
   },
 
   getRandomSubs: function() {
-
     var random = [];
     var success_counted = 0;
     var nums = [];
@@ -67,9 +66,9 @@ Meteor.methods({
   },
 
   parseSubreddits: function(data) {
+    var posts = [];
     data = JSON.parse(data.content);
 
-    var posts = [];
     data.data.children.forEach(function(obj, i) {
       var p = obj.data;
 
@@ -106,7 +105,6 @@ Meteor.methods({
 
   // returns url based on given user search input
   parseInput: function(input) {
-    console.log(input);
     var query_pos = input.indexOf('?');
     if (query_pos != -1) {
       return REDDIT + input.substring(0, query_pos) + '.json' + input.substring(query_pos, input.length);

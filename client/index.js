@@ -12,25 +12,24 @@ Template.subredditSearch.helpers({
   }
 });
 
-var setRandomSubs = function() {
-  Meteor.call('getRandomSubs', function(err, data) {
-    if (data) {
-      Session.set('randomSubs', data);
-    }
-  });
+Template.index.rendered = function() {
+
 }
 
-Template.index.rendered = function() {
+Template.catBar.rendered = function() {
+  if (!Session.get('randomSubs')) {
+    Meteor.call('getRandomSubs', function(err, data) {
+      if (data) {
+        Session.set('randomSubs', data);
+      }
+    });
+  }
+
   Meteor.call('getPopularSubs', function(err, data) {
     if (data) {
       Session.set('popularSubs', data);
-      console.log(data);
     }
   });
-
-  if (!Session.get('randomSubs')) {
-    setRandomSubs();
-  }
 }
 
 Template.catBar.helpers({
@@ -71,9 +70,15 @@ Template.index.events({
     console.log('invalid input');
     Session.set('errorMessage', 'Invaid input');
     // Router.go('/' + sub_name);
-  },
+  }
+});
 
+Template.catBar.events({
   'click #random-button': function(event) {
-    setRandomSubs();
+    Meteor.call('getRandomSubs', function(err, data) {
+      if (data) {
+        Session.set('randomSubs', data);
+      }
+    });
   }
 });

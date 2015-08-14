@@ -79,6 +79,7 @@ Router.route('/(.*)', function() {
   Session.set('canPause', false);
   Session.set('canEye', false);
   Session.set('loading', false);
+  Session.set('pageError', false);
 
   // set posts to empty at start
   Session.set('posts', []);
@@ -90,8 +91,6 @@ Router.route('/(.*)', function() {
 
   // get subreddit data from server
   Meteor.call('fetchSubreddit', subreddit_link, function(err, data) {
-
-    Session.set('loading', false);
 
     if (!data || !data.success) {
       Session.set('displayMessage', 'There was an error calling reddit');
@@ -108,9 +107,10 @@ Router.route('/(.*)', function() {
       return;
     }
 
-    Session.set('posts', posts);
-
     for (var i=0;i<posts.length;i++) {
+      var varTitle = $('<textarea />').html(posts[i].title).text();
+      posts[i].title = varTitle;
+
       Meteor.call('checkImage', posts[i], function(err, results) {
         if (results) {
           var isSuccess = results[0];
@@ -121,6 +121,8 @@ Router.route('/(.*)', function() {
         }
       });
     }
+
+    Session.set('posts', posts);
 
     if (!posts) {
       return;
@@ -139,6 +141,8 @@ Router.route('/(.*)', function() {
     if (loadedYoutube) {
       loadPlayers();
     }
+
+    Session.set('loading', false);
   });
 });
 
@@ -269,7 +273,6 @@ $(window).scroll(function() {
 });
 
 var scrollToCurrent = function(p) {
-  console.log(p);
   var post = p || currentPost();
   $('#song-' + post.name).animatescroll({
     easing: 'easeInOutQuart',
