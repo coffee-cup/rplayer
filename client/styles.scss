@@ -118,14 +118,15 @@ html, body {
 
 .post-title {
   a {
-    font-size: 2em;
+    font-size: 20pt;
+    font-weight: 600;
     color: $darkgrey-colour;
     text-decoration: none;
   }
 
   a:hover {
     color: $main-colour;
-    // text-decoration: underline;
+    text-decoration: underline;
   }
 }
 
@@ -135,14 +136,14 @@ html, body {
 
 .post-user {
   a {
-    font-size: 1.5em;
+    font-size: 15pt;
     color: $darkgrey-colour;
     text-decoration: none;
   }
 
   a:hover {
     color: $main-colour;
-    // text-decoration: underline;
+    text-decoration: underline;
   }
 }
 
@@ -230,7 +231,7 @@ html, body {
   }
 
   label {
-    font-size: 1.7em;
+    font-size: 20pt;
     font-weight: 400;
     margin-bottom: 0.3em;
   }
@@ -250,7 +251,7 @@ html, body {
 
 #title {
   color: $darkgrey-colour;
-  font-size: 2.5em;
+  font-size: 35pt;
   text-decoration: underline;
   font-weight: 700;
 
@@ -271,7 +272,7 @@ html, body {
 .search-cat {
   p {
     padding-left: 0.4em;
-    font-size: 1.6em;
+    font-size: 20pt;
     margin-bottom: 0;
   }
 }
@@ -281,7 +282,8 @@ html, body {
   font-size: 1rem;
 
   ul {
-    font-size: 1.2em;
+    font-size: 14pt;
+    font-weight: 300;
     /*margin-left: 2em;*/
   }
 
