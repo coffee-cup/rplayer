@@ -19,7 +19,8 @@ $footer-height: 4em;
 
 $main-colour: #B9121B;
 $grey-colour: #BABABA;
-$darkgrey-colour: #333333;
+$darkgrey-colour: 353535;
+// #333333;
 
 $selection-background: #00FFED;
 $selection-colour: $darkgrey-colour;
@@ -134,7 +135,9 @@ html, body {
   padding-right: 1em;
 }
 
-.post-user {
+#post-user {
+  margin-bottom: 0;
+
   a {
     font-size: 15pt;
     color: $darkgrey-colour;
