@@ -3,17 +3,17 @@ var REDDIT = 'https://www.reddit.com'
 // new RegExp('^https?://soundcloud.com/')
 
 var MATCH_URLS = [
-  new RegExp('^https?://www.youtube.com/'),
-  new RegExp('^https?://youtu.be/')
+new RegExp('^https?://www.youtube.com/'),
+new RegExp('^https?://youtu.be/')
 ]
 
 var music_subs = [];
 var popular_subs = [
-  {subreddit: 'ListenToThis', link: '/r/ListenToThis'},
-  {subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
-  {subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
-  {subreddit: 'chillmusic', link: '/r/chillmusic'},
-  {subreddit: 'woahtunes', link: '/r/woahtunes'}
+{subreddit: 'ListenToThis', link: '/r/ListenToThis'},
+{subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
+{subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
+{subreddit: 'chillmusic', link: '/r/chillmusic'},
+{subreddit: 'woahtunes', link: '/r/woahtunes'}
 ];
 
 Meteor.startup(function () {
@@ -54,6 +54,11 @@ Meteor.methods({
     return false;
   },
 
+  getSoundcloudId: function(url) {
+    var regexp = /^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/;
+    return url.match(regexp) && url.match(regexp)[2]
+  },
+
   getYoutubeId: function(url) {
     // var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -72,8 +77,14 @@ Meteor.methods({
     data.data.children.forEach(function(obj, i) {
       var p = obj.data;
 
-      var youtubeId = Meteor.call('getYoutubeId', p.url);
-      if (youtubeId) {
+      // var youtubeId = Meteor.call('getYoutubeId', p.url);
+      var youtubeId = null;
+      var soundcloudId = Meteor.call('getSoundcloudId', p.url);
+
+      var videoId = youtubeId;
+      if (!youtubeId) videoId = soundcloudId;
+
+      if (videoId) {
         var post = {
           author: p.author,
           score: p.score,
@@ -84,7 +95,8 @@ Meteor.methods({
           post_sub_link: Meteor.absoluteUrl() + 'r/' + p.subreddit,
           num_comments: p.num_comments,
           name: p.name,
-          videoId: youtubeId,
+          videoId: videoId,
+          isYoutube: (youtubeId != null),
           user_name: 'u/' + p.author,
           user_link: 'https://reddit.com/u/' + p.author,
           comment_link: 'https://reddit.com' + p.permalink,

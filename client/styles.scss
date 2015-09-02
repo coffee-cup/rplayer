@@ -109,6 +109,12 @@ html, body {
   padding-top: 0.5em;
 }
 
+.soundcloud-iframe {
+  width: 100%;
+  max-width: $max-width;
+  height: 450px;
+}
+
 #post-row {
   margin-bottom: 0;
   padding-top: 0.5em;
@@ -302,6 +308,10 @@ html, body {
   a {
     text-decoration: underline;
     color: white;
+  }
+
+  a:hover {
+    color: $grey-colour;
   }
 }
 

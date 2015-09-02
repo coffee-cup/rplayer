@@ -34,12 +34,12 @@ Router.route('/(.*)', function() {
     $("<style>")
     .prop("type", "text/css")
     .html("\
-    #player-controls img {\
+      #player-controls img {\
         height: " + i_height + ";\
         margin-top: 2em;\
         margin-right: 1.5em;\
         margin-left: 1.5em;\
-    }")
+      }")
     .appendTo("head");
   }
 
@@ -143,9 +143,6 @@ Router.route('/(.*)', function() {
     }
 
     loadedPosts = true;
-    if (loadedYoutube) {
-      loadPlayers();
-    }
 
     Session.set('loading', false);
   });
@@ -339,8 +336,6 @@ var playVideo = function() {
 }
 
 var pauseVideo = function() {
-  // console.log('pausing video');
-
   var cp = currentPost();
   if (cp && cp.player) {
     cp.player.pauseVideo();
@@ -387,69 +382,107 @@ var prevVideo = function() {
   }
 }
 
-var stateChange = function(event, post_name) {
+var onError = function(event, post_name) {
+  console.log('there is an error with the youtube video');
+}
+
+/**
+  * State event for when media starts playing
+ */
+var statePlaying = function(event, post_name) {
+  // get post index and post object from post name
   var post_index = getPostIndexForName(post_name);
   if (post_index < 0) {
     return;
   }
-
   var post = posts[post_index];
 
-  if (event.data == YT.PlayerState.PLAYING) {
-    // console.log('started playing ' + post.name);
+  // stop other video playing
+  if (playing_index >= 0 && playing_index != post_index && posts[playing_index].player) {
+    // players[playing_index].stopVideo();
+    posts[playing_index].player.stopVideo();
+  }
+  playing_index = post_index;
+  var player = players[playing_index];
 
-    // stop other video playing
-    if (playing_index >= 0 && playing_index != post_index && posts[playing_index].player) {
-      // players[playing_index].stopVideo();
-      posts[playing_index].player.stopVideo();
-    }
-    playing_index = post_index;
-    var player = players[playing_index];
+  if (playing_index <= 0) {
+    Session.set('canPrev', false);
+  } else {
+    Session.set('canPrev', true);
+  }
 
-    if (playing_index <= 0) {
-      Session.set('canPrev', false);
-    } else {
-      Session.set('canPrev', true);
-    }
+  if (playing_index >= posts.length - 1) {
+    Session.set('canNext', false);
+  } else {
+    Session.set('canNext', true);
+  }
 
-    if (playing_index >= posts.length - 1) {
-      Session.set('canNext', false);
-    } else {
-      Session.set('canNext', true);
-    }
+  // if the canEye is true
+  // scroll to new video
+  if (Session.get('canEye')) {
+    scrollToCurrent();
+  }
 
-    // if the canEye is true
-    // scroll to new video
-    if (Session.get('canEye')) {
-      scrollToCurrent();
-    }
+  Session.set('playing', true);
+}
 
-    Session.set('playing', true);
-  } else if (event.data == YT.PlayerState.ENDED) {
-    // console.log('stopped playing ' + post.name);
+/**
+  * State event for when media is paused
+ */
+var statePause = function(event, post_name) {
+  // get post index and post object from post name
+  var post_index = getPostIndexForName(post_name);
+  if (post_index < 0) {
+    return;
+  }
+  var post = posts[post_index];
 
-    if (post.player) {
-      // set current time of video back to 0
-      // so it can be played again
-      post.player.pauseVideo();
-      post.player.seekTo(0);
-      post.player.clearVideo();
-    }
+  Session.set('playing', false);
+}
 
-    // if there is not another video to player
-    if (post_index + 1 >= posts.length) {
-      Session.set('playing', false);
-    }
+/*
+ * State event for when media is ended
+ */
+var stateEnded = function(event, post_name) {
+  // get post index and post object from post name
+  var post_index = getPostIndexForName(post_name);
+  if (post_index < 0) {
+    return;
+  }
+  var post = posts[post_index];
 
-    nextVideo();
-  } else if (event.data == YT.PlayerState.PAUSED) {
-    // console.log('paused ' + post.name);
+  if (post.player) {
+    // set current time of video back to 0
+    // so it can be played again
+    post.player.pauseVideo();
+    post.player.seekTo(0);
+    post.player.clearVideo();
+  }
 
+  // if there is not another video to player
+  if (post_index + 1 >= posts.length) {
     Session.set('playing', false);
-  } else if (event.data == YT.PlayerState.UNSTARTED) {
+  }
+
+  nextVideo();
+}
+
+/**
+ * State change event for youtube videos
+ */
+var stateChange = function(event, post_name) {
+  if (event.data == YT.PlayerState.PLAYING) {
+    statePlaying(event, post_name);
+  } else if (event.data == YT.PlayerState.ENDED) {
+    stateEnded(event, post_name);
+  } else if (event.data == YT.PlayerState.PAUSED) {
+    statePause(event, post_name);
   }
 }
 
+/**
+  * State event for when youtube video is ready
+ */
 var onReady = function(event, post_name) {
   // event.target.playVideo();
   // console.log('video ' + post_name + ' is ready')
@@ -461,7 +494,6 @@ var onReady = function(event, post_name) {
 }
 
 var loadVideoForIndex = function(index) {
-
   if (index >= 0 && index < posts.length) {
     var p = posts[index];
 
@@ -469,60 +501,103 @@ var loadVideoForIndex = function(index) {
     $('#' + 'thumbnail-' + p.name).hide();
 
     if (!p.player) {
-      p.player = new YT.Player('video-' + p.name, {
-        videoId: p.videoId,
-        playerVars: {'autoplay': 1},
-
-        events: {
-          onReady: function(event) {
-            onReady(event, p.name);
-          },
-
-          onStateChange: function(event) {
-            stateChange(event, p.name);
-          }
-        }
-      });
+      p.player = initPlayer(p);
       $('#wrapper').fitVids();
     }
   }
 }
 
-var initPlayer = function(post) {
-  return new YT.Player('video-' + post.name, {
-    videoId: post.videoId,
-    events: {
-      onReady: function(event) {
-        onReady(event, post.name);
-      },
+function Player(post) {
 
-      onStateChange: function(event) {
-        stateChange(event, post.name);
+}
+
+/**
+ * Inits a posts player object, (either soundcloud or youtube)
+ * @param  {post object}
+ * @return {either youtube player or soundcloud player}
+ */
+var initPlayer = function(post) {
+  var autoplay = true;
+
+  // youtube or soundcloud song
+  if (post.isYoutube) {
+    return new YT.Player('video-' + post.name, {
+      videoId: post.videoId,
+      playerVars: { 'autoplay': autoplay},
+      events: {
+        onReady: function(event) {
+          onReady(event, post.name);
+        },
+
+        onStateChange: function(event) {
+          stateChange(event, post.name);
+        },
+
+        onError: function(event) {
+          onError(event, post.name);
+        }
+      }
+    });
+  } else {
+    // options for soundcloud widget
+    var params = {
+      auto_play: autoplay,
+      hide_related: false,
+      show_comments: true,
+      show_user: false,
+      show_reposts: false,
+      visual: true,
+      show_artwork: true,
+      url: post.url
+    };
+
+    // create url for iframe
+    var src = "https://w.soundcloud.com/player/?";
+    for (var key in params) {
+      if (params.hasOwnProperty(key)) {
+        src += key + "=" + params[key] + "&";
       }
     }
-  });
+
+    // create iframe for soundcloud song
+    var sid = "soundcloud" + post.name;
+    var iframe = $('<iframe>', {
+      scrolling: "no",
+      frameborder: "no",
+      src: src,
+      id: sid,
+      class: 'soundcloud-iframe'
+    });
+    var v = $('#video-' + post.name);
+    iframe.appendTo(v);
+
+    // get the soundcloud widget object
+    // we will use this to bind events
+    var s_obj = SC.Widget(sid);
+
+    // bind the needed events for the newly loaded song
+    s_obj.bind(SC.Widget.Events.PLAY, function(event) {
+      statePlaying(event, post.name);
+    });
+
+    s_obj.bind(SC.Widget.Events.PAUSE, function(event) {
+      statePause(event, post.name);
+    });
+
+    s_obj.bind(SC.Widget.Events.FINISH, function(event) {
+      stateEnded(event, post.name);
+    });
+  }
 }
 
-// called when posts are loaded and youtube player ready
-var loadPlayers = function() {
-
-}
-
+/**
+ * Called when youtube iframe api is ready
+ * @return {[type]}
+ */
 onYouTubeIframeAPIReady = function() {
   // console.log('loaded youtube iframe');
 
   loadedYoutube = true;
-  if (loadedPosts) {
-    loadPlayers();
-  }
-
-  // player = new YT.Player('player', {
-  //   videoId: "LdH1hSWGFGU",
-
-  //   events: {
-  //     onReady: onReady
-  //   }
-  // });
 }
 
 YT.load();

@@ -1,7 +1,5 @@
 <template name='player'>
 
-  <script type="text/javascript" src="www.youtube.com/iframe_api"></script>
-
   <div id="wrapper">
 
     <div class="units-row">
@@ -27,35 +25,38 @@
 
         {{#if loading}}
 
-          <div id="loading" class="units-row">
-            <h1>Loading...</h1>
+        <div id="loading" class="units-row">
+
+          <div class="unit-60">
+            <img src="/loading_animation.gif" alt="">
           </div>
+        </div>
 
         {{else}}
 
-          {{#if pageError}}
+        {{#if pageError}}
 
-            <div id="page-error" class='units-row'>
-              <div class="unit-80 unit-centered">
+        <div id="page-error" class='units-row'>
+          <div class="unit-80 unit-centered">
 
-                <p id="displayMessage">
-                  {{displayMessage}}
-                  <p id="displayLink">
-                    <a href="{{displayLink}}">{{displayLink}}</a>
-                  </p>
-                </p>
+            <p id="displayMessage">
+              {{displayMessage}}
+              <p id="displayLink">
+                <a href="{{displayLink}}">{{displayLink}}</a>
+              </p>
+            </p>
 
-                {{> catBar}}
-              </div>
-            </div>
+            {{> catBar}}
+          </div>
+        </div>
 
-          {{else}}
+        {{else}}
 
-            {{#each posts}}
-              {{> song}}
-            {{/each}}
+        {{#each posts}}
+        {{> song}}
+        {{/each}}
 
-          {{/if}}
+        {{/if}}
 
         {{/if}}
 
@@ -74,10 +75,13 @@
   <div id='song-{{name}}' class="song units-row">
     <div class="video-col unit-centered unit-100">
 
-      <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}" onerror='console.log("test")'/>
+      <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
 
       <!-- Holder for the youtube video -->
       <div id='video-{{name}}' class='player'></div>
+
+
+      <!-- <iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/221792697&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
 
       <div id='post-row' class="units-row">
         <div class="post-title unit-100">
@@ -115,35 +119,35 @@
 <template name='controls'>
   <div id="player-controls">
     {{#if canPrev}}
-      <img id='prev-button' class='can pointer' src="/icons/prev.svg">
+    <img id='prev-button' class='can pointer' src="/icons/prev.svg">
     {{else}}
-      <img class='cant' src="/icons/prev_cant.svg">
+    <img class='cant' src="/icons/prev_cant.svg">
     {{/if}}
 
     {{#if playing}}
-      {{#if canPause}}
-        <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
-      {{else}}
-        <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
-      {{/if}}
+    {{#if canPause}}
+    <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
     {{else}}
-      {{#if canPlay}}
-        <img id='play-button' class='pointer' src="/icons/play.svg">
-      {{else}}
-        <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
-      {{/if}}
+    <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
+    {{/if}}
+    {{else}}
+    {{#if canPlay}}
+    <img id='play-button' class='pointer' src="/icons/play.svg">
+    {{else}}
+    <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
+    {{/if}}
     {{/if}}
 
     {{#if canNext}}
-      <img id='next-button' class='pointer' src="/icons/next.svg">
+    <img id='next-button' class='pointer' src="/icons/next.svg">
     {{else}}
-      <img class='cant' src="/icons/next_cant.svg">
+    <img class='cant' src="/icons/next_cant.svg">
     {{/if}}
 
     {{#if canEye}}
-      <img id='eye-button' src="/icons/eye.svg">
+    <img id='eye-button' src="/icons/eye.svg">
     {{else}}
-      <img id='eye-button-cant' class='cant pointer' src="/icons/eye_cant.svg">
+    <img id='eye-button-cant' class='cant pointer' src="/icons/eye_cant.svg">
     {{/if}}
   </div>
 </template>
