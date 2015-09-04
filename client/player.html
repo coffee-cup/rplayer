@@ -8,6 +8,12 @@
 
         <div class="units-row">
 
+          <a id="logo-link" href="{{siteUrl}}">
+            <svg id="logo-link-svg">
+              <image src="/icons/boomz_logo_120.png" xlink:href="" />
+            </svg>
+          </a>
+
           <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
             {{subreddit_title}}
           </a>
@@ -75,7 +81,15 @@
   <div id='song-{{name}}' class="song units-row">
     <div class="video-col unit-centered unit-100">
 
-      <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
+      {{#if isYoutube}}
+        <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
+      {{else}}
+        {{#if sound_thumb}}
+          <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
+        {{else}}
+          <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
+        {{/if}}
+      {{/if}}
 
       <!-- Holder for the youtube video -->
       <div id='video-{{name}}' class='player'></div>

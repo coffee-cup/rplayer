@@ -77,12 +77,21 @@ Meteor.methods({
     data.data.children.forEach(function(obj, i) {
       var p = obj.data;
 
-      // var youtubeId = Meteor.call('getYoutubeId', p.url);
-      var youtubeId = null;
+      var youtubeId = Meteor.call('getYoutubeId', p.url);
+      // var youtubeId = null;
       var soundcloudId = Meteor.call('getSoundcloudId', p.url);
+      // var soundcloudId = null;
 
       var videoId = youtubeId;
       if (!youtubeId) videoId = soundcloudId;
+
+      var sound_thumb = null;
+
+      try {
+        var images = p.preview.images;
+        sound_thumb = images[0].source.url;
+      } catch (err) {
+      }
 
       if (videoId) {
         var post = {
@@ -97,6 +106,7 @@ Meteor.methods({
           name: p.name,
           videoId: videoId,
           isYoutube: (youtubeId != null),
+          sound_thumb: sound_thumb,
           user_name: 'u/' + p.author,
           user_link: 'https://reddit.com/u/' + p.author,
           comment_link: 'https://reddit.com' + p.permalink,
@@ -108,11 +118,11 @@ Meteor.methods({
       }
     });
 
-    return {
-      posts: posts,
-      success: true
-    };
-  },
+return {
+  posts: posts,
+  success: true
+};
+},
 
 
   // returns url based on given user search input
@@ -139,15 +149,17 @@ Meteor.methods({
   },
 
   checkImage: function(post) {
-    try {
-      var result = Meteor.http.get(post.thumbnail, {timeout: 2000});
-      if (result.statusCode != 200) {
+    if (post.isYoutube) {
+      try {
+        var result = Meteor.http.get(post.thumbnail, {timeout: 2000});
+        if (result.statusCode != 200) {
+          return [false, post];
+        }
+      } catch(err) {
         return [false, post];
       }
-    } catch(err) {
-      return [false, post];
+      return [true, post];
     }
-
     return [true, post];
   }
 });
