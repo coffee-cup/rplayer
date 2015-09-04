@@ -333,7 +333,6 @@ var playVideo = function() {
     if (!cp.player) {
       $('#' + 'thumbnail-' + cp.name).hide();
       play_when_loaded = true;
-      Session.set('playing', true);
       cp.player = initPlayer(cp);
       $('#wrapper').fitVids();
     } else {
@@ -349,12 +348,15 @@ var pauseVideo = function() {
   }
 }
 
+var delayPlaying = function() {
+  setTimeout(function() {
+    Session.set('playing', true);
+  }, 500);
+}
+
 var nextVideo = function() {
   if (playing_index + 1 < posts.length && playing_index != -1) {
-    var cp = currentPost();
-    if (cp && cp.player) {
-      cp.player.pauseVideo();
-    }
+    pauseVideo();
     playing_index++;
 
     if (Session.get('canEye')) {
@@ -362,19 +364,19 @@ var nextVideo = function() {
     }
 
     playVideo();
+    delayPlaying();
     Session.set('canPrev', true);
     if (playing_index >= posts.length - 1) {
       Session.set('canNext', false);
     }
+  } else {
+    Session.set('playing', false);
   }
 }
 
 var prevVideo = function() {
   if (playing_index - 1 >= 0 && playing_index != -1) {
-    var cp = currentPost();
-    if (cp && cp.player) {
-      cp.player.pauseVideo();
-    }
+    pauseVideo();
     playing_index--;
 
     if (Session.get('canEye')) {
@@ -382,6 +384,7 @@ var prevVideo = function() {
     }
 
     playVideo();
+    delayPlaying();
     Session.set('canNext', true);
     if (playing_index <= 0) {
       Session.set('canPrev', false);
@@ -390,7 +393,8 @@ var prevVideo = function() {
 }
 
 var onError = function(event, post_name) {
-  console.log('there is an error with the youtube video');
+  // console.log('there is an error with the youtube video');
+  nextVideo();
 }
 
 /**
@@ -430,6 +434,7 @@ var statePlaying = function(event, post_name) {
     scrollToCurrent();
   }
 
+  console.log('setting playing to true');
   Session.set('playing', true);
 }
 
@@ -437,14 +442,8 @@ var statePlaying = function(event, post_name) {
   * State event for when media is paused
  */
 var statePause = function(event, post_name) {
-  // get post index and post object from post name
-  var post_index = getPostIndexForName(post_name);
-  if (post_index < 0) {
-    return;
-  }
-  var post = posts[post_index];
-
   Session.set('playing', false);
+  console.log('setting playing to false - pause');
 }
 
 /*
@@ -469,6 +468,7 @@ var stateEnded = function(event, post_name) {
   // if there is not another video to player
   if (post_index + 1 >= posts.length) {
     Session.set('playing', false);
+    console.log('setting playing to false - state ended');
   }
 
   nextVideo();
