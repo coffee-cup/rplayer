@@ -174,7 +174,15 @@ Template.controls.helpers({
   }
 });
 
+Template.player.onRendered(function() {
+  animations.logo_animation();
+});
+
 Template.player.helpers({
+  siteUrl: function() {
+    return Meteor.absoluteUrl();
+  },
+
   pageError: function() {
     return Session.get('pageError');
   },
@@ -317,7 +325,6 @@ var getPostIndexForName = function(post_name) {
 }
 
 var playVideo = function() {
-  // console.log('playing video');
 
   var cp = currentPost();
   if (cp && cp.player) {
@@ -507,10 +514,6 @@ var loadVideoForIndex = function(index) {
   }
 }
 
-function Player(post) {
-
-}
-
 /**
  * Inits a posts player object, (either soundcloud or youtube)
  * @param  {post object}
@@ -519,9 +522,40 @@ function Player(post) {
 var initPlayer = function(post) {
   var autoplay = true;
 
+  // object to control playing both youtube and soundcloud songs
+  var player = {
+    y_obj: null,
+    s_obj: null,
+
+    playVideo: function() {
+      // youtube media
+      if (this.y_obj) {
+        this.y_obj.playVideo();
+      } else if(this.s_obj) { // soundcloud song
+        this.s_obj.play();
+      }
+    },
+
+    stopVideo: function() {
+      if (this.y_obj) {
+        this.y_obj.stopVideo();
+      } else if (this.s_obj) {
+        this.s_obj.pause();
+      }
+    },
+
+    pauseVideo: function() {
+      if (this.y_obj) {
+        this.y_obj.pauseVideo();
+      } else if (this.s_obj) {
+        this.s_obj.pause();
+      }
+    }
+  }
+
   // youtube or soundcloud song
   if (post.isYoutube) {
-    return new YT.Player('video-' + post.name, {
+    var y_player = new YT.Player('video-' + post.name, {
       videoId: post.videoId,
       playerVars: { 'autoplay': autoplay},
       events: {
@@ -538,11 +572,13 @@ var initPlayer = function(post) {
         }
       }
     });
+    player.y_obj = y_player;
+    return player;
   } else {
     // options for soundcloud widget
     var params = {
       auto_play: autoplay,
-      hide_related: false,
+      hide_related: true,
       show_comments: true,
       show_user: false,
       show_reposts: false,
@@ -587,6 +623,9 @@ var initPlayer = function(post) {
     s_obj.bind(SC.Widget.Events.FINISH, function(event) {
       stateEnded(event, post.name);
     });
+
+    player.s_obj = s_obj;
+    return player;
   }
 }
 
