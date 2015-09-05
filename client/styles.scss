@@ -35,6 +35,15 @@ $selection-colour: $darkgrey-colour;
   transform: rotate($value);
 }
 
+@mixin transform($value) {
+  -ms-transform: $value;
+  -ms-transform-origin: center;
+  -webkit-transform: $value;
+  -webkit-transform-origin: center;
+  transform: $value;
+  transform-origin: center;
+}
+
 /* selection colour */
 ::-moz-selection { /* Code for Firefox */
     color: $selection-colour;
@@ -87,7 +96,31 @@ html, body {
   }
 }
 
+@keyframes logo-zoom {
+  0%   {@include transform(scale(1)); }
+  50%  {@include transform(scale(0.2)); }
+  100%  {@include transform(scale(1)); }
+}
+
+@keyframes logo-norm {
+  0%  {@include transform(scale(1)); }
+  100%  {@include transform(scale(1)); }
+}
+
+#logo-circle {
+  animation: logo-norm 1.2s ease-in-out;
+}
+
+#logo-circle:hover {
+  animation: logo-zoom 1.2s ease-in-out infinite;
+}
+
+// #logo-circle:hover {
+//   transform: scale(0.2);
+// }
+
 #logo-link {
+  cursor: pointer;
   text-decoration: none;
   margin-right: 1em;
 

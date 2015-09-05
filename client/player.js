@@ -189,7 +189,7 @@ Template.controls.helpers({
 });
 
 Template.player.onRendered(function() {
-  animations.logo_animation();
+  // animations.logo_animation();
 });
 
 Template.player.helpers({
