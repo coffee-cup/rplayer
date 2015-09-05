@@ -32,7 +32,7 @@ Template.subredditSearch.helpers({
 });
 
 Template.index.rendered = function() {
-  animations.logo_animation();
+  // animations.logo_animation();
 }
 
 Template.catBar.rendered = function() {
