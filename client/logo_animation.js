@@ -16,9 +16,6 @@ var loaded = false;
 animations = {
   // use snap svg to aniamte the logo
   logo_animation: function() {
-    // prevent loading twice
-    if (loaded) return;
-    loaded = true;
 
     s = Snap("#logo-link-svg");
     g = s.group();
@@ -30,7 +27,7 @@ animations = {
     });
 
     // setup red circle
-    circle = s.circle(45, 55, CIRCLE_RADIUS_FULL);
+    circle = s.circle(48, 59, CIRCLE_RADIUS_FULL);
     circle.attr({
       fill: '#B9121B'
     });

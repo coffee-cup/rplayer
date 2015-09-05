@@ -3,22 +3,11 @@ Router.route('/', function() {
 
   GAnalytics.pageview();
 
+  loadSubs();
   this.render('index');
 });
 
-var example_string = 'https://www.reddit.com/r/listentothis';
-
-Template.subredditSearch.helpers({
-  errorMessage: function() {
-    return Session.get('errorMessage');
-  }
-});
-
-Template.index.rendered = function() {
-
-}
-
-Template.catBar.rendered = function() {
+var loadSubs = function() {
   if (!Session.get('randomSubs')) {
     Meteor.call('getRandomSubs', function(err, data) {
       if (data) {
@@ -32,6 +21,22 @@ Template.catBar.rendered = function() {
       Session.set('popularSubs', data);
     }
   });
+}
+
+var example_string = 'https://www.reddit.com/r/listentothis';
+
+Template.subredditSearch.helpers({
+  errorMessage: function() {
+    return Session.get('errorMessage');
+  }
+});
+
+Template.index.rendered = function() {
+  animations.logo_animation();
+}
+
+Template.catBar.rendered = function() {
+  loadSubs();
 }
 
 Template.catBar.helpers({

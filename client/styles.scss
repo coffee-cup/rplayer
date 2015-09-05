@@ -90,9 +90,9 @@ html, body {
   margin-right: 1em;
 
   svg, img {
-    width: 6em;
-    height: 6em;
-    margin-bottom: -2em;
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: -2rem;
   }
 
 /*  img:hover {
@@ -179,7 +179,6 @@ html, body {
 }
 
 #player-controls {
-  display: none;
   background-color: $main-colour;
   height: $footer-height;
   position: fixed;
@@ -269,8 +268,11 @@ html, body {
   background-color: $main-colour;
   padding: 3em 6em;
   color: white;
-  margin-top: 4em;
   margin-right: 2em;
+}
+
+#music-list {
+  margin-bottom: 0;
 }
 
 #title {

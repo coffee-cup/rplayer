@@ -7,13 +7,39 @@
 
 <template name='subredditSearch'>
 
-  <div id="search-wrapper">
+  <div id="wrapper">
 
     <div class="units-row">
-      <div id='title' class="unit-20 unit-push-10">
-        boomz
+
+      <div id='name-bar' class="unit-30 unit-push-10">
+
+        <div class="units-row">
+
+          <a id="logo-link" href="{{siteUrl}}">
+            <svg id="logo-link-svg">
+              <image src="/icons/boomz_logo_120.png" xlink:href="" />
+            </svg>
+          </a>
+
+          <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
+            boomz
+          </a>
+
+        </div>
+
       </div>
 
+   <!--    <div id='title' class="unit-20 unit-push-10">
+
+        <a id="logo-link" href="{{siteUrl}}">
+          <svg id="logo-link-svg">
+            <image src="/icons/boomz_logo_120.png" xlink:href=""/>
+          </svg>
+        </a>
+
+        boomz
+      </div>
+ -->
       <div id='desc-bar' class="unit-push-right unit-70">
 
         <form id='search-form' class="forms">
@@ -28,7 +54,7 @@
           </p>
         </form>
 
-      {{> catBar}}
+        {{> catBar}}
 
       </div>
 
@@ -47,7 +73,7 @@
       <ul>
 
         {{#each popularSubs}}
-          <li><a href="{{link}}">{{subreddit}}</a></li>
+        <li><a href="{{link}}">{{subreddit}}</a></li>
         {{/each}}
 
       </ul>
@@ -55,12 +81,12 @@
     </div>
 
     <div id='random-cat' class="search-cat unit-50">
-    <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
+      <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
 
       <ul>
 
         {{#each randomSubs}}
-          <li><a href="{{link}}">{{subreddit}}</a></li>
+        <li><a href="{{link}}">{{subreddit}}</a></li>
         {{/each}}
 
       </ul>
