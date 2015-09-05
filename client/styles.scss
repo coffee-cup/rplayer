@@ -85,6 +85,22 @@ html, body {
   }
 }
 
+#logo-link {
+  text-decoration: none;
+  margin-right: 1em;
+
+  svg, img {
+    width: 6em;
+    height: 6em;
+    margin-bottom: -2em;
+  }
+
+/*  img:hover {
+    transform: rotate(90deg);
+    transition: all 150.00ms linear;
+  } */
+}
+
 #name-bar {
   @include mq($until: tablet) {
     padding-left: 1em;
@@ -163,6 +179,7 @@ html, body {
 }
 
 #player-controls {
+  display: none;
   background-color: $main-colour;
   height: $footer-height;
   position: fixed;
