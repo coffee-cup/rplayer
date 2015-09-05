@@ -19,6 +19,9 @@ var lastAnimateScroll = null;
 // a seperate copy from the one in Session
 var posts = [];
 
+// the jquery object of the currently active song
+var active_song = null;
+
 /**
  * Catch all route
  */
@@ -121,6 +124,7 @@ Router.route('/(.*)', function() {
       return;
     }
 
+    playing_index = 0;
     for (var i=0;i<posts.length;i++) {
       var varTitle = $('<textarea />').html(posts[i].title).text();
       posts[i].title = varTitle;
@@ -146,8 +150,6 @@ Router.route('/(.*)', function() {
     if (posts.length >= 1) {
       Session.set('canPlay', true);
       Session.set('canPause', true);
-
-      $('song-' + posts[0].name).addClass('active-song');
     }
 
     if (posts.length >= 2) {
@@ -350,10 +352,8 @@ var playVideo = function() {
   if (cp) {
     if (cp.player) {
       cp.player.playVideo();
-      $('#song-' + cp.name).addClass('active-song');
     } else {
       $('#' + 'thumbnail-' + cp.name).hide();
-      $('#song-' + cp.name).addClass('active-song');
       play_when_loaded = true;
       cp.player = initPlayer(cp);
       $('#wrapper').fitVids();
@@ -475,6 +475,14 @@ var statePlaying = function(event, post_name) {
     scrollToCurrent();
   }
 
+  if (active_song) {
+    active_song.removeClass('active-song');
+  }
+  active_song = $('#info-' + post.name);
+  active_song.addClass('active-song');
+
+  console.log('set active for #info-' + post.name);
+
   Session.set('playing', true);
 
   setTimeout(function() {
@@ -533,14 +541,12 @@ var stateChange = function(event, post_name) {
   * State event for when youtube video is ready
  */
 var onReady = function(event, post_name) {
-  console.log('youtube video ready!!');
   if (currentPost() && currentPost().player) {
     // currentPost().player.seekTo(10);
   }
 }
 
 var loadVideoForIndex = function(index, on_load) {
-  console.log('loading video for ' + index);
   if (!on_load) on_load = false;
   if (index >= 0 && index < posts.length) {
     var p = posts[index];

@@ -202,6 +202,11 @@ html, body {
   }
 }
 
+.info-section {
+  margin-top: 0.2em;
+  padding-left: 1em;;
+}
+
 #player-controls {
   background-color: $main-colour;
   height: $footer-height;
@@ -246,7 +251,7 @@ html, body {
 }
 
 .active-song {
-
+  border-left: solid 0.5em $main-colour;
 }
 
 #song:last-of-type {
