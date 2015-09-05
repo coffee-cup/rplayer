@@ -2,18 +2,19 @@
 
   <div id="wrapper">
 
-    <div class="units-row">
+    <div id='name-bar' class="units-row">
 
-      <div id='name-bar' class="unit-90 unit-push-10">
+      <div id='name-icon' class="unit-10 unit-push-10">
+        <a id="logo-link" href="{{siteUrl}}">
+          <svg id="logo-link-svg">
+            <image src="/icons/boomz_logo_120.png" xlink:href="" />
+          </svg>
+        </a>
+      </div>
 
-        <div class="units-row">
+      <div id='name-text' class="unit-80 unit-push-10">
 
-          <a id="logo-link" href="{{siteUrl}}">
-            <svg id="logo-link-svg">
-              <image src="/icons/boomz_logo_120.png" xlink:href="" />
-            </svg>
-          </a>
-
+        <span id="title-wrapper">
           <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
             {{subreddit_title}}
           </a>
@@ -22,11 +23,13 @@
             <br>
             {{mutliuser}}
           </a>
-
-        </div>
+        </span>
 
       </div>
 
+    </div>
+
+    <div class='units-row'>
       <div id='post-bar' class="unit-60 unit-push-right">
 
         {{#if loading}}
@@ -67,7 +70,6 @@
         {{/if}}
 
       </div>
-
     </div>
 
     {{> controls}}
@@ -82,13 +84,13 @@
     <div class="video-col unit-centered unit-100">
 
       {{#if isYoutube}}
-        <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
+      <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
       {{else}}
-        {{#if sound_thumb}}
-          <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
-        {{else}}
-          <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
-        {{/if}}
+      {{#if sound_thumb}}
+      <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
+      {{else}}
+      <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
+      {{/if}}
       {{/if}}
 
       <!-- Holder for the youtube video -->
