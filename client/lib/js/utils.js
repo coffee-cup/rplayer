@@ -43,7 +43,7 @@ utils = {
   // check if input is reddit link
   // if it is, return the subreddit
   isLink: function(input) {
-    var link_reg = /\/r\/(.+$)/;
+    var link_reg = /\/?r?\/?(.+)/;
     var m;
     if ((m = link_reg.exec(input)) !== null) {
       if (m.index === link_reg.lastIndex) {
@@ -51,12 +51,29 @@ utils = {
       }
 
       if (m.length == 2) {
-        return {subreddit: m[1]};
+        return {link: m[1], subreddit: this.subFromLink((input))};
       }
     }
     return null;
   },
 
+  // return subreddit portion of a link
+  subFromLink: function(input) {
+    var link_reg = /\/r\/([\w+]+)/;
+    var m;
+    if ((m = link_reg.exec(input)) !== null) {
+      if (m.index === link_reg.lastIndex) {
+        link_reg.lastIndex++;
+      }
+
+      if (m.length == 2) {
+        return m[1];
+      }
+    }
+    return null;
+  },
+
+  // returns whether or not the user is on mobile device
   isMobile: function(input) {
     var isMobile = false; //initiate as false
     // device detection

@@ -64,7 +64,8 @@ Router.route('/(.*)', function() {
   // check if subreddit
   r = utils.isLink(path);
   if (r && r.subreddit) {
-    Session.set('subreddit', r.subreddit);
+    var sub = utils.subFromLink(path);
+    Session.set('subreddit', sub);
     if (r.subreddit.indexOf('+') != -1) {
       Session.set('isMulti', true);
     }

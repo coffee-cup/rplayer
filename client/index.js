@@ -57,8 +57,8 @@ Template.index.events({
 
     var r;
     r = utils.isLink(input);
-    if (r && r.subreddit) {
-      Router.go('/r/' + r.subreddit);
+    if (r && r.link) {
+      Router.go('/r/' + r.link);
       return;
     }
 
