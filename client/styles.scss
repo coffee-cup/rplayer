@@ -300,9 +300,13 @@ html, body {
 
 .sub-link {
   text-decoration: underline;
-  color: #373737;
+  color: $darkgrey-colour;
   font-size: 2.5em;
   font-weight: 700;
+}
+
+.sub-link:hover {
+  color: $main-colour;
 }
 
 #song {
@@ -368,18 +372,13 @@ html, body {
 }
 
 #title {
-  color: $darkgrey-colour;
   font-size: 35pt;
-  text-decoration: underline;
   font-weight: 700;
+  text-decoration: none;
 
   @include mq($until: tablet) {
     padding-left: 1em;
   }
-}
-
-#title:hover {
-  color: $main-colour;
 }
 
 .search-link {

@@ -484,8 +484,6 @@ var statePlaying = function(event, post_name) {
   active_song = $('#info-' + post.name);
   active_song.addClass('active-song');
 
-  console.log('set active for #info-' + post.name);
-
   Session.set('playing', true);
 
   setTimeout(function() {
@@ -684,6 +682,10 @@ var initPlayer = function(post, load_up) {
     s_obj.bind(SC.Widget.Events.FINISH, function(event) {
       stateEnded(event, post.name);
     });
+
+    s_obj.bind(SC.Widget.Events.ERROR, function(event) {
+      onError(event, post.name);
+    })
 
     player.s_obj = s_obj;
     return player;
