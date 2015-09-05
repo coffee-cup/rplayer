@@ -16,7 +16,7 @@ var loaded = false;
 animations = {
   // use snap svg to aniamte the logo
   logo_animation: function() {
-
+    return;
     s = Snap("#logo-link-svg");
     g = s.group();
     heaphones = g.group();
