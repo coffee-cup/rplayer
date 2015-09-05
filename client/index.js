@@ -56,6 +56,12 @@ Template.index.events({
     var input = event.target.sub_name.value.trim();
 
     var r;
+    r = utils.isLink(input);
+    if (r && r.subreddit) {
+      Router.go('/r/' + r.subreddit);
+      return;
+    }
+
     r = utils.isSubreddit(input);
     if (r && r.subreddit) {
       Router.go('/r/' + r.subreddit);
@@ -68,15 +74,9 @@ Template.index.events({
       return;
     }
 
-    r = utils.isLink(input);
-    if (r && r.subreddit) {
-      Router.go('/r/' + r.subreddit);
-      return;
-    }
-
     console.log('invalid input');
     Session.set('errorMessage', 'Invaid input');
-    // Router.go('/' + sub_name);
+    Router.go('/' + sub_name);
   }
 });
 

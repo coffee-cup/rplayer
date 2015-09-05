@@ -43,7 +43,7 @@ utils = {
   // check if input is reddit link
   // if it is, return the subreddit
   isLink: function(input) {
-    var link_reg = /\/r\/([\w+]+)/;
+    var link_reg = /\/r\/(.+$)/;
     var m;
     if ((m = link_reg.exec(input)) !== null) {
       if (m.index === link_reg.lastIndex) {
