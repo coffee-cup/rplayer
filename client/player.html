@@ -64,7 +64,7 @@
 
         {{/if}}
 
-        {{/i f}}
+        {{/if}}
 
       </div>
     </div>
@@ -80,15 +80,15 @@
   <div id='song-{{name}}' class="{{active}} song units-row">
     <div class="video-col unit-centered unit-100">
 
-      {{#if isYoutube}}
+    {{#if isYoutube}}
       <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
-      {{else}}
+    {{else}}
       {{#if sound_thumb}}
       <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
       {{else}}
       <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
       {{/if}}
-      {{/if}}
+    {{/if}}
 
       <!-- Holder for the youtube video -->
       <div id='video-{{name}}' class='player'></div>
