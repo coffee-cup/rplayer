@@ -137,7 +137,7 @@ return {
   fetchSubreddit: function(url) {
     var url = Meteor.call('parseInput', url);
     console.log('making request to ' + url);
-    var result = Meteor.http.get(url, {timeout:30000});
+    var result = Meteor.http.get(url, {timeout:15000});
     if (result.statusCode == 200) {
       console.log('fetchSubreddit success');
       return Meteor.call('parseSubreddits', result);

@@ -15,22 +15,23 @@ var scrolling = false;
 // keep track of last time we animated scrolled
 var lastAnimateScroll = null;
 
-// var ct = new ColorThief();
-
 // the posts from the server
 // a seperate copy from the one in Session
 var posts = [];
 
+/**
+ * Catch all route
+ */
 Router.route('/(.*)', function() {
   this.render('player');
 
+  // if on mobile device,
+  // change height of player controls
   var isMobile = utils.isMobile();
   if (isMobile) {
     var f_height = '12em';
     var i_height = '8em';
-
     $('#player-controls').css('height', f_height);
-
     $("<style>")
     .prop("type", "text/css")
     .html("\
@@ -52,7 +53,12 @@ Router.route('/(.*)', function() {
   Session.set('multiuser', '');
   Session.set('isMulti', false);
 
+  /**
+   * Start parsing url
+   */
   var r;
+
+  // check if subreddit
   r = utils.isLink(path);
   if (r && r.subreddit) {
     Session.set('subreddit', r.subreddit);
@@ -60,6 +66,7 @@ Router.route('/(.*)', function() {
       Session.set('isMulti', true);
     }
   } else {
+    // check if multireddit
     r = utils.isMulti(path);
     if (r && r.username && r.multiname) {
       Session.set('subreddit', r.multiname);
@@ -67,6 +74,7 @@ Router.route('/(.*)', function() {
 
       Session.set('isMulti', true);
     } else {
+      // if not, its unknown, stil attempt to parse normal way
       Session.set('subreddit', 'unknown subreddit');
     }
   }
@@ -74,7 +82,6 @@ Router.route('/(.*)', function() {
   console.log('fetching from ' + subreddit_link);
 
   Session.set('subreddit_link', subreddit_link);
-
   Session.set('canPrev', false);
   Session.set('canNext', false);
   Session.set('canPlay', false);
@@ -86,14 +93,16 @@ Router.route('/(.*)', function() {
   // set posts to empty at start
   Session.set('posts', []);
 
-  // set playing to false
+  /**
+   * init session values
+   */
   Session.set('playing', false);
-
   Session.set('loading', true);
 
   // get subreddit data from server
   Meteor.call('fetchSubreddit', subreddit_link, function(err, data) {
 
+    // error with fetching from reddit
     if (!data || !data.success) {
       Session.set('displayMessage', 'There was an error calling reddit');
       Session.set('pageError', true);
@@ -101,6 +110,7 @@ Router.route('/(.*)', function() {
       return;
     }
 
+    // set global var
     posts = data.posts;
 
     if (posts.length <= 0) {
@@ -136,6 +146,8 @@ Router.route('/(.*)', function() {
     if (posts.length >= 1) {
       Session.set('canPlay', true);
       Session.set('canPause', true);
+
+      $('song-' + posts[0].name).addClass('active-song');
     }
 
     if (posts.length >= 2) {
@@ -179,6 +191,12 @@ Template.player.onRendered(function() {
 });
 
 Template.player.helpers({
+  multied: function() {
+    return Session.get('isMulti')?"multied":"";
+
+    return this.complete?"completed":"";
+  },
+
   siteUrl: function() {
     return Meteor.absoluteUrl();
   },
@@ -285,7 +303,7 @@ $(window).scroll(function() {
 var scrollToCurrent = function(p) {
   var post = p || currentPost();
   $('#song-' + post.name).animatescroll({
-    easing: 'easeInOutQuart',
+    easing: 'easeOutCirc',
     onScrollStart: function() {
       scrolling = true;
     },
@@ -324,23 +342,28 @@ var getPostIndexForName = function(post_name) {
   return -1;
 }
 
+/**
+ * Play the currently selected media
+ */
 var playVideo = function() {
-
   var cp = currentPost();
-  if (cp && cp.player) {
-    cp.player.playVideo();
-  } else {
-    if (!cp.player) {
+  if (cp) {
+    if (cp.player) {
+      cp.player.playVideo();
+      $('#song-' + cp.name).addClass('active-song');
+    } else {
       $('#' + 'thumbnail-' + cp.name).hide();
+      $('#song-' + cp.name).addClass('active-song');
       play_when_loaded = true;
       cp.player = initPlayer(cp);
       $('#wrapper').fitVids();
-    } else {
-      cp.player.playVideo();
     }
   }
 }
 
+/**
+ * Pause the currently selected media
+ */
 var pauseVideo = function() {
   var cp = currentPost();
   if (cp && cp.player) {
@@ -348,12 +371,24 @@ var pauseVideo = function() {
   }
 }
 
+/**
+ * Function needed to delay setting the playing flag to true,
+ * if a youtube videos take a sec to pause playing, and soundcloud
+ * plays instantly.
+ *
+ * This function will set the 'delay' flag in the Session to true
+ * after 500ms
+ * @return {[type]} [description]
+ */
 var delayPlaying = function() {
   setTimeout(function() {
     Session.set('playing', true);
   }, 500);
 }
 
+/**
+ * Will start playing the next media if there is some to play
+ */
 var nextVideo = function() {
   if (playing_index + 1 < posts.length && playing_index != -1) {
     pauseVideo();
@@ -374,6 +409,9 @@ var nextVideo = function() {
   }
 }
 
+/**
+ * Will play the previous media if available
+ */
 var prevVideo = function() {
   if (playing_index - 1 >= 0 && playing_index != -1) {
     pauseVideo();
@@ -392,6 +430,9 @@ var prevVideo = function() {
   }
 }
 
+/**
+ * Youtube on error event
+ */
 var onError = function(event, post_name) {
   // console.log('there is an error with the youtube video');
   nextVideo();
@@ -435,6 +476,11 @@ var statePlaying = function(event, post_name) {
   }
 
   Session.set('playing', true);
+
+  setTimeout(function() {
+    if (playing_index<=0) playing_index = 0;
+    loadVideoForIndex(playing_index+1, true);
+  }, 1000);
 }
 
 /**
@@ -487,16 +533,15 @@ var stateChange = function(event, post_name) {
   * State event for when youtube video is ready
  */
 var onReady = function(event, post_name) {
-  // event.target.playVideo();
-  // console.log('video ' + post_name + ' is ready')
-
-  if (play_when_loaded && currentPost() && currentPost().player) {
-    currentPost().player.playVideo();
-    play_when_loaded = false;
+  console.log('youtube video ready!!');
+  if (currentPost() && currentPost().player) {
+    // currentPost().player.seekTo(10);
   }
 }
 
-var loadVideoForIndex = function(index) {
+var loadVideoForIndex = function(index, on_load) {
+  console.log('loading video for ' + index);
+  if (!on_load) on_load = false;
   if (index >= 0 && index < posts.length) {
     var p = posts[index];
 
@@ -504,7 +549,7 @@ var loadVideoForIndex = function(index) {
     $('#' + 'thumbnail-' + p.name).hide();
 
     if (!p.player) {
-      p.player = initPlayer(p);
+      p.player = initPlayer(p, on_load);
       $('#wrapper').fitVids();
     }
   }
@@ -515,8 +560,11 @@ var loadVideoForIndex = function(index) {
  * @param  {post object}
  * @return {either youtube player or soundcloud player}
  */
-var initPlayer = function(post) {
-  var autoplay = true;
+var initPlayer = function(post, load_up) {
+  if (post.player) return;
+
+  load_up = typeof load_up !== 'undefined' ? load_up : false; // default value of true
+  var autoplay = !load_up;
 
   // object to control playing both youtube and soundcloud songs
   var player = {
@@ -571,7 +619,7 @@ var initPlayer = function(post) {
           stateChange(event, post.name);
         },
 
-        onError: function(event) {
+        onError : function(event) {
           onError(event, post.name);
         }
       }

@@ -77,7 +77,7 @@ html, body {
   @include mq($from: tablet) {
     // position: absolute;
     // right: 1em;
-    margin-top: 4em;
+    margin-top: 1em;
     padding-left: 1em;
   }
 
@@ -116,9 +116,18 @@ html, body {
   }
 }
 
+.multied {
+  margin-top: 2rem !important;
+}
+
 #name-icon {
   @include mq($from: tablet) {
     position: fixed;
+  }
+
+  @include mq($until: tablet) {
+    margin-bottom: 3rem;
+    text-align: center;
   }
 }
 
@@ -234,6 +243,10 @@ html, body {
 
 #song {
   border-bottom: solid 2px $main-colour;
+}
+
+.active-song {
+
 }
 
 #song:last-of-type {
