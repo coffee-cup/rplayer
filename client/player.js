@@ -434,7 +434,6 @@ var statePlaying = function(event, post_name) {
     scrollToCurrent();
   }
 
-  console.log('setting playing to true');
   Session.set('playing', true);
 }
 
@@ -443,7 +442,6 @@ var statePlaying = function(event, post_name) {
  */
 var statePause = function(event, post_name) {
   Session.set('playing', false);
-  console.log('setting playing to false - pause');
 }
 
 /*
@@ -468,7 +466,6 @@ var stateEnded = function(event, post_name) {
   // if there is not another video to player
   if (post_index + 1 >= posts.length) {
     Session.set('playing', false);
-    console.log('setting playing to false - state ended');
   }
 
   nextVideo();
