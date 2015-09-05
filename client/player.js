@@ -199,10 +199,6 @@ Template.player.helpers({
     return this.complete?"completed":"";
   },
 
-  siteUrl: function() {
-    return Meteor.absoluteUrl();
-  },
-
   pageError: function() {
     return Session.get('pageError');
   },
@@ -259,6 +255,12 @@ Template.song.helpers({
 
 Template.player.rendered = function() {
 }
+
+Template.logo.helpers({
+  siteUrl: function() {
+    return Meteor.absoluteUrl();
+  }
+});
 
 Template.player.events({
   'click .thumbnail': function(event) {

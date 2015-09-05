@@ -44,6 +44,19 @@ $selection-colour: $darkgrey-colour;
   transform-origin: center;
 }
 
+@mixin scale($value) {
+  -ms-transform: scale($value);
+  -webkit-transform: scale($value);
+  transform: scale($value);
+  @include origin(center);
+}
+
+@mixin origin($value) {
+  -ms-transform-origin: center;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+}
+
 /* selection colour */
 ::-moz-selection { /* Code for Firefox */
     color: $selection-colour;
@@ -97,22 +110,36 @@ html, body {
 }
 
 @keyframes logo-zoom {
-  0%   {@include transform(scale(1)); }
-  50%  {@include transform(scale(0.2)); }
-  100%  {@include transform(scale(1)); }
+  0%   {@include scale(1); }
+  50%  {@include scale(0.2); }
+  100%   {@include scale(1); }
 }
 
 @keyframes logo-norm {
-  0%  {@include transform(scale(1)); }
-  100%  {@include transform(scale(1)); }
+  0%   {@include scale(1); }
+  50%  {@include scale(0.2); }
+  100%   {@include scale(1); }
+}
+
+@-webkit-keyframes logo-zoom {
+  0%   {@include scale(1); }
+  50%  {@include scale(0.2); }
+  100%   {@include scale(1); }
+}
+
+@-webkit-keyframes logo-norm {
+  0%   {@include scale(1); }
+  100%   {@include scale(1); }
 }
 
 #logo-circle {
-  animation: logo-norm 1.2s ease-in-out;
+    -webkit-animation: logo-norm 1.2s ease-in-out;
+          animation: logo-norm 1.2s ease-in-out;
 }
 
 #logo-circle:hover {
-  animation: logo-zoom 1.2s ease-in-out infinite;
+  -webkit-animation: logo-zoom 1.2s ease-in-out infinite;
+          animation: logo-zoom 1.2s ease-in-out infinite;
 }
 
 // #logo-circle:hover {
