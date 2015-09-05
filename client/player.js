@@ -460,7 +460,6 @@ var stateEnded = function(event, post_name) {
     // so it can be played again
     post.player.pauseVideo();
     post.player.seekTo(0);
-    post.player.clearVideo();
   }
 
   // if there is not another video to player
@@ -546,6 +545,14 @@ var initPlayer = function(post) {
         this.y_obj.pauseVideo();
       } else if (this.s_obj) {
         this.s_obj.pause();
+      }
+    },
+
+    seekTo: function(value) {
+      if (this.y_obj) {
+        this.y_obj.seekTo(value);
+      } else if (this.s_obj) {
+        this.s_obj.seekTo(value);
       }
     }
   }
