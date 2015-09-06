@@ -33,45 +33,52 @@
         <div id="loading" class="units-row">
 
           <div class="unit-60">
-            <!-- <img src="/loading_animation.gif" alt=""> -->
-            <h1>Loading</h1>
-          </div>
-        </div>
 
-        {{else}}
+             <div id='loading-animation' class="sk-spinner sk-spinner-wave">
+               <div class="sk-rect1"></div>
+               <div class="sk-rect2"></div>
+               <div class="sk-rect3"></div>
+               <div class="sk-rect4"></div>
+               <div class="sk-rect5"></div>
+             </div>
 
-        {{#if pageError}}
+         </div>
+       </div>
 
-        <div id="page-error" class='units-row'>
-          <div class="unit-80 unit-centered">
+       {{else}}
 
-            <p id="displayMessage">
-              {{displayMessage}}
-              <p id="displayLink">
-                <a href="{{displayLink}}">{{displayLink}}</a>
-              </p>
+       {{#if pageError}}
+
+       <div id="page-error" class='units-row'>
+        <div class="unit-80 unit-centered">
+
+          <p id="displayMessage">
+            {{displayMessage}}
+            <p id="displayLink">
+              <a href="{{displayLink}}">{{displayLink}}</a>
             </p>
+          </p>
 
-            {{> catBar}}
-          </div>
+          {{> catBar}}
         </div>
-
-        {{else}}
-
-        {{#each posts}}
-        {{> song}}
-        {{/each}}
-
-        {{/if}}
-
-        {{/if}}
-
       </div>
+
+      {{else}}
+
+      {{#each posts}}
+      {{> song}}
+      {{/each}}
+
+      {{/if}}
+
+      {{/if}}
+
     </div>
-
-    {{> controls}}
-
   </div>
+
+  {{> controls}}
+
+</div>
 
 </template>
 
@@ -80,15 +87,15 @@
   <div id='song-{{name}}' class="{{active}} song units-row">
     <div class="video-col unit-centered unit-100">
 
-    {{#if isYoutube}}
+      {{#if isYoutube}}
       <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
-    {{else}}
+      {{else}}
       {{#if sound_thumb}}
       <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
       {{else}}
       <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
       {{/if}}
-    {{/if}}
+      {{/if}}
 
       <!-- Holder for the youtube video -->
       <div id='video-{{name}}' class='player'></div>
