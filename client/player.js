@@ -61,24 +61,22 @@ Router.route('/(.*)', function() {
    */
   var r;
 
-  // check if subreddit
-  r = utils.isLink(path);
-  if (r && r.subreddit) {
-    var sub = utils.subFromLink(path);
-    Session.set('subreddit', sub);
-    if (r.subreddit.indexOf('+') != -1) {
-      Session.set('isMulti', true);
-    }
+  // check if multireddit
+  r = utils.isMulti(path);
+  if (r && r.username && r.multiname) {
+    Session.set('subreddit', r.multiname);
+    Session.set('multiuser', r.username);
+    Session.set('isMulti', true);
   } else {
-    // check if multireddit
-    r = utils.isMulti(path);
-    if (r && r.username && r.multiname) {
-      Session.set('subreddit', r.multiname);
-      Session.set('multiuser', r.username);
-
-      Session.set('isMulti', true);
+    // check if subreddit / reddit link
+    r = utils.isLink(path);
+    if (r && r.subreddit) {
+      var sub = utils.subFromLink(path);
+      Session.set('subreddit', sub);
+      if (r.subreddit.indexOf('+') != -1) {
+        Session.set('isMulti', true);
+      }
     } else {
-      // if not, its unknown, stil attempt to parse normal way
       Session.set('subreddit', 'unknown subreddit');
     }
   }
@@ -114,7 +112,6 @@ Router.route('/(.*)', function() {
       return;
     }
 
-    // set global var
     posts = data.posts;
 
     if (posts.length <= 0) {
@@ -437,8 +434,15 @@ var prevVideo = function() {
  * Youtube on error event
  */
 var onError = function(event, post_name) {
-  // console.log('there is an error with the youtube video');
-  nextVideo();
+  var post_index = getPostIndexForName(post_name);
+  if (post_index < 0) {
+    return;
+  }
+  var post = posts[post_index];
+
+  if (post_index == playing_index) {
+    nextVideo();
+  }
 }
 
 /**

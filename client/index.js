@@ -56,6 +56,12 @@ Template.index.events({
     var input = event.target.sub_name.value.trim();
 
     var r;
+    r = utils.isMulti(input);
+    if (r && r.username && r.multiname) {
+      Router.go('/user/' + r.username + '/m/' + r.multiname);
+      return;
+    }
+
     r = utils.isLink(input);
     if (r && r.link) {
       Router.go('/r/' + r.link);
@@ -65,12 +71,6 @@ Template.index.events({
     r = utils.isSubreddit(input);
     if (r && r.subreddit) {
       Router.go('/r/' + r.subreddit);
-      return;
-    }
-
-    r = utils.isMulti(input);
-    if (r && r.username && r.multiname) {
-      Router.go('/user/' + r.username + '/m/' + r.multiname);
       return;
     }
 
