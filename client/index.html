@@ -11,31 +11,24 @@
 
     <div class="units-row">
 
-      <div id='name-bar' class="unit-30 unit-push-10">
+    <div id='name-bar' class="units-row">
 
-        <div class="units-row">
+      <div id='name-icon' class="unit-10 unit-push-10">
+        {{> logo}}
+      </div>
 
-          {{> logo}}
+      <div id='name-text' class="{{multied}} unit-80 unit-push-10">
 
+        <span id="title-wrapper">
           <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
             boomz
           </a>
-
-        </div>
+        </span>
 
       </div>
 
-   <!--    <div id='title' class="unit-20 unit-push-10">
+    </div>
 
-        <a id="logo-link" href="{{siteUrl}}">
-          <svg id="logo-link-svg">
-            <image src="/icons/boomz_logo_120.png" xlink:href=""/>
-          </svg>
-        </a>
-
-        boomz
-      </div>
- -->
       <div id='desc-bar' class="unit-push-right unit-70">
 
         <form id='search-form' class="forms">
@@ -43,7 +36,7 @@
             Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
             <br>
             <span id="searchError">{{errorMessage}}</span>
-            <input type="text" name='sub_name' class="width-100" />
+            <input type="text" name='sub_name' class="width-100" autofocus/>
           </label>
           <p>
             <button id='search-button' class="btn btn-red">Search</button>
