@@ -52,9 +52,9 @@ $selection-colour: $darkgrey-colour;
 }
 
 @mixin origin($value) {
-  -ms-transform-origin: center;
-  -webkit-transform-origin: center;
-  transform-origin: center;
+  -ms-transform-origin: $value;
+  -webkit-transform-origin: $value;
+  transform-origin: $value;
 }
 
 /* selection colour */
@@ -131,15 +131,15 @@ html, body {
   100%   {@include scale(1); }
 }
 
-#logo-circle {
-    -webkit-animation: logo-norm 1.2s ease-in-out;
-          animation: logo-norm 1.2s ease-in-out;
-}
+// #logo-circle {
+//     -webkit-animation: logo-norm 1.2s ease-in-out;
+//             animation: logo-norm 1.2s ease-in-out;
+// }
 
-#logo-circle:hover {
-  -webkit-animation: logo-zoom 1.2s ease-in-out infinite;
-          animation: logo-zoom 1.2s ease-in-out infinite;
-}
+// #logo-circle:hover {
+//   -webkit-animation: logo-zoom 1.2s ease-in-out infinite;
+//           animation: logo-zoom 1.2s ease-in-out infinite;
+// }
 
 // #logo-circle:hover {
 //   transform: scale(0.2);
@@ -263,7 +263,7 @@ html, body {
 
 .info-section {
   margin-top: 0.2em;
-  padding-left: 1em;;
+  /*padding-left: 1em;;*/
 }
 
 #player-controls {
@@ -306,7 +306,7 @@ html, body {
 .sub-link {
   text-decoration: underline;
   color: $darkgrey-colour;
-  font-size: 2.5em;
+  font-size: 3rem;
   font-weight: 700;
 }
 
@@ -320,6 +320,7 @@ html, body {
 
 .active-song {
   border-left: solid 0.5em $main-colour;
+  padding-left: 1em;
 }
 
 #song:last-of-type {
@@ -374,6 +375,7 @@ html, body {
 
 #music-list {
   margin-bottom: 0;
+  font-size: 1.1rem;
 }
 
 #title {
@@ -439,7 +441,6 @@ html, body {
   background-color: $main-colour;
   color: white;
   padding: 2em;
-  margin-top: 5em;
 }
 
 #displayMessage {
