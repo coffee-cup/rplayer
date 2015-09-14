@@ -35,7 +35,7 @@ Template.index.rendered = function() {
   // animations.logo_animation();
 }
 
-Template.catBar.rendered = function() {
+Template.catBar.onRendered = function() {
   loadSubs();
 }
 

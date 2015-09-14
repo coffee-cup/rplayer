@@ -29,6 +29,13 @@ $selection-colour: $darkgrey-colour;
   text-decoration-color: $value;
 }
 
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
 @mixin rotateall($value) {
   -ms-transform: rotate($value); /* IE 9 */
   -webkit-transform: rotate($value); /* Safari */
@@ -295,6 +302,41 @@ html, body {
 
   #pause-button-cant {
     @extend#play-button;
+  }
+
+  #sort {
+    position: fixed;
+    bottom: 0;
+    right: 8px;
+    color: white;
+    font-size: 18pt;
+    font-weight: 300;
+    width: 600px;
+    height: 60px;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    div {
+      cursor: pointer;
+      position: absolute;
+      bottom: 12px;
+      right: 0;
+    }
+
+    .opt {
+      opacity: 0;
+    }
+
+    #selection {
+      width: 50px;
+    }
+
+    #t-sort {
+      font-size: 12pt;
+      margin-left: -3px;
+    }
   }
 }
 

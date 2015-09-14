@@ -56,6 +56,8 @@ Router.route('/(.*)', function() {
   Session.set('multiuser', '');
   Session.set('isMulti', false);
 
+  Session.set('query', this.params.query);
+
   /**
    * Start parsing url
    */

@@ -9,11 +9,11 @@ new RegExp('^https?://youtu.be/')
 
 var music_subs = [];
 var popular_subs = [
-{subreddit: 'ListenToThis', link: '/r/ListenToThis'},
-{subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
-{subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
-{subreddit: 'chillmusic', link: '/r/chillmusic'},
-{subreddit: 'woahtunes', link: '/r/woahtunes'}
+  {subreddit: 'ListenToThis', link: '/r/ListenToThis'},
+  {subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
+  {subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
+  {subreddit: 'chillmusic', link: '/r/chillmusic'},
+  {subreddit: 'woahtunes', link: '/r/woahtunes'}
 ];
 
 Meteor.startup(function () {
