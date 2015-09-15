@@ -50,11 +50,18 @@ Router.route('/(.*)', function() {
   var path = Router.current().location.get().path;
   GAnalytics.pageview(path);
 
+  Session.set('path', path);
+
+  if (sort.parseUrl) {
+    sort.parseUrl();
+  }
+
   // var subreddit = this.params.subreddit;
   var subreddit_link = path;
 
   Session.set('multiuser', '');
   Session.set('isMulti', false);
+  Session.set('isMultiTrue', false);
 
   Session.set('query', this.params.query);
 
@@ -69,6 +76,7 @@ Router.route('/(.*)', function() {
     Session.set('subreddit', r.multiname);
     Session.set('multiuser', r.username);
     Session.set('isMulti', true);
+    Session.set('isMultiTrue', true);
   } else {
     // check if subreddit / reddit link
     r = utils.isLink(path);
@@ -82,6 +90,18 @@ Router.route('/(.*)', function() {
       Session.set('subreddit', 'unknown subreddit');
     }
   }
+
+  var base_reddit = '';
+  // is legit reddit multireddit
+  if (Session.get('multiuser')) {
+    var multiuser = Session.get('multiuser');
+    var multireddit = Session.get('subreddit');
+    base_reddit = '/user/' + multiuser + '/m/' + multireddit;
+  } else {
+    var subreddit = Session.get('subreddit');
+    base_reddit = '/r/' + subreddit;
+  }
+  Session.set('base_reddit', base_reddit);
 
   console.log('fetching from ' + subreddit_link);
 
@@ -104,13 +124,21 @@ Router.route('/(.*)', function() {
   Session.set('loading', true);
 
   // get subreddit data from server
-  Meteor.call('fetchSubreddit', subreddit_link, function(err, data) {
+  var sid = utils.randomId();
+  Session.set('latestSID', sid);
+  Meteor.call('fetchSubreddit', subreddit_link, sid, function(err, data) {
 
     // error with fetching from reddit
     if (!data || !data.success) {
       Session.set('displayMessage', 'There was an error calling reddit');
       Session.set('pageError', true);
       Session.set('loading', false);
+      return;
+    }
+
+    // make sure the request is the latest one
+    var sid = Session.get('latestSID');
+    if (sid && sid != data.sid) {
       return;
     }
 
@@ -194,9 +222,7 @@ Template.player.onRendered(function() {
 
 Template.player.helpers({
   multied: function() {
-    return Session.get('isMulti')?"multied":"";
-
-    return this.complete?"completed":"";
+    return Session.get('isMultiTrue')?"multied":"";
   },
 
   pageError: function() {

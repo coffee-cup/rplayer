@@ -304,10 +304,19 @@ html, body {
     @extend#play-button;
   }
 
+  .noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   #sort {
     position: fixed;
     bottom: 0;
-    right: 8px;
+    right: 12px;
     color: white;
     font-size: 18pt;
     font-weight: 300;
@@ -327,10 +336,18 @@ html, body {
 
     .opt {
       opacity: 0;
+      bottom: 12px;
+    }
+
+    .top {
+      bottom: 12px;
+      opacity: 0;
     }
 
     #selection {
-      width: 50px;
+      width: 55px;
+      z-index: 1000;
+      font-size: 22pt;
     }
 
     #t-sort {

@@ -82,6 +82,16 @@
 
     </div>
 
+    <div id="multi-list" class="search-cat unit-50">
+      <p class="cat-title">Multis</p>
+
+      <ul>
+        {{#each multiList}}
+          <li><a href="{{link}}">{{subreddit}}</a></li>
+        {{/each}}
+      </ul>
+    </div>
+
   </div>
 
   <div id="music-list" class="units-row">

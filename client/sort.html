@@ -1,11 +1,11 @@
 <template name='sort'>
   <div id="sort">
 
-    <div id="selection">
-      {{sort}} <span id='t-sort'>{{t}}</span>
+    <div id="selection" class='noselect'>
+      {{sort}} {{#if isT}}<span id='t-sort'>{{t}}</span>{{/if}}
     </div>
 
-    <div class='opt' id="opt_top">
+    <div class='top' id="opt_top">
       top
     </div>
 
@@ -15,6 +15,22 @@
 
     <div class='opt' id="opt_hot">
       hot
+    </div>
+
+    <div class="top" id="top_day">
+      day
+    </div>
+
+    <div class="top" id="top_mon">
+      mon
+    </div>
+
+    <div class="top" id="top_year">
+      year
+    </div>
+
+    <div class="top" id="top_all">
+      all
     </div>
 
   </div>
