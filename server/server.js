@@ -10,11 +10,20 @@ new RegExp('^https?://youtu.be/')
 var music_subs = [];
 var popular_subs = [
   {subreddit: 'ListenToThis', link: '/r/ListenToThis'},
-  {subreddit: 'ElectronicMusic', link: '/r/ElectronicMusic'},
-  {subreddit: 'ModernRockMusic', link: '/r/ModernRockMusic'},
+  {subreddit: 'futurebeats', link: '/r/futurebeats'},
   {subreddit: 'chillmusic', link: '/r/chillmusic'},
-  {subreddit: 'woahtunes', link: '/r/woahtunes'}
+  {subreddit: 'MusicForConcentration', link: '/r/MusicForConcentration'},
+  {subreddit: 'videos', link: '/r/videos'}
 ];
+
+var multis = [
+  {subreddit: 'True Music', link: '/user/evilnight/m/truemusic'},
+  {subreddit: 'The Firehose', link: '/user/evilnight/m/thefirehose'},
+  {subreddit: 'Electronic Music', link: '/user/evilnight/m/electronic'},
+  {subreddit: 'Rock', link: '/user/evilnight/m/rock'},
+  {subreddit: 'The Drip', link: '/user/evilnight/m/thedrip'}
+
+]
 
 Meteor.startup(function () {
   // code to run on server at startup
@@ -45,6 +54,10 @@ Meteor.methods({
     return random;
   },
 
+  getMultis: function() {
+    return multis;
+  },
+
   isMusic: function(url) {
     for (var i=0;i<MATCH_URLS.length;i++) {
       if (url.match(MATCH_URLS[i])) {
@@ -70,7 +83,7 @@ Meteor.methods({
     }
   },
 
-  parseSubreddits: function(data) {
+  parseSubreddits: function(data, sid) {
     var posts = [];
     data = JSON.parse(data.content);
 
@@ -118,10 +131,11 @@ Meteor.methods({
       }
     });
 
-return {
-  posts: posts,
-  success: true
-};
+  return {
+    posts: posts,
+    success: true,
+    sid: sid
+  };
 },
 
 
@@ -134,16 +148,16 @@ return {
     return REDDIT + input + '/.json?limit=100';
   },
 
-  fetchSubreddit: function(url) {
+  fetchSubreddit: function(url, sid) {
     var url = Meteor.call('parseInput', url);
     console.log('making request to ' + url);
-    var result = Meteor.http.get(url, {timeout:15000});
+    var result = Meteor.http.get(url, {timeout:10000});
     if (result.statusCode == 200) {
       console.log('fetchSubreddit success');
-      return Meteor.call('parseSubreddits', result);
+      return Meteor.call('parseSubreddits', result, sid);
     } else {
       console.log('error fetching subreddits');
-      return {success: false, message: 'Error fetching subreddits'};
+      return {success: false, message: 'Error fetching subreddits', sid: sid};
       // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
     }
   },

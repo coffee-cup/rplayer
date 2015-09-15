@@ -21,6 +21,12 @@ var loadSubs = function() {
       Session.set('popularSubs', data);
     }
   });
+
+  Meteor.call('getMultis', function(err, data) {
+    if (data) {
+      Session.set('multiList', data);
+    }
+  });
 }
 
 var example_string = 'https://www.reddit.com/r/listentothis';
@@ -46,6 +52,10 @@ Template.catBar.helpers({
 
   randomSubs: function() {
     return Session.get('randomSubs');
+  },
+
+  multiList: function() {
+    return Session.get('multiList');
   }
 });
 
