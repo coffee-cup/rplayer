@@ -2,6 +2,8 @@ var REDDIT = 'https://www.reddit.com'
 
 // new RegExp('^https?://soundcloud.com/')
 
+var slog = new Logger('server')
+
 var MATCH_URLS = [
   new RegExp('^https?://www.youtube.com/'),
   new RegExp('^https?://youtu.be/')
@@ -46,6 +48,7 @@ var multis = [{
 
 Meteor.startup(function() {
   // code to run on server at startup
+  slog.info('starting meteor server');
   var data = JSON.parse(Assets.getText('music_subs.json')).music_subs;
   data.forEach(function(obj) {
     music_subs.push({
@@ -171,17 +174,17 @@ Meteor.methods({
 
   fetchSubreddit: function(url, sid) {
     var url = Meteor.call('parseInput', url);
-    console.log('making request to ' + url + ' for ' + sid);
+    slog.info(sid + ' - making request to ' + url);
 
     try {
       var result = Meteor.http.get(url, {
         timeout: 10000
       });
       if (result.statusCode == 200) {
-        console.log('fetchSubreddit success');
+        slog.info(sid + ' - fetchSubreddit success');
         return Meteor.call('parseSubreddits', result, sid);
       } else {
-        console.log('error fetching subreddits');
+        slog.error('error fetching subreddits');
         return {
           success: false,
           message: 'Error fetching subreddits',
@@ -190,7 +193,7 @@ Meteor.methods({
         // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
       }
     } catch (err) {
-      console.log(err);
+      slog.error(err);
     }
   },
 
