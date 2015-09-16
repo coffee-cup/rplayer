@@ -9,7 +9,7 @@ $mq-breakpoints: (
   );
 $mq-static-breakpoint: desktop;
 // $mq-show-breakpoints: (mobile, tablet, desktop, wide);
-@import 'lib/css/mq';
+@import 'mq';
 
 // variables
 $max-width: 1280px;
@@ -73,6 +73,11 @@ $selection-colour: $darkgrey-colour;
 ::selection {
     color: $selection-colour;
     background: $selection-background;
+}
+
+#iron-router-progress {
+    background-color : $main-colour;
+    box-shadow       : 0 0 5px $main-colour;
 }
 
 * {
