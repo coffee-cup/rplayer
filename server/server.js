@@ -3,33 +3,55 @@ var REDDIT = 'https://www.reddit.com'
 // new RegExp('^https?://soundcloud.com/')
 
 var MATCH_URLS = [
-new RegExp('^https?://www.youtube.com/'),
-new RegExp('^https?://youtu.be/')
+  new RegExp('^https?://www.youtube.com/'),
+  new RegExp('^https?://youtu.be/')
 ]
 
 var music_subs = [];
-var popular_subs = [
-  {subreddit: 'ListenToThis', link: '/r/ListenToThis'},
-  {subreddit: 'futurebeats', link: '/r/futurebeats'},
-  {subreddit: 'chillmusic', link: '/r/chillmusic'},
-  {subreddit: 'MusicForConcentration', link: '/r/MusicForConcentration'},
-  {subreddit: 'videos', link: '/r/videos'}
-];
+var popular_subs = [{
+  subreddit: 'ListenToThis',
+  link: '/r/ListenToThis'
+}, {
+  subreddit: 'futurebeats',
+  link: '/r/futurebeats'
+}, {
+  subreddit: 'chillmusic',
+  link: '/r/chillmusic'
+}, {
+  subreddit: 'MusicForConcentration',
+  link: '/r/MusicForConcentration'
+}, {
+  subreddit: 'videos',
+  link: '/r/videos'
+}];
 
-var multis = [
-  {subreddit: 'True Music', link: '/user/evilnight/m/truemusic'},
-  {subreddit: 'The Firehose', link: '/user/evilnight/m/thefirehose'},
-  {subreddit: 'Electronic Music', link: '/user/evilnight/m/electronic'},
-  {subreddit: 'Rock', link: '/user/evilnight/m/rock'},
-  {subreddit: 'The Drip', link: '/user/evilnight/m/thedrip'}
+var multis = [{
+    subreddit: 'True Music',
+    link: '/user/evilnight/m/truemusic'
+  }, {
+    subreddit: 'The Firehose',
+    link: '/user/evilnight/m/thefirehose'
+  }, {
+    subreddit: 'Electronic Music',
+    link: '/user/evilnight/m/electronic'
+  }, {
+    subreddit: 'Rock',
+    link: '/user/evilnight/m/rock'
+  }, {
+    subreddit: 'The Drip',
+    link: '/user/evilnight/m/thedrip'
+  }
 
 ]
 
-Meteor.startup(function () {
+Meteor.startup(function() {
   // code to run on server at startup
   var data = JSON.parse(Assets.getText('music_subs.json')).music_subs;
   data.forEach(function(obj) {
-    music_subs.push({subreddit: obj, link: '/r/' + obj});
+    music_subs.push({
+      subreddit: obj,
+      link: '/r/' + obj
+    });
   });
 });
 
@@ -42,7 +64,7 @@ Meteor.methods({
     var random = [];
     var success_counted = 0;
     var nums = [];
-    while(success_counted < 5) {
+    while (success_counted < 5) {
       var n = Math.floor(Math.random() * music_subs.length);
       if (nums.indexOf(n) == -1) {
         success_counted += 1;
@@ -59,7 +81,7 @@ Meteor.methods({
   },
 
   isMusic: function(url) {
-    for (var i=0;i<MATCH_URLS.length;i++) {
+    for (var i = 0; i < MATCH_URLS.length; i++) {
       if (url.match(MATCH_URLS[i])) {
         return true;
       }
@@ -76,7 +98,7 @@ Meteor.methods({
     // var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
     var match = url.match(regExp);
-    if (match&&match[7].length==11){
+    if (match && match[7].length == 11) {
       return match[7];
     } else {
       return null;
@@ -103,8 +125,7 @@ Meteor.methods({
       try {
         var images = p.preview.images;
         sound_thumb = images[0].source.url;
-      } catch (err) {
-      }
+      } catch (err) {}
 
       if (videoId) {
         var post = {
@@ -131,12 +152,12 @@ Meteor.methods({
       }
     });
 
-  return {
-    posts: posts,
-    success: true,
-    sid: sid
-  };
-},
+    return {
+      posts: posts,
+      success: true,
+      sid: sid
+    };
+  },
 
 
   // returns url based on given user search input
@@ -151,25 +172,38 @@ Meteor.methods({
   fetchSubreddit: function(url, sid) {
     var url = Meteor.call('parseInput', url);
     console.log('making request to ' + url);
-    var result = Meteor.http.get(url, {timeout:10000});
-    if (result.statusCode == 200) {
-      console.log('fetchSubreddit success');
-      return Meteor.call('parseSubreddits', result, sid);
-    } else {
-      console.log('error fetching subreddits');
-      return {success: false, message: 'Error fetching subreddits', sid: sid};
-      // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
+
+    try {
+      var result = Meteor.http.get(url, {
+        timeout: 10000
+      });
+      if (result.statusCode == 200) {
+        console.log('fetchSubreddit success');
+        return Meteor.call('parseSubreddits', result, sid);
+      } else {
+        console.log('error fetching subreddits');
+        return {
+          success: false,
+          message: 'Error fetching subreddits',
+          sid: sid
+        };
+        // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
+      }
+    } catch (err) {
+      console.log(err);
     }
   },
 
   checkImage: function(post) {
     if (post.isYoutube) {
       try {
-        var result = Meteor.http.get(post.thumbnail, {timeout: 2000});
+        var result = Meteor.http.get(post.thumbnail, {
+          timeout: 2000
+        });
         if (result.statusCode != 200) {
           return [false, post];
         }
-      } catch(err) {
+      } catch (err) {
         return [false, post];
       }
       return [true, post];

@@ -1,4 +1,3 @@
-
 var url = null;
 
 sort = {
@@ -23,9 +22,6 @@ sort = {
 
 Template.sort.onRendered(function() {
   sort.parseUrl();
-
-  // init the sort animations
-  sort_animation();
 });
 
 Template.sort.helpers({
@@ -54,20 +50,64 @@ var redirectSort = function(sort, t) {
 
 var everythingIn = function() {
   // slide options in
-  TweenLite.to('#selection', SELECTION_DURATION, {opacity: 1, ease: EASING});
+  TweenLite.to('#selection', SELECTION_DURATION, {
+    opacity: 1,
+    ease: EASING
+  });
 
-  TweenLite.to('#opt_top', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.1});
-  TweenLite.to('#opt_new', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.05});
-  TweenLite.to('#opt_hot', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0});
+  TweenLite.to('#opt_top', SLIDE_DURATION, {
+    opacity: 0,
+    right: '0',
+    ease: EASING,
+    delay: 0.1
+  });
+  TweenLite.to('#opt_new', SLIDE_DURATION, {
+    opacity: 0,
+    right: '0',
+    ease: EASING,
+    delay: 0.05
+  });
+  TweenLite.to('#opt_hot', SLIDE_DURATION, {
+    opacity: 0,
+    right: '0',
+    ease: EASING,
+    delay: 0
+  });
 
-  TweenLite.to('.can', SELECTION_DURATION, {opacity: 100, ease: EASING});
-  TweenLite.to('.cant', SELECTION_DURATION, {opacity: 100, ease: EASING});
+  TweenLite.to('.can', 0, {
+    opacity: 100,
+    ease: EASING
+  });
+  TweenLite.to('.cant', 0, {
+    opacity: 100,
+    ease: EASING
+  });
 
   if (top_out) {
-    TweenLite.to('#top_day', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.15});
-    TweenLite.to('#top_mon', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.1});
-    TweenLite.to('#top_year', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.05});
-    TweenLite.to('#top_all', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0});
+    TweenLite.to('#top_day', SLIDE_DURATION, {
+      opacity: 0,
+      right: '0',
+      ease: EASING,
+      delay: 0.15
+    });
+    TweenLite.to('#top_mon', SLIDE_DURATION, {
+      opacity: 0,
+      right: '0',
+      ease: EASING,
+      delay: 0.1
+    });
+    TweenLite.to('#top_year', SLIDE_DURATION, {
+      opacity: 0,
+      right: '0',
+      ease: EASING,
+      delay: 0.05
+    });
+    TweenLite.to('#top_all', SLIDE_DURATION, {
+      opacity: 0,
+      right: '0',
+      ease: EASING,
+      delay: 0
+    });
 
     top_out = false;
   }
@@ -89,14 +129,38 @@ Template.sort.events({
     if (!options_out) {
 
       // slide options out
-      TweenLite.to('#selection', SELECTION_DURATION, {opacity: 0.5, ease: EASING});
+      TweenLite.to('#selection', SELECTION_DURATION, {
+        opacity: 0.5,
+        ease: EASING
+      });
 
-      TweenLite.to('#opt_top', SLIDE_DURATION, {opacity: 100, right: '60px', ease: EASING, delay: 0.1});
-      TweenLite.to('#opt_new', SLIDE_DURATION, {opacity: 100, right: '110px', ease: EASING, delay: 0.05});
-      TweenLite.to('#opt_hot', SLIDE_DURATION, {opacity: 100, right: '170px', ease: EASING, delay: 0});
+      TweenLite.to('#opt_top', SLIDE_DURATION, {
+        opacity: 100,
+        right: '60px',
+        ease: EASING,
+        delay: 0.1
+      });
+      TweenLite.to('#opt_new', SLIDE_DURATION, {
+        opacity: 100,
+        right: '110px',
+        ease: EASING,
+        delay: 0.05
+      });
+      TweenLite.to('#opt_hot', SLIDE_DURATION, {
+        opacity: 100,
+        right: '170px',
+        ease: EASING,
+        delay: 0
+      });
 
-      TweenLite.to('.can', SELECTION_DURATION, {opacity: 0, ease: EASING});
-      TweenLite.to('.cant', SELECTION_DURATION, {opacity: 0, ease: EASING});
+      TweenLite.to('.can', 0, {
+        opacity: 0,
+        ease: EASING
+      });
+      TweenLite.to('.cant', 0, {
+        opacity: 0,
+        ease: EASING
+      });
 
       options_out = true;
     } else {
@@ -108,26 +172,94 @@ Template.sort.events({
 
     // animate top options out
     if (!top_out) {
-      TweenLite.to('#opt_top', SLIDE_DURATION, {opacity: 0.5, right: '60px', ease: EASING});
-      TweenLite.to('#opt_new', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.05});
-      TweenLite.to('#opt_hot', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0});
+      TweenLite.to('#opt_top', SLIDE_DURATION, {
+        opacity: 0.5,
+        right: '60px',
+        ease: EASING
+      });
+      TweenLite.to('#opt_new', SLIDE_DURATION, {
+        opacity: 0,
+        right: '0',
+        ease: EASING,
+        delay: 0.05
+      });
+      TweenLite.to('#opt_hot', SLIDE_DURATION, {
+        opacity: 0,
+        right: '0',
+        ease: EASING,
+        delay: 0
+      });
 
-      TweenLite.to('#top_day', SLIDE_DURATION, {opacity: 1, right: '100px', ease: EASING, delay: 0.15});
-      TweenLite.to('#top_mon', SLIDE_DURATION, {opacity: 1, right: '150px', ease: EASING, delay: 0.1});
-      TweenLite.to('#top_year', SLIDE_DURATION, {opacity: 1, right: '210px', ease: EASING, delay: 0.05});
-      TweenLite.to('#top_all', SLIDE_DURATION, {opacity: 1, right: '270px', ease: EASING, delay: 0});
+      TweenLite.to('#top_day', SLIDE_DURATION, {
+        opacity: 1,
+        right: '100px',
+        ease: EASING,
+        delay: 0.15
+      });
+      TweenLite.to('#top_mon', SLIDE_DURATION, {
+        opacity: 1,
+        right: '150px',
+        ease: EASING,
+        delay: 0.1
+      });
+      TweenLite.to('#top_year', SLIDE_DURATION, {
+        opacity: 1,
+        right: '210px',
+        ease: EASING,
+        delay: 0.05
+      });
+      TweenLite.to('#top_all', SLIDE_DURATION, {
+        opacity: 1,
+        right: '270px',
+        ease: EASING,
+        delay: 0
+      });
 
 
       top_out = true;
     } else {
-      TweenLite.to('#opt_top', SLIDE_DURATION, {opacity: 1, right: '60px', ease: EASING});
-      TweenLite.to('#opt_new', SLIDE_DURATION, {opacity: 1, right: '110px', ease: EASING, delay: 0.05});
-      TweenLite.to('#opt_hot', SLIDE_DURATION, {opacity: 1, right: '170px', ease: EASING, delay: 0});
+      TweenLite.to('#opt_top', SLIDE_DURATION, {
+        opacity: 1,
+        right: '60px',
+        ease: EASING
+      });
+      TweenLite.to('#opt_new', SLIDE_DURATION, {
+        opacity: 1,
+        right: '110px',
+        ease: EASING,
+        delay: 0.05
+      });
+      TweenLite.to('#opt_hot', SLIDE_DURATION, {
+        opacity: 1,
+        right: '170px',
+        ease: EASING,
+        delay: 0
+      });
 
-      TweenLite.to('#top_day', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.15});
-      TweenLite.to('#top_mon', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.1});
-      TweenLite.to('#top_year', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0.05});
-      TweenLite.to('#top_all', SLIDE_DURATION, {opacity: 0, right: '0', ease: EASING, delay: 0});
+      TweenLite.to('#top_day', SLIDE_DURATION, {
+        opacity: 0,
+        right: '0',
+        ease: EASING,
+        delay: 0.15
+      });
+      TweenLite.to('#top_mon', SLIDE_DURATION, {
+        opacity: 0,
+        right: '0',
+        ease: EASING,
+        delay: 0.1
+      });
+      TweenLite.to('#top_year', SLIDE_DURATION, {
+        opacity: 0,
+        right: '0',
+        ease: EASING,
+        delay: 0.05
+      });
+      TweenLite.to('#top_all', SLIDE_DURATION, {
+        opacity: 0,
+        right: '0',
+        ease: EASING,
+        delay: 0
+      });
 
       top_out = false;
     }
@@ -150,7 +282,7 @@ Template.sort.events({
   },
 
   'click #top_year': function() {
-  redirectSort('top', 'year');
+    redirectSort('top', 'year');
   },
 
   'click #top_all': function() {
