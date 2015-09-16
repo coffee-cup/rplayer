@@ -175,6 +175,8 @@ html, body {
 }
 
 #name-bar {
+  margin-bottom: 0;
+
   @include mq($until: tablet) {
     padding-left: 1em;
   }
@@ -458,10 +460,13 @@ html, body {
 }
 
 .search-cat {
+  color: white;
+
   p {
     padding-left: 0.4em;
     font-size: 20pt;
     margin-bottom: 0;
+    margin-left: 0;
   }
 }
 

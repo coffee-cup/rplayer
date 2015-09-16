@@ -171,7 +171,7 @@ Meteor.methods({
 
   fetchSubreddit: function(url, sid) {
     var url = Meteor.call('parseInput', url);
-    console.log('making request to ' + url);
+    console.log('making request to ' + url + ' for ' + sid);
 
     try {
       var result = Meteor.http.get(url, {

@@ -11,23 +11,23 @@
 
     <div class="units-row">
 
-    <div id='name-bar' class="units-row">
+      <div id='name-bar' class="units-row">
 
-      <div id='name-icon' class="unit-10 unit-push-10">
-        {{> logo}}
+        <div id='name-icon' class="unit-10 unit-push-10">
+          {{> logo}}
+        </div>
+
+        <div id='name-text' class="{{multied}} unit-80 unit-push-10">
+
+          <span id="title-wrapper">
+            <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
+              boomz
+            </a>
+          </span>
+
+        </div>
+
       </div>
-
-      <div id='name-text' class="{{multied}} unit-80 unit-push-10">
-
-        <span id="title-wrapper">
-          <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
-            boomz
-          </a>
-        </span>
-
-      </div>
-
-    </div>
 
       <div id='desc-bar' class="unit-push-right unit-70">
 
@@ -55,41 +55,51 @@
 
 <template name='catBar'>
 
-  <div id='cats' class="units-row">
-    <div id='popular-cat' class="search-cat unit-50">
-      <p class='cat-title'>Popular</p>
+  <div id='cats'>
+    <div class='units-row'>
+      <div id='popular-cat' class="search-cat unit-50">
+        <p class='cat-title'>Popular</p>
 
-      <ul>
+        <ul>
 
-        {{#each popularSubs}}
-        <li><a href="{{link}}">{{subreddit}}</a></li>
-        {{/each}}
-
-      </ul>
-
-    </div>
-
-    <div id='random-cat' class="search-cat unit-50">
-      <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
-
-      <ul>
-
-        {{#each randomSubs}}
-        <li><a href="{{link}}">{{subreddit}}</a></li>
-        {{/each}}
-
-      </ul>
-
-    </div>
-
-    <div id="multi-list" class="search-cat unit-50">
-      <p class="cat-title">Multis</p>
-
-      <ul>
-        {{#each multiList}}
+          {{#each popularSubs}}
           <li><a href="{{link}}">{{subreddit}}</a></li>
-        {{/each}}
-      </ul>
+          {{/each}}
+
+        </ul>
+
+      </div>
+
+      <div id='random-cat' class="search-cat unit-50">
+        <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
+
+        <ul>
+
+          {{#each randomSubs}}
+          <li><a href="{{link}}">{{subreddit}}</a></li>
+          {{/each}}
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="units-row">
+
+      <div id="multi-list" class="search-cat unit-50">
+        <p class="cat-title">Multis</p>
+
+        <ul>
+          {{#each multiList}}
+          <li><a href="{{link}}">{{subreddit}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div id="about-section" class="search-cat unit-50">
+        <h4>Hello world</h4>
+      </div>
+
     </div>
 
   </div>
