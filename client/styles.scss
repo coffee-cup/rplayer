@@ -77,7 +77,6 @@ $selection-colour: $darkgrey-colour;
 
 #iron-router-progress {
     background-color : $main-colour;
-    box-shadow       : 0 0 5px $main-colour;
 }
 
 * {
@@ -546,8 +545,14 @@ html, body {
 
 #loading {
   padding: 2em;
+  margin-bottom: 0;
+  padding-bottom: 0.2em;
 
   h1 {
     color: $darkgrey-colour;
   }
+}
+
+#loading-story {
+  text-align: center;
 }

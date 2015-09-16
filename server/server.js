@@ -26,23 +26,23 @@ var popular_subs = [{
 }];
 
 var multis = [{
-    subreddit: 'True Music',
-    link: '/user/evilnight/m/truemusic'
-  }, {
-    subreddit: 'The Firehose',
-    link: '/user/evilnight/m/thefirehose'
-  }, {
-    subreddit: 'Electronic Music',
-    link: '/user/evilnight/m/electronic'
-  }, {
-    subreddit: 'Rock',
-    link: '/user/evilnight/m/rock'
-  }, {
-    subreddit: 'The Drip',
-    link: '/user/evilnight/m/thedrip'
-  }
+  subreddit: 'True Music',
+  link: '/user/evilnight/m/truemusic'
+}, {
+  subreddit: 'The Firehose',
+  link: '/user/evilnight/m/thefirehose'
+}, {
+  subreddit: 'Electronic Music',
+  link: '/user/evilnight/m/electronic'
+}, {
+  subreddit: 'Rock',
+  link: '/user/evilnight/m/rock'
+}, {
+  subreddit: 'The Drip',
+  link: '/user/evilnight/m/thedrip'
+}];
 
-]
+var messages = [];
 
 Meteor.startup(function() {
   // code to run on server at startup
@@ -54,9 +54,19 @@ Meteor.startup(function() {
       link: '/r/' + obj
     });
   });
+
+  var message_data = JSON.parse(Assets.getText('messages.json')).messages;
+  messages = message_data;
 });
 
 Meteor.methods({
+  getListOfMessages: function() {
+    return {
+      success: true,
+      messages: messages
+    };
+  },
+
   getPopularSubs: function() {
     return popular_subs;
   },
@@ -160,7 +170,6 @@ Meteor.methods({
     };
   },
 
-
   // returns url based on given user search input
   parseInput: function(input) {
     var query_pos = input.indexOf('?');
@@ -178,7 +187,7 @@ Meteor.methods({
       var result = Meteor.http.get(url, {
         timeout: 100000
       });
-      console.log(result);
+      // console.log(result);
       if (result.statusCode == 200) {
         Winston.info(sid + ' - fetchSubreddit success');
         return Meteor.call('parseSubreddits', result, sid);
