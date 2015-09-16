@@ -31,7 +31,6 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
-jag:pince@0.0.9
 jeremy:snapsvg@0.4.1_2
 jquery@1.11.3_2
 json@1.0.3
@@ -48,7 +47,6 @@ meteorhacks:picker@1.0.3
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
-momentjs:moment@2.10.6
 mongo@1.1.0
 multiply:iron-router-progress@1.0.1
 observe-sequence@1.0.6
@@ -70,4 +68,5 @@ underscore@1.0.3
 url@1.0.4
 webapp@1.2.0
 webapp-hashing@1.0.3
+winston@0.0.0
 yogiben:spinkit@0.0.1

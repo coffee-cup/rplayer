@@ -1,1 +1,0 @@
-log = new Logger('client');
