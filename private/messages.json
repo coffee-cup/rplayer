@@ -1,18 +1,23 @@
 {
   "messages": [{
-    "msg": "Sometimes this takes some time :/",
+    "title": "",
+    "msg": "",
+    "dur": 1
+  }, {
+    "title": "I apologize,",
+    "msg": "",
+    "dur": 2
+  }, {
+    "title": "but sometimes this can <br> take sometime.",
+    "msg": "",
     "dur": 3
   }, {
-    "msg": "While you wait...",
-    "dur": 3
+    "title": "While you wait, here is",
+    "msg": "",
+    "dur": 2
   }, {
-    "msg": "Yo\nYO\nYO<br>adfasdfsaf<br>",
-    "dur": 1
-  }, {
-    "msg": "I am sorry this is taking so long",
-    "dur": 1
-  }, {
-    "msg": "I am sorry this is taking so long",
-    "dur": 1
+    "title": "here is ",
+    "msg": "",
+    "dur": 2
   }]
 }
