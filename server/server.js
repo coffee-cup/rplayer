@@ -44,6 +44,8 @@ var multis = [{
 
 var messages = [];
 
+var gifs = [];
+
 Meteor.startup(function() {
   // code to run on server at startup
   Winston.info('starting meteor server');
@@ -55,11 +57,33 @@ Meteor.startup(function() {
     });
   });
 
+  // cron job to get gifs for loading screen
+  SyncedCron.add({
+    name: 'get gifs',
+    schedule: function(parser) {
+      return parser.recur().every(1).hour();
+    },
+    job: function() {
+      gifs = Meteor.call('getGifs');
+    }
+  });
+  SyncedCron.start();
+  gifs = Meteor.call('getGifs');
+
   var message_data = JSON.parse(Assets.getText('messages.json')).messages;
   messages = message_data;
 });
 
 Meteor.methods({
+  getGifs: function() {
+    var url = 'https://www.reddit.com/r/gifs.json?count=100'
+    Winston.info('making gif request to ' + url);
+    var result = Meteor.http.get(url, {
+      timeout: 100000
+    });
+    console.log(result);
+  },
+
   getListOfMessages: function() {
     return {
       success: true,
@@ -197,7 +221,7 @@ Meteor.methods({
     if (query_pos != -1) {
       return REDDIT + input.substring(0, query_pos) + '.json' + input.substring(query_pos, input.length);
     }
-    return REDDIT + input + '/.json?limit=100';
+    return REDDIT + input + '/.json?count=100';
   },
 
   fetchSubreddit: function(url, sid) {
