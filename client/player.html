@@ -73,13 +73,13 @@
     <div class="video-col unit-centered unit-100">
 
       {{#if isYoutube}}
-      <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
+        <img id='thumbnail-{{name}}' class='thumbnail' src="{{thumbnail}}"/>
       {{else}}
-      {{#if sound_thumb}}
-      <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
-      {{else}}
-      <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
-      {{/if}}
+        {{#if sound_thumb}}
+        <img id='thumbnail-{{name}}' class='thumbnail' src="{{sound_thumb}}"/>
+        {{else}}
+        <img id='thumbnail-{{name}}' class='thumbnail' src="/images/boomz_soundcloud.png"/>
+        {{/if}}
       {{/if}}
 
       <!-- Holder for the youtube video -->
@@ -105,7 +105,7 @@
           </li>
           <li id="post-user">
             <a href="{{comment_link}}" target='_blank'>
-              {{num_comments}} comments
+              {{comment_string}}
             </a>
           </li>
           <li id="post-user">
