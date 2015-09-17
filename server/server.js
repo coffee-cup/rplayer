@@ -118,56 +118,77 @@ Meteor.methods({
 
   parseSubreddits: function(data, sid) {
     var posts = [];
-    data = JSON.parse(data.content);
 
-    data.data.children.forEach(function(obj, i) {
-      var p = obj.data;
+    // console.log(data.data);
 
-      var youtubeId = Meteor.call('getYoutubeId', p.url);
-      // var youtubeId = null;
-      var soundcloudId = Meteor.call('getSoundcloudId', p.url);
-      // var soundcloudId = null;
+    try {
+      data = JSON.parse(data.content);
 
-      var videoId = youtubeId;
-      if (!youtubeId) videoId = soundcloudId;
+      data.data.children.forEach(function(obj, i) {
+        var p = obj.data;
 
-      var sound_thumb = null;
+        var youtubeId = Meteor.call('getYoutubeId', p.url);
 
-      try {
-        var images = p.preview.images;
-        sound_thumb = images[0].source.url;
-      } catch (err) {}
+        // var youtubeId = null;
+        var soundcloudId = Meteor.call('getSoundcloudId', p.url);
+        // var soundcloudId = null;
 
-      if (videoId) {
-        var post = {
-          author: p.author,
-          score: p.score,
-          title: p.title,
-          ups: p.ups,
-          url: p.url,
-          post_subreddit: p.subreddit,
-          post_sub_link: Meteor.absoluteUrl() + 'r/' + p.subreddit,
-          num_comments: p.num_comments,
-          name: p.name,
-          videoId: videoId,
-          isYoutube: (youtubeId != null),
-          sound_thumb: sound_thumb,
-          user_name: 'u/' + p.author,
-          user_link: 'https://reddit.com/u/' + p.author,
-          comment_link: 'https://reddit.com' + p.permalink,
-          thumbnail: 'https://i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg',
-          thumb_small: 'https://i.ytimg.com/vi/' + youtubeId + '/sddefault.jpg',
-          alt_image: 'https://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
+        var videoId = youtubeId;
+        if (!youtubeId) videoId = soundcloudId;
+
+        if (!youtubeId && !soundcloudId) {
+          return true;
         }
-        posts.push(post);
-      }
-    });
+        var sound_thumb = null;
 
-    return {
-      posts: posts,
-      success: true,
-      sid: sid
-    };
+        try {
+          var images = p.preview.images;
+          sound_thumb = images[0].source.url;
+        } catch (err) {}
+
+        var comment_string = p.num_comments + '';
+        if (p.num_comments === 1) {
+          comment_string += ' comment';
+        } else {
+          comment_string += ' comments';
+        }
+        if (videoId) {
+
+          var post = {
+            author: p.author,
+            score: p.score,
+            title: p.title,
+            ups: p.ups,
+            url: p.url,
+            post_subreddit: p.subreddit,
+            post_sub_link: Meteor.absoluteUrl() + 'r/' + p.subreddit,
+            num_comments: p.num_comments,
+            comment_string: comment_string,
+            name: p.name,
+            videoId: videoId,
+            isYoutube: (youtubeId != null),
+            sound_thumb: sound_thumb,
+            user_name: 'u/' + p.author,
+            user_link: 'https://reddit.com/u/' + p.author,
+            comment_link: 'https://reddit.com' + p.permalink,
+            thumbnail: 'https://i.ytimg.com/vi/' + youtubeId + '/maxresdefault.jpg',
+            thumb_small: 'https://i.ytimg.com/vi/' + youtubeId + '/sddefault.jpg',
+            alt_image: 'https://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'
+          }
+          posts.push(post);
+        }
+      });
+
+      return {
+        posts: posts,
+        success: true,
+        sid: sid
+      };
+    } catch (err) {
+      Winston.error(err);
+    }
+
+
   },
 
   // returns url based on given user search input
@@ -189,7 +210,6 @@ Meteor.methods({
       });
       // console.log(result);
       if (result.statusCode == 200) {
-        Winston.info(sid + ' - fetchSubreddit success');
         return Meteor.call('parseSubreddits', result, sid);
       } else {
         Winston.error('error fetching subreddits');
