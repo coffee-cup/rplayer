@@ -76,12 +76,21 @@ Meteor.startup(function() {
 
 Meteor.methods({
   getGifs: function() {
-    var url = 'https://www.reddit.com/r/gifs.json?count=100'
+    var url = 'https://www.reddit.com/r/gifs.json?limit=100'
     Winston.info('making gif request to ' + url);
     var result = Meteor.http.get(url, {
       timeout: 100000
     });
-    console.log(result);
+
+    var gifs = [];
+    try {
+      result.data.data.children.forEach(function(obj) {
+        var p = obj.data;
+      });
+    } catch (err) {
+      Winston.error(err);
+      Winston.error(result);
+    }
   },
 
   getListOfMessages: function() {

@@ -442,6 +442,7 @@ html, body {
 }
 
 #desc-bar {
+  margin-top: 2em;
   background-color: $main-colour;
   padding: 3em 6em;
   color: white;
@@ -558,11 +559,33 @@ html, body {
   margin-bottom: 0;
   padding-bottom: 0.5em;
 
-  h1 {
+  h2 {
     color: $darkgrey-colour;
   }
 }
 
 #loading-story {
   text-align: center;
+  margin-top: 2em;
+  cursor: pointer;
+
+  #gif-holder {
+    position: relative;
+
+    #gif {
+      position: absolute;
+      z-index: 1;
+    }
+
+    #text {
+      position: absolute;
+      color: white;
+      font-weight: 800;
+      line-height: 1.1em;
+      top: 60px;
+      width: 100%;
+      z-index: 2;
+      font-size: 7rem;
+    }
+  }
 }

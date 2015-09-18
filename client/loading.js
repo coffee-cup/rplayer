@@ -85,7 +85,7 @@ var switchStory = function() {
     }, {
       autoAlpha: 1,
       ease: Power2.easeInOut
-    }, 0.1);
+    }, 0.07);
     current_message += 1;
     setTimeout(function() {
       switchStory();

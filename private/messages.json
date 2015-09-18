@@ -2,22 +2,14 @@
   "messages": [{
     "title": "",
     "msg": "",
-    "dur": 1
-  }, {
-    "title": "I apologize,",
-    "msg": "",
     "dur": 2
+  }, {
+    "title": "I apologize <br> but sometimes this takes a second.",
+    "msg": "",
+    "dur": 5
   }, {
     "title": "but sometimes this can <br> take sometime.",
     "msg": "",
     "dur": 3
-  }, {
-    "title": "While you wait, here is",
-    "msg": "",
-    "dur": 2
-  }, {
-    "title": "here is ",
-    "msg": "",
-    "dur": 2
   }]
 }
