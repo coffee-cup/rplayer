@@ -31,9 +31,9 @@ $selection-colour: $darkgrey-colour;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
 }
 
 @mixin rotateall($value) {
@@ -66,17 +66,18 @@ $selection-colour: $darkgrey-colour;
 
 /* selection colour */
 ::-moz-selection { /* Code for Firefox */
-    color: $selection-colour;
-    background: $selection-background;
+  color: $selection-colour;
+  background: $selection-background;
 }
 
 ::selection {
-    color: $selection-colour;
-    background: $selection-background;
+  color: $selection-colour;
+  background: $selection-background;
 }
 
 #iron-router-progress {
-    background-color : $main-colour;
+  background-color : $main-colour;
+  box-shadow       : 0 0 5px $main-colour;
 }
 
 * {
@@ -170,17 +171,17 @@ html, body {
 /*  img:hover {
     transform: rotate(90deg);
     transition: all 150.00ms linear;
-  } */
-}
-
-#name-bar {
-  margin-bottom: 0;
-
-  @include mq($until: tablet) {
-    padding-left: 1em;
+    } */
   }
 
-  @include mq($from: tablet) {
+  #name-bar {
+    margin-bottom: 0;
+
+    @include mq($until: tablet) {
+      padding-left: 1em;
+    }
+
+    @include mq($from: tablet) {
     // padding-left: 1em;
     // position: fixed;
     // top: 6%;
@@ -280,6 +281,10 @@ html, body {
 }
 
 #player-controls {
+  div {
+    bottom: 4px;
+  }
+
   background-color: $main-colour;
   height: $footer-height;
   position: fixed;
@@ -292,6 +297,8 @@ html, body {
   img {
     height: $footer-height;
     padding: 20px 1em;
+    z-index: 1000;
+    position:relative
   }
 
   #play-button {
@@ -318,48 +325,51 @@ html, body {
     -ms-user-select: none;
     user-select: none;
   }
+}
 
-  #sort {
-    position: fixed;
-    bottom: 0;
-    right: 12px;
-    color: white;
-    font-size: 18pt;
-    font-weight: 300;
-    width: 600px;
-    height: 60px;
+#sort {
+  bottom: 0;
+  right: 12px;
+  color: white;
+  font-size: 18pt;
+  font-weight: 300;
+  width: 600px;
+  height: 60px;
 
-    p {
-      margin-bottom: 0;
-    }
+  p {
+    margin-bottom: 0;
+  }
 
-    div {
-      cursor: pointer;
-      position: absolute;
-      bottom: 12px;
-      right: 0;
-    }
+  div {
+    cursor: pointer;
+    position: absolute;
+    bottom: 16px;
+    right: 0;
+  }
 
-    .opt {
-      opacity: 0;
-      bottom: 12px;
-    }
+  .opt {
+    opacity: 0;
+    bottom: 20px;
+    right: 20px;
+  }
 
-    .top {
-      bottom: 12px;
-      opacity: 0;
-    }
+  .top {
+    bottom: 20px;
+    opacity: 0;
+    right: 20px;
+  }
 
-    #selection {
-      width: 55px;
-      z-index: 1000;
-      font-size: 22pt;
-    }
+  #selection {
+    width: 55px;
+    z-index: 1000;
+    font-size: 22pt;
+    bottom: 18px;
+    right: 20px;
+  }
 
-    #t-sort {
-      font-size: 12pt;
-      margin-left: -3px;
-    }
+  #t-sort {
+    font-size: 12pt;
+    margin-left: -3px;
   }
 }
 
@@ -546,7 +556,7 @@ html, body {
 #loading {
   padding: 2em;
   margin-bottom: 0;
-  padding-bottom: 0.2em;
+  padding-bottom: 0.5em;
 
   h1 {
     color: $darkgrey-colour;

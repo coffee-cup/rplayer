@@ -1,42 +1,44 @@
 <template name='controls'>
-  <div id="player-controls">
+
+  <div id="player-controls" class='noselect'>
     {{#if canPrev}}
-      <img id='prev-button' class='can pointer' src="/icons/prev.svg">
+    <img id='prev-button' class='can pointer' src="/icons/prev.svg">
     {{else}}
-      <img class='cant' src="/icons/prev_cant.svg">
+    <img class='cant' src="/icons/prev_cant.svg">
     {{/if}}
 
     {{#if playing}}
-      {{#if canPause}}
-        <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
-      {{else}}
-        <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
-      {{/if}}
+    {{#if canPause}}
+    <img id='pause-button' class='can pointer' src="/icons/pause2.svg">
+    {{else}}
+    <img id='pause-button-cant' class='cant' src="/icons/pause_cant.svg">
+    {{/if}}
     {{else}}
 
-      {{#if canPlay}}
-        <img id='play-button' class='can pointer' src="/icons/play.svg">
-      {{else}}
-        <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
-      {{/if}}
+    {{#if canPlay}}
+    <img id='play-button' class='can pointer' src="/icons/play.svg">
+    {{else}}
+    <img id='play-button-cant' class='cant' src="/icons/play_cant.svg">
+    {{/if}}
     {{/if}}
 
 
     {{#if canNext}}
-      <img id='next-button' class='can pointer' src="/icons/next.svg">
+    <img id='next-button' class='can pointer' src="/icons/next.svg">
     {{else}}
-      <img class='cant' src="/icons/next_cant.svg">
+    <img class='cant' src="/icons/next_cant.svg">
     {{/if}}
 
     {{#if canEye}}
-      <img id='eye-button' src="/icons/eye.svg">
+    <img id='eye-button' src="/icons/eye.svg">
     {{else}}
-      <img id='eye-button-cant' class='cant pointer' src="/icons/eye_cant.svg">
+    <img id='eye-button-cant' class='cant pointer' src="/icons/eye_cant.svg">
     {{/if}}
+    <!-- </div> -->
 
     {{#unless isMobile}}
-        {{> sort}}
+    {{> sort}}
     {{/unless}}
-    <!-- </div> -->
   </div>
+
 </template>
