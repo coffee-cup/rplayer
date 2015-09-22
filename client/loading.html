@@ -1,8 +1,8 @@
 <template name='load'>
 
-  <div id="loading" class="units-row noselect">
+  <div id="loading" class="noselect">
 
-    <div class="unit-60">
+    <div>
 
      <div id='loading-animation' class="sk-spinner sk-spinner-wave">
        <div class="sk-rect1"></div>
@@ -16,22 +16,34 @@
  </div>
 
  <div id="loading-story" class="units-row">
-  <div class="unit-60">
+  <div class="unit-centered unit-80">
 
     <div id="gif-holder">
 
       <div id="gif">
-        <img src="/loading_cat.gif" alt="loading cat">
+
+        {{#if gifsLoaded}}
+          {{> gifStack}}
+        {{/if}}
+
+        {{#unless isGif}}
+        <img id='cat-loading' src="/LoadingGifs.gif" alt="loading cat">
+        {{/unless}}
       </div>
 
-      <div id="text">
-        Loading
+      {{#if gifsLoaded}}
+      <div id="next-gif">
+        <img src="/icons/right-arrow.svg" alt="right arrow">
       </div>
+      {{/if}}
 
     </div>
-
-    <p>{{{message}}}</p>
   </div>
- </div>
+</div>
 
+</template>
+
+<template name='gifStack'>
+  <div id="yesGif">
+  </div>
 </template>

@@ -89,6 +89,12 @@ html, body {
   font-family: 'Josefin Sans', sans-serif;
 }
 
+.hidden {
+  display: none;
+  // height: 0 !important;
+  // opacity: 0 !important;
+}
+
 #wrapper {
   margin-top: 4em;
   padding-bottom: 1em;
@@ -564,21 +570,37 @@ html, body {
   }
 }
 
+#cat-loading {
+  margin-bottom: 3em;
+}
+
 #loading-story {
   text-align: center;
   margin-top: 2em;
-  cursor: pointer;
 
   #gif-holder {
-    position: relative;
 
     #gif {
-      position: absolute;
+      margin-bottom: 3em;;
       z-index: 1;
+      height: 350px;
+      cursor: pointer;
+
+      img {
+        max-height: 350px;
+      }
+    }
+
+    #next-gif {
+      margin-bottom: 3em;
+
+      img {
+        width: 4em;
+        cursor: pointer;
+      }
     }
 
     #text {
-      position: absolute;
       color: white;
       font-weight: 800;
       line-height: 1.1em;
@@ -587,5 +609,9 @@ html, body {
       z-index: 2;
       font-size: 7rem;
     }
+  }
+
+  .active-gif {
+    display: block;
   }
 }
