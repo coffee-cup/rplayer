@@ -156,6 +156,7 @@ var createGifElement = function(gif) {
   var a = document.createElement('a');
   a.setAttribute('target', '_blank');
   a.setAttribute('id', 'a-' + gif.name);
+  a.setAttribute('href', gif.url);
   a.classList.add('hidden');
 
   var im = document.createElement('img');
