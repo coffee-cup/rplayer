@@ -108,6 +108,12 @@ current_gif = null;
 // number of images to load in at a time
 PRELOAD_COUNT = 3;
 
+// returns a shuffled array
+function shuffle(o) {
+  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  return o;
+}
+
 Template.load.rendered = function() {
   // getListOfMessages();
   Session.set('isGif', false);
@@ -119,11 +125,10 @@ Template.load.rendered = function() {
   if (result && result.length >= 1) {
     var data = result[0];
     if (data && data.gifs) {
-      gifs = data.gifs;
+      gifs = shuffle(data.gifs);
       Session.set('gifsLoaded', true)
     }
   }
-
   // Meteor.call('returnGifs', function(err, data) {
   //   if (!err && data) {
   //     gifs = data;
@@ -169,7 +174,7 @@ var createGifElement = function(gif) {
   return a;
 }
 
-var nextGif = function() {
+nextGif = function() {
   if (!gifs || gifs.length == 0) {
     return;
   }
