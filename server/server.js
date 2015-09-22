@@ -44,8 +44,6 @@ var multis = [{
 
 var messages = [];
 
-var gifs = [];
-
 Meteor.startup(function() {
   // code to run on server at startup
   Winston.info('starting meteor server');
@@ -64,33 +62,33 @@ Meteor.startup(function() {
       return parser.recur().every(1).hour();
     },
     job: function() {
-      gifs = Meteor.call('getGifs');
+      gifs = [];
+      Meteor.call('getGifs');
     }
   });
+  checkGifDB();
   SyncedCron.start();
-  gifs = Meteor.call('getGifs');
+  Meteor.call('getGifs');
 
   var message_data = JSON.parse(Assets.getText('messages.json')).messages;
   messages = message_data;
 });
 
+// returns a shuffled array
+function shuffle(o) {
+  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  return o;
+}
+
 Meteor.methods({
   getGifs: function() {
-    var url = 'https://www.reddit.com/r/gifs.json?limit=100'
-    Winston.info('making gif request to ' + url);
-    var result = Meteor.http.get(url, {
-      timeout: 100000
-    });
+    // run the gif gettings async
+    getGifSet(0, 0, null);
+  },
 
-    var gifs = [];
-    try {
-      result.data.data.children.forEach(function(obj) {
-        var p = obj.data;
-      });
-    } catch (err) {
-      Winston.error(err);
-      Winston.error(result);
-    }
+  returnGifs: function() {
+    Winston.info('sending back ' + gifs.length + ' gifs');
+    return shuffle(gifs);
   },
 
   getListOfMessages: function() {
@@ -151,8 +149,6 @@ Meteor.methods({
 
   parseSubreddits: function(data, sid) {
     var posts = [];
-
-    // console.log(data.data);
 
     try {
       data = JSON.parse(data.content);
@@ -241,7 +237,7 @@ Meteor.methods({
       var result = Meteor.http.get(url, {
         timeout: 100000
       });
-      // console.log(result);
+
       if (result.statusCode == 200) {
         return Meteor.call('parseSubreddits', result, sid);
       } else {
