@@ -558,6 +558,17 @@ html, body {
   color: $darkgrey-colour;
 }
 
+#about-section {
+  span.about-change {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.9rem;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
 #searchError {
   font-size: 0.8em;
   color: black;
@@ -617,5 +628,27 @@ html, body {
 
   .active-gif {
     display: block;
+  }
+}
+
+#about-page {
+  margin-top: 5em;
+  text-align: center;
+  color: $darkgrey-colour;
+
+  #logo-link-svg {
+    width: 12em;
+    height: 12em;
+    margin-bottom: -1em;
+  }
+
+  h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    color: $darkgrey-colour;
+    font-size: 4rem;
+  }
+
+  img {
+    width: 12em;
   }
 }

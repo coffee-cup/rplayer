@@ -6,10 +6,6 @@ var pause_next = false;
 
 
 Template.logo.onRendered(function() {
-  var songs = $('.song');
-  TweenLite.to(songs, 2, {
-    width: "10px"
-  });
   tl = new TimelineMax({
     paused: true,
     repeat: -1
