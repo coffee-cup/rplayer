@@ -152,6 +152,10 @@ Template.gifStack.rendered = function() {
   Session.set('isGif', false);
 }
 
+// create a HTML element from gif object
+// cannot use jquery here for some reason
+// just wasnt working
+// so I did this
 var createGifElement = function(gif) {
   var a = document.createElement('a');
   a.setAttribute('target', '_blank');
