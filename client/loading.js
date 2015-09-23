@@ -102,11 +102,15 @@ loaded_gifs = [];
 // global index
 play_index = -1;
 
+// flag if the user requested the gif but it wasn't loaded yet
+// so load when we can
+need_next = false;
+
 // current jquery gif playing
 current_gif = null;
 
 // number of images to load in at a time
-PRELOAD_COUNT = 3;
+PRELOAD_COUNT = 2;
 
 Template.load.rendered = function() {
   // getListOfMessages();
@@ -150,6 +154,11 @@ Template.gifStack.rendered = function() {
     loaded_gifs.push(gifs[i]);
   }
   Session.set('isGif', false);
+
+  if (need_next) {
+    need_next = false;
+    nextGif();
+  }
 }
 
 // create a HTML element from gif object
@@ -176,6 +185,7 @@ var createGifElement = function(gif) {
 
 nextGif = function() {
   if (!gifs || gifs.length == 0) {
+    need_next = true;
     return;
   }
 
@@ -203,13 +213,18 @@ nextGif = function() {
 
   if (play_index - 1 >= 0) {
     var og = gifs[play_index - 1];
-    var oge = $('#a-' + og.name);
-    oge.addClass('hidden');
-    oge.remove();
+    var oge = document.getElementById('a-' + og.name);
+    if (oge.parentNode) {
+      oge.parentNode.removeChild(oge);
+    }
+    oge.classList.add('hidden');
   }
 
   var ge = $('#a-' + g.name);
-  ge.removeClass('hidden');
+  var ge = document.getElementById('a-' + g.name);
+  if (ge.classList.contains('hidden')) {
+    ge.classList.remove('hidden')
+  }
   Session.set('gif', g);
   Session.set('isGif', true);
 }
