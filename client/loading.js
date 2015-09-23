@@ -119,7 +119,7 @@ Template.load.rendered = function() {
   if (result && result.length >= 1) {
     var data = result[0];
     if (data && data.gifs) {
-      gifs = data.gifs;
+      gifs = _.shuffle(data.gifs);
       Session.set('gifsLoaded', true)
     }
   }
