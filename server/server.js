@@ -1,59 +1,8 @@
 var REDDIT = 'https://www.reddit.com'
 
-// new RegExp('^https?://soundcloud.com/')
-
-var MATCH_URLS = [
-  new RegExp('^https?://www.youtube.com/'),
-  new RegExp('^https?://youtu.be/')
-]
-
-var music_subs = [];
-var popular_subs = [{
-  subreddit: 'ListenToThis',
-  link: '/r/ListenToThis'
-}, {
-  subreddit: 'futurebeats',
-  link: '/r/futurebeats'
-}, {
-  subreddit: 'chillmusic',
-  link: '/r/chillmusic'
-}, {
-  subreddit: 'MusicForConcentration',
-  link: '/r/MusicForConcentration'
-}, {
-  subreddit: 'videos',
-  link: '/r/videos'
-}];
-
-var multis = [{
-  subreddit: 'True Music',
-  link: '/user/evilnight/m/truemusic'
-}, {
-  subreddit: 'The Firehose',
-  link: '/user/evilnight/m/thefirehose'
-}, {
-  subreddit: 'Electronic Music',
-  link: '/user/evilnight/m/electronic'
-}, {
-  subreddit: 'Rock',
-  link: '/user/evilnight/m/rock'
-}, {
-  subreddit: 'The Drip',
-  link: '/user/evilnight/m/thedrip'
-}];
-
-var messages = [];
-
 Meteor.startup(function() {
   // code to run on server at startup
   Winston.info('starting meteor server');
-  var data = JSON.parse(Assets.getText('music_subs.json')).music_subs;
-  data.forEach(function(obj) {
-    music_subs.push({
-      subreddit: obj,
-      link: '/r/' + obj
-    });
-  });
 
   // cron job to get gifs for loading screen
   SyncedCron.add({
@@ -69,16 +18,7 @@ Meteor.startup(function() {
   checkGifDB();
   SyncedCron.start();
   Meteor.call('getGifs');
-
-  var message_data = JSON.parse(Assets.getText('messages.json')).messages;
-  messages = message_data;
 });
-
-// returns a shuffled array
-function shuffle(o) {
-  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-  return o;
-}
 
 Meteor.methods({
   getGifs: function() {
@@ -96,30 +36,6 @@ Meteor.methods({
       success: true,
       messages: messages
     };
-  },
-
-  getPopularSubs: function() {
-    return popular_subs;
-  },
-
-  getRandomSubs: function() {
-    var random = [];
-    var success_counted = 0;
-    var nums = [];
-    while (success_counted < 5) {
-      var n = Math.floor(Math.random() * music_subs.length);
-      if (nums.indexOf(n) == -1) {
-        success_counted += 1;
-        nums.push(n);
-        random.push(music_subs[n]);
-      }
-    }
-
-    return random;
-  },
-
-  getMultis: function() {
-    return multis;
   },
 
   isMusic: function(url) {
