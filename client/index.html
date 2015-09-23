@@ -56,50 +56,47 @@
 <template name='catBar'>
 
   <div id='cats'>
-    <div class='units-row'>
-      <div id='popular-cat' class="search-cat unit-50">
+    <div class='blocks-2 blocks-mobile-50'>
+      <li id='popular-cat' class="search-cat">
         <p class='cat-title'>Popular</p>
 
         <ul>
 
           {{#each popularSubs}}
-          <li><a href="{{link}}">{{subreddit}}</a></li>
+            <li><a href="{{link}}">{{subreddit}}</a></li>
           {{/each}}
 
         </ul>
 
-      </div>
+      </li>
 
-      <div id='random-cat' class="search-cat unit-50">
+      <li id='random-cat' class="search-cat">
         <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
 
         <ul>
 
           {{#each randomSubs}}
-          <li><a href="{{link}}">{{subreddit}}</a></li>
+            <li><a href="{{link}}">{{subreddit}}</a></li>
           {{/each}}
 
         </ul>
 
-      </div>
+      </li>
     </div>
 
-    <div class="units-row">
+    <div class="blocks-2 blocks-mobile-50">
 
-      <div id="multi-list" class="search-cat unit-50">
+      <li id='multilist' class='search-cat'>
         <p class="cat-title">Multis</p>
-
         <ul>
           {{#each multiList}}
           <li><a href="{{link}}">{{subreddit}}</a></li>
           {{/each}}
         </ul>
-      </div>
+      </li>
 
-      <div id="about-section" class="search-cat unit-50">
-        <!-- <h4>Hello world</h4> -->
-      </div>
-
+    <li id="about-section" class='search-cat'></li>
+      Hello
     </div>
 
   </div>
