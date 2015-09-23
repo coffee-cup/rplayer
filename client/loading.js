@@ -174,7 +174,7 @@ var createGifElement = function(gif) {
   return a;
 }
 
-var nextGif = function() {
+nextGif = function() {
   if (!gifs || gifs.length == 0) {
     return;
   }
