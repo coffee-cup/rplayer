@@ -114,6 +114,12 @@ PRELOAD_COUNT = 2;
 
 Template.load.rendered = function() {
   // getListOfMessages();
+
+  // if there is gifs already loaded, do not change
+  if (gifs != null && gifs != undefined && gifs.length > 1) {
+    return;
+  }
+
   Session.set('isGif', false);
   Session.set('gifsLoaded', false);
   Session.set('loaded_gifs', []);
