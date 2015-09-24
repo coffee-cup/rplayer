@@ -184,7 +184,7 @@ html, body {
     margin-bottom: 0;
 
     @include mq($until: tablet) {
-      padding-left: 2em;
+      padding-left: 1em;
     }
 
     @include mq($from: tablet) {
@@ -559,9 +559,12 @@ html, body {
 }
 
 #about-section {
+  span.control-s {
+  }
+
   span.about-change {
     font-family: "Courier New", Courier, monospace;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   a {
@@ -632,7 +635,7 @@ html, body {
 }
 
 #about-page {
-  margin-top: 5em;
+  margin-top: 2em;
   text-align: center;
   color: $darkgrey-colour;
 
@@ -646,9 +649,64 @@ html, body {
     font-family: 'Josefin Sans', sans-serif;
     color: $darkgrey-colour;
     font-size: 4rem;
+    margin-bottom: 0;
   }
 
   img {
     width: 12em;
+  }
+
+  a {
+    color: $darkgrey-colour;
+  }
+
+  a:hover {
+    color: $main-colour;
+  }
+
+  #about-foot {
+    font-size: 12pt;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  #about-write {
+    font-family: 'Playfair Display', serif;
+
+    #write-tight {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 1.65em;
+      border-top: solid 1px $main-colour;
+      border-bottom: solid 1px $main-colour;
+    }
+
+    p {
+      margin-left: auto;
+      margin-right: auto;
+
+      span.change-url {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 1.1em;
+      }
+    }
+
+    .control-s {
+      padding-right: 1.2em;
+    }
+  }
+
+  #about-header {
+    .unit-centered {
+      div {
+        @include mq($until: tablet) {
+          margin-left: 3em !important;
+          margin-right: 3em !important;
+        }
+      }
+    }
   }
 }

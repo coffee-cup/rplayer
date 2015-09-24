@@ -1,30 +1,50 @@
 <template name="about">
 
-<div id='about-page'></div>
+  <div id='about-page'>
 
-  <div id='about-header' class="units-row">
-    <div class="unit-50 unit-centered">
-      {{> logo}}
+    <div id='about-header' class="units-row">
+      <div class="unit-50 unit-centered">
+        <div>
+          {{> logo}}
 
-      <h1>boomz</h1>
+          <h1>boomz</h1>
+        </div>
+      </div>
     </div>
-  </div>
-  
-  <div id='about-write' class='units-row'>
-    <div class='unit-50 unit-centered'>
-      <p>
-        Boomz is a very simple and minimal media player for <a href="https://www.reddit.com/">Reddit</a>.
-      </p>
+
+    <div id='about-write' class='units-row'>
+      <div class='unit-50 unit-centered'>
+      <div id='write-tight'>
+          <p>
+            Boomz is a very simple and minimal media player for <a href="https://www.reddit.com/">Reddit</a>.
+          </p>
+          <p>
+            Everyday thousands of people link awesome and interesting songs to <a href="https://www.reddit.com/r/Music/wiki/musicsubreddits">a wide range of subreddits</a>. This is a great way to discover new songs and artists.
+          </p>
+          <p>
+            Just go to a subreddit or multireddit, and in the url change <span class='change-url'>reddit.com</span> to <span class="change-url">boomz.xyz</span>, and easily browse that pages the Youtube and Soundcloud media.
+          </p>
+          <p>
+            Although this was originally created for music, it works with non-music pages too. Check out <a href="http://boomz.xyz/r/videos">r/videos</a>.
+          </p>
+          <p>
+            The player can be controlled with the keyboard <br>
+            <span class='control-s'>▲ play</span>
+            <span class='control-s'>▶ next</span>
+            <span class='control-s'>◀ prev</span>
+            <span class='control-s'>▼ scroll</span>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-  
-  <div id='about-foot' class='units-row'>
-    <div class='unit-50 unit-centered'>
-      <p>Made with ❤ by <a href='https://twitter.com/jakerunzer'>@jakerunzer</a>/p>
-      <p><a href='https://github.com/coffee-cup/rplayer'>Source</a></p>
+
+    <div id='about-foot' class='units-row'>
+      <div class='unit-50 unit-centered'>
+        <p>Made with ❤ by <a href='https://twitter.com/jakerunzer'>@jakerunzer</a></p>
+        <p><a href='https://github.com/coffee-cup/rplayer'>Source</a></p>
+      </div>
     </div>
+
   </div>
-  
-</div>
 
 </template>
