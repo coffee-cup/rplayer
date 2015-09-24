@@ -15,9 +15,12 @@ Meteor.startup(function() {
       Meteor.call('getGifs');
     }
   });
-  checkGifDB();
   SyncedCron.start();
-  Meteor.call('getGifs');
+
+  var need_fetch = checkGifDB();
+  if (need_fetch) {
+    Meteor.call('getGifs');
+  }
 });
 
 Meteor.methods({
