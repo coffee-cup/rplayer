@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export APP_ENV="production"
+export SRC_DIR="/var/www/rplayer/"
 export PATH=/usr/local/bin:$PATH
 export ROOT_URL='http://boomz.xyz'
 export PORT=7000
