@@ -673,7 +673,7 @@ html, body {
   }
 
   #about-write {
-    font-family: 'Playfair Display', serif;
+    font-size: 14pt;
 
     #write-tight {
       width: 80%;
@@ -690,7 +690,7 @@ html, body {
 
       span.change-url {
         font-family: "Courier New", Courier, monospace;
-        font-size: 1.1em;
+        // font-size: 1.1em;
       }
     }
 
@@ -709,4 +709,41 @@ html, body {
       }
     }
   }
+}
+
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 5px solid black;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+
+  border-top: 20px solid #f00;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+
+  border-left: 60px solid green;
+}
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+
+  border-right:10px solid blue;
 }
