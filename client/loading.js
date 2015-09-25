@@ -119,6 +119,7 @@ Template.load.rendered = function() {
   loaded_gifs = [];
   // if there is gifs already loaded, do not change
   if (gifs != null && gifs != undefined && gifs.length > 1) {
+    gifs = _.shuffle(gifs);
     return;
   }
 
