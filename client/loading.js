@@ -115,6 +115,8 @@ PRELOAD_COUNT = 2;
 Template.load.rendered = function() {
   // getListOfMessages();
 
+  play_index = -1;
+  loaded_gifs = [];
   // if there is gifs already loaded, do not change
   if (gifs != null && gifs != undefined && gifs.length > 1) {
     return;
@@ -184,8 +186,8 @@ var createGifElement = function(gif) {
   im.setAttribute('id', 'gif-img-' + gif.name);
   im.classList.add('gif-img');
 
-  // a.append(im);
   a.appendChild(im);
+
   return a;
 }
 
@@ -205,7 +207,7 @@ nextGif = function() {
   var pe = $('#yesGif');
   pe = document.getElementById('yesGif');
 
-  if (play_index >= loaded_gifs.length - 1 && loaded_gifs.length < gifs.length) {
+  if (play_index >= loaded_gifs.length - 2 && loaded_gifs.length < gifs.length) {
     // load the next 10 images
     var end = PRELOAD_COUNT + loaded_gifs.length;
     if (end > gifs.length) end = gifs.length;
@@ -220,19 +222,23 @@ nextGif = function() {
   if (play_index - 1 >= 0) {
     var og = gifs[play_index - 1];
     var oge = document.getElementById('a-' + og.name);
-    if (oge.parentNode) {
-      oge.parentNode.removeChild(oge);
+    if (oge) {
+      if (oge.parentNode) {
+        oge.parentNode.removeChild(oge);
+      }
+      oge.classList.add('hidden');
     }
-    oge.classList.add('hidden');
   }
 
   var ge = $('#a-' + g.name);
   var ge = document.getElementById('a-' + g.name);
-  if (ge.classList.contains('hidden')) {
-    ge.classList.remove('hidden')
+  if (ge) {
+    if (ge.classList.contains('hidden')) {
+      ge.classList.remove('hidden')
+    }
+    Session.set('gif', g);
+    Session.set('isGif', true);
   }
-  Session.set('gif', g);
-  Session.set('isGif', true);
 }
 
 Template.load.helpers({
