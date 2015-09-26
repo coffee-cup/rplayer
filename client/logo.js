@@ -4,8 +4,7 @@ var EASE_FUNCTION = Power2.easeInOut;
 var tl;
 var pause_next = false;
 
-
-Template.logo.onRendered(function() {
+Template.logo.rendered = function() {
   tl = new TimelineMax({
     paused: true,
     repeat: -1
@@ -34,4 +33,4 @@ Template.logo.onRendered(function() {
     pause_next = true;
   });
 
-});
+}
