@@ -8,7 +8,7 @@ $mq-breakpoints: (
   wide:    1300px,
   );
 $mq-static-breakpoint: desktop;
-// $mq-show-breakpoints: (mobile, tablet, desktop, wide);
+$mq-show-breakpoints: (mobile, tablet, desktop, wide);
 @import 'mq';
 
 // variables
@@ -652,10 +652,7 @@ html, body {
     margin-bottom: 0;
   }
 
-  img {
-    width: 12em;
-  }
-
+  color: $darkgrey-colour;
   a {
     color: $darkgrey-colour;
   }
@@ -665,6 +662,7 @@ html, body {
   }
 
   #about-foot {
+    font-weight: 600;
     font-size: 12pt;
 
     p {
@@ -695,7 +693,7 @@ html, body {
     }
 
     .control-s {
-      padding-right: 1.2em;
+      padding-right: 1em;
     }
   }
 
@@ -711,6 +709,9 @@ html, body {
   }
 }
 
+.arrow {
+
+}
 
 .arrow-up {
   width: 0;
