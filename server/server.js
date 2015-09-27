@@ -176,7 +176,9 @@ Meteor.methods({
         // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
       }
     } catch (err) {
-      Winston.info(result.statusCode);
+      if (result && result.statusCode) {
+        Winston.info(result.statusCode);
+      }
       Winston.error('error fetching subreddits');
     }
   },
