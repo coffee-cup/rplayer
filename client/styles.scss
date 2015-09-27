@@ -184,7 +184,7 @@ html, body {
     margin-bottom: 0;
 
     @include mq($until: tablet) {
-      padding-left: 1em;
+      padding-left: 2em;
     }
 
     @include mq($from: tablet) {
@@ -241,7 +241,7 @@ html, body {
 
 .post-title {
   a {
-    font-size: 20pt;
+    font-size: 1.4em;
     font-weight: 600;
     color: $darkgrey-colour;
     text-decoration: none;
@@ -261,7 +261,7 @@ html, body {
   margin-bottom: 0;
 
   a {
-    font-size: 15pt;
+    font-size: 1.4em;
     font-weight: 300;
     color: $darkgrey-colour;
     text-decoration: none;
@@ -337,7 +337,7 @@ html, body {
   bottom: 0;
   right: 12px;
   color: white;
-  font-size: 18pt;
+  font-size: 1.6em;
   font-weight: 300;
   width: 600px;
   height: 60px;
@@ -368,13 +368,13 @@ html, body {
   #selection {
     width: 55px;
     z-index: 1000;
-    font-size: 22pt;
+    font-size: 1.8em;
     bottom: 18px;
     right: 20px;
   }
 
   #t-sort {
-    font-size: 12pt;
+    font-size: 1em;
     margin-left: -3px;
   }
 }
@@ -437,7 +437,7 @@ html, body {
   }
 
   label {
-    font-size: 20pt;
+    font-size: 1.7em;
     font-weight: 400;
     margin-bottom: 0.3em;
   }
@@ -448,14 +448,24 @@ html, body {
 }
 
 #desc-bar {
-  margin-top: 2em;
-  background-color: $main-colour;
-  padding: 3em 6em;
   color: white;
   margin-right: 2em;
 
+  #desc-bar-col {
+    background-color: $main-colour;
+    padding: 3em 4em;
+
+    @include mq($until: tablet) {
+      padding: 3em 3em;
+    }
+
+    @include mq($from: tablet) {
+      margin-top: 2em;
+    }
+  }
+
   @include mq($until: tablet) {
-    padding: 3em 2em;
+    margin-right: 0;
   }
 }
 
@@ -465,7 +475,7 @@ html, body {
 }
 
 #title {
-  font-size: 35pt;
+  font-size: 3em;
   font-weight: 700;
   text-decoration: none;
 
@@ -484,7 +494,7 @@ html, body {
 
   p {
     padding-left: 0.4em;
-    font-size: 20pt;
+    font-size: 1.7em;
     margin-bottom: 0;
     margin-left: 0;
   }
@@ -495,7 +505,7 @@ html, body {
   font-size: 1rem;
 
   ul {
-    font-size: 14pt;
+    font-size: 1.2em;
     font-weight: 300;
     /*margin-left: 2em;*/
   }
@@ -663,7 +673,7 @@ html, body {
 
   #about-foot {
     font-weight: 600;
-    font-size: 12pt;
+    font-size: 1em;
 
     p {
       margin-bottom: 0;
@@ -671,7 +681,7 @@ html, body {
   }
 
   #about-write {
-    font-size: 14pt;
+    font-size: 1.1em;
 
     #write-tight {
       width: 80%;
@@ -713,38 +723,9 @@ html, body {
 
 }
 
-.arrow-up {
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-
-  border-bottom: 5px solid black;
-}
-
-.arrow-down {
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-
-  border-top: 20px solid #f00;
-}
-
-.arrow-right {
-  width: 0;
-  height: 0;
-  border-top: 60px solid transparent;
-  border-bottom: 60px solid transparent;
-
-  border-left: 60px solid green;
-}
-
-.arrow-left {
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-
-  border-right:10px solid blue;
+.units-row {
+  div {
+    // background-color: blue;
+    // border: solid 10px black;
+  }
 }
