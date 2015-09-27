@@ -21,5 +21,9 @@ Template.controls.helpers({
 
   canEye: function() {
     return Session.get('canEye');
+  },
+
+  canControl: function() {
+    return Session.get('canControl');
   }
 });

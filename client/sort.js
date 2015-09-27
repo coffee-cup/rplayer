@@ -74,14 +74,7 @@ var everythingIn = function() {
     delay: 0
   });
 
-  TweenLite.to('.can', 0, {
-    opacity: 100,
-    ease: EASING
-  });
-  TweenLite.to('.cant', 0, {
-    opacity: 100,
-    ease: EASING
-  });
+  Session.set('canControl', true);
 
   if (top_out) {
     TweenLite.to('#top_day', SLIDE_DURATION, {
@@ -153,15 +146,7 @@ Template.sort.events({
         delay: 0
       });
 
-      TweenLite.to('.can', 0, {
-        opacity: 0,
-        ease: EASING
-      });
-      TweenLite.to('.cant', 0, {
-        opacity: 0,
-        ease: EASING
-      });
-
+      Session.set('canControl', false);
       options_out = true;
     } else {
       everythingIn();
