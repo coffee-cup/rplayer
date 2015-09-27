@@ -8,7 +8,7 @@ $mq-breakpoints: (
   wide:    1300px,
   );
 $mq-static-breakpoint: desktop;
-$mq-show-breakpoints: (mobile, tablet, desktop, wide);
+// $mq-show-breakpoints: (mobile, tablet, desktop, wide);
 @import 'mq';
 
 // variables
