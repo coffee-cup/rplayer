@@ -87,6 +87,13 @@ Meteor.methods({
         if (!youtubeId && !soundcloudId) {
           return true;
         }
+        var url = p.url;
+        // make url http if possible
+        var r = utils.avalHTTPS(url, false);
+        if (!r || !r.aval || !r.url) {
+          url = r.url;
+        }
+
         var sound_thumb = null;
 
         try {
@@ -107,7 +114,7 @@ Meteor.methods({
             score: p.score,
             title: p.title,
             ups: p.ups,
-            url: p.url,
+            url: url,
             post_subreddit: p.subreddit,
             post_sub_link: Meteor.absoluteUrl() + 'r/' + p.subreddit,
             num_comments: p.num_comments,
@@ -169,7 +176,8 @@ Meteor.methods({
         // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
       }
     } catch (err) {
-      Winston.error(err);
+      Winston.info(result.statusCode);
+      Winston.error('error fetching subreddits');
     }
   },
 
