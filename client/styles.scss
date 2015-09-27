@@ -184,7 +184,7 @@ html, body {
     margin-bottom: 0;
 
     @include mq($until: tablet) {
-      padding-left: 2em;
+      padding-left: 1em;
     }
 
     @include mq($from: tablet) {
@@ -232,6 +232,10 @@ html, body {
   width: 100%;
   max-width: $max-width;
   height: 450px;
+
+  @include mq($until: tablet) {
+    height: 200px;
+  }
 }
 
 #post-row {
@@ -366,16 +370,16 @@ html, body {
   }
 
   #selection {
-    width: 55px;
+    width: 60px;
     z-index: 1000;
-    font-size: 1.8em;
+    font-size: 1.3em;
     bottom: 18px;
     right: 20px;
   }
 
   #t-sort {
-    font-size: 1em;
-    margin-left: -3px;
+    font-size: 0.7em;
+    margin-left: -6px;
   }
 }
 
@@ -389,6 +393,8 @@ html, body {
   color: $darkgrey-colour;
   font-size: 3rem;
   font-weight: 700;
+  word-wrap: break-word;
+  line-height: 1em;
 }
 
 .sub-link:hover {
