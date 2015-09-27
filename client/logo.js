@@ -29,8 +29,8 @@ Template.logo.rendered = function() {
 
   $('#logo-link-svg').on('mouseenter', function() {
     tl.play();
+    pause_next = false;
   }).on('mouseleave', function() {
     pause_next = true;
   });
-
 }
