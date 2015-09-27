@@ -456,7 +456,7 @@ html, body {
     padding: 3em 4em;
 
     @include mq($until: tablet) {
-      padding: 3em 3em;
+      padding: 3em 1em;
     }
 
     @include mq($from: tablet) {
@@ -491,6 +491,7 @@ html, body {
 
 .search-cat {
   color: white;
+  margin-bottom: 0;
 
   p {
     padding-left: 0.4em;
