@@ -1,0 +1,20 @@
+<template name='gifs'>
+
+  <div id="gifs-page" class="units-row">
+    <div id='gif-header' class="unit-50 unit-centered">
+      {{> logo}}
+
+      <h1>Current set of loading gifs</h1>
+    </div>
+
+    <div id="gif-set">
+      {{#each gifs}}
+      <div id='gif-{{name}}' class='gif'>
+        <a href="{{url}}">{{title}}</a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+
+</template>

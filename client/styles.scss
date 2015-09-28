@@ -670,7 +670,6 @@ html, body {
     margin-bottom: 0;
   }
 
-  color: $darkgrey-colour;
   a {
     color: $darkgrey-colour;
   }
@@ -736,5 +735,41 @@ html, body {
   div {
     // background-color: blue;
     // border: solid 10px black;
+  }
+}
+
+#gifs-page {
+  text-align: center;
+  color: $darkgrey-colour;
+  margin-left: 1em;
+  margin-right: 1em;
+
+  #logo-link-svg {
+    width: 12em;
+    height: 12em;
+    margin-bottom: -1em;
+  }
+
+  a {
+    color: $darkgrey-colour;
+  }
+
+  a:hover {
+    color: $main-colour;
+  }
+
+  .gif {
+    word-wrap: break-word;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 1.65em;
+  }
+
+  #gif-set {
+    margin-top: 1.65em;
+  }
+
+  #gif-header {
+    border-bottom: 1px solid $main-colour;
   }
 }
