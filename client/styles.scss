@@ -758,6 +758,10 @@ html, body {
     color: $main-colour;
   }
 
+  a:visited {
+    color: $main-colour;
+  }
+
   .gif {
     word-wrap: break-word;
     font-size: 1.2em;
