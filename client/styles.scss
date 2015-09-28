@@ -197,7 +197,7 @@ html, body {
 }
 
 .multied {
-  margin-top: 2rem !important;
+  margin-top: 1rem !important;
 }
 
 #name-icon {
@@ -213,7 +213,7 @@ html, body {
 
 #name-text {
   @include mq($from: tablet) {
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-left: 7rem;
   }
 }
