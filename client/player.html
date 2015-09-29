@@ -32,10 +32,10 @@
           {{> load}}
        {{else}}
 
-       {{#if pageError}}
+       {{#unless pageError}}
 
        <div id="page-error" class='units-row'>
-        <div class="unit-80 unit-centered">
+        <div class="unit-100">
 
           <p id="displayMessage">
             {{displayMessage}}
@@ -44,7 +44,10 @@
             </p>
           </p>
 
-          {{> catBar}}
+        {{> redBar}}
+
+        {{> catBar}}
+
         </div>
       </div>
 
@@ -54,7 +57,7 @@
         {{> song}}
       {{/each}}
 
-      {{/if}}
+      {{/unless}}
 
       {{/if}}
 

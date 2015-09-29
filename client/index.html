@@ -29,17 +29,8 @@
 
     <div id='desc-bar' class="units-row">
       <div id='desc-bar-col' class="unit-push-right unit-70">
-        <form id='search-form' class="forms">
-          <label>
-            Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
-            <br>
-            <span id="searchError">{{errorMessage}}</span>
-            <input type="text" name='sub_name' class="width-100" autofocus/>
-          </label>
-          <p>
-            <button id='search-button' class="btn btn-red">Search</button>
-          </p>
-        </form>
+
+        {{> redBar}}
 
         {{> catBar}}
 
@@ -48,6 +39,20 @@
 
   </div>
 
+</template>
+
+<template name='redBar'>
+  <form id='search-form' class="forms">
+    <label>
+      Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
+      <br>
+      <span id="searchError">{{errorMessage}}</span>
+      <input type="text" name='sub_name' class="width-100" autofocus/>
+    </label>
+    <p>
+      <button id='search-button' class="btn btn-red">Search</button>
+    </p>
+  </form>
 </template>
 
 <template name='catBar'>
