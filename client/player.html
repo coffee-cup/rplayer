@@ -32,13 +32,19 @@
           {{> load}}
        {{else}}
 
-       {{#unless pageError}}
+       {{#if pageError}}
 
        <div id="page-error" class='units-row'>
         <div class="unit-100">
 
           <p id="displayMessage">
             {{displayMessage}}
+
+            {{#if busyReddit}}
+              <p id='busy-reddit-reload'>
+                Reload the page and try again <img id='reload-icon' src='/icons/refresh.svg'>
+              </p>
+            {{/if}}
             <p id="displayLink">
               <a href="{{displayLink}}">{{displayLink}}</a>
             </p>
@@ -57,7 +63,7 @@
         {{> song}}
       {{/each}}
 
-      {{/unless}}
+      {{/if}}
 
       {{/if}}
 

@@ -159,27 +159,37 @@ Meteor.methods({
     var url = Meteor.call('parseInput', url);
     Winston.info(sid + ' - making request to ' + url);
 
+    var result = null;
     try {
-      var result = Meteor.http.get(url, {
+      result = Meteor.http.get(url, {
         timeout: 100000
       });
 
-      if (result.statusCode == 200) {
+      if (result && result.statusCode == 200) {
         return Meteor.call('parseSubreddits', result, sid);
       } else {
-        Winston.error('error fetching subreddits');
-        return {
-          success: false,
-          message: 'Error fetching subreddits',
-          sid: sid
-        };
-        // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
+        if (result && result.statusCode == 503) {
+          return {
+            success: false,
+            message: 'Reddit servers are busy right now',
+            sid: sid
+          }
+        } else {
+          Winston.error('error fetching subreddits');
+          return {
+            success: false,
+            message: 'Error fetching subreddits',
+            sid: sid
+          };
+        }
       }
     } catch (err) {
-      if (result && result.statusCode) {
-        Winston.info(result.statusCode);
-      }
       Winston.error('error fetching subreddits');
+      return {
+        success: false,
+        message: 'Error fetching subreddits',
+        sid: sid
+      }
     }
   },
 
