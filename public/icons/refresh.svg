@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="109px" viewBox="0 0 100 109" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>refresh</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Tablet-Portrait" sketch:type="MSArtboardGroup" transform="translate(-120.000000, -339.000000)" fill="#FFFFFF">
+            <g id="refresh" sketch:type="MSLayerGroup" transform="translate(120.000000, 339.000000)">
+                <path d="M95.922332,57.9243083 L87.2590909,57.9243083 C85.066996,57.9243083 83.2980237,59.6780632 83.222332,61.8399209 C81.4231225,78.5610672 67.272332,91.5782609 50.0523715,91.5782609 C31.6229249,91.5782609 16.7007905,76.6713439 16.7007905,58.2721344 C16.7007905,40.0393281 31.7286561,25.2229249 49.9164032,24.9660079 L49.9164032,30.3784585 C49.9164032,32.8428854 51.6701581,33.9464427 53.816996,32.8428854 L81.6201581,18.6164032 C83.766996,17.5126482 83.766996,15.7286561 81.6201581,14.6250988 L53.816996,0.428458498 C51.6701581,-0.675098814 49.9164032,0.428458498 49.9164032,2.87766798 L49.9164032,8.33537549 C22.5063241,8.59249012 0.0250988142,30.8772727 0.0250988142,58.3023715 C0.0250988142,85.8936759 22.4156126,108.26917 50.0525692,108.26917 C76.4800395,108.26917 98.1296443,87.813834 99.9436759,61.8703557 C99.9586957,59.6932806 98.1294466,57.9243083 95.922332,57.9243083 L95.922332,57.9243083 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -74,14 +74,7 @@ var everythingIn = function() {
     delay: 0
   });
 
-  TweenLite.to('.can', 0, {
-    opacity: 100,
-    ease: EASING
-  });
-  TweenLite.to('.cant', 0, {
-    opacity: 100,
-    ease: EASING
-  });
+  Session.set('canControl', true);
 
   if (top_out) {
     TweenLite.to('#top_day', SLIDE_DURATION, {
@@ -136,32 +129,24 @@ Template.sort.events({
 
       TweenLite.to('#opt_top', SLIDE_DURATION, {
         opacity: 100,
-        right: '80px',
+        right: '85px',
         ease: EASING,
         delay: 0.1
       });
       TweenLite.to('#opt_new', SLIDE_DURATION, {
         opacity: 100,
-        right: '130px',
+        right: '135px',
         ease: EASING,
         delay: 0.05
       });
       TweenLite.to('#opt_hot', SLIDE_DURATION, {
         opacity: 100,
-        right: '190px',
+        right: '195px',
         ease: EASING,
         delay: 0
       });
 
-      TweenLite.to('.can', 0, {
-        opacity: 0,
-        ease: EASING
-      });
-      TweenLite.to('.cant', 0, {
-        opacity: 0,
-        ease: EASING
-      });
-
+      Session.set('canControl', false);
       options_out = true;
     } else {
       everythingIn();
@@ -174,7 +159,7 @@ Template.sort.events({
     if (!top_out) {
       TweenLite.to('#opt_top', SLIDE_DURATION, {
         opacity: 0.5,
-        right: '80px',
+        right: '85px',
         ease: EASING
       });
       TweenLite.to('#opt_new', SLIDE_DURATION, {
@@ -192,25 +177,25 @@ Template.sort.events({
 
       TweenLite.to('#top_day', SLIDE_DURATION, {
         opacity: 1,
-        right: '120px',
+        right: '125px',
         ease: EASING,
         delay: 0.15
       });
       TweenLite.to('#top_mon', SLIDE_DURATION, {
         opacity: 1,
-        right: '170px',
+        right: '175px',
         ease: EASING,
         delay: 0.1
       });
       TweenLite.to('#top_year', SLIDE_DURATION, {
         opacity: 1,
-        right: '230px',
+        right: '235px',
         ease: EASING,
         delay: 0.05
       });
       TweenLite.to('#top_all', SLIDE_DURATION, {
         opacity: 1,
-        right: '290px',
+        right: '295px',
         ease: EASING,
         delay: 0
       });
@@ -220,18 +205,18 @@ Template.sort.events({
     } else {
       TweenLite.to('#opt_top', SLIDE_DURATION, {
         opacity: 1,
-        right: '80px',
+        right: '85px',
         ease: EASING
       });
       TweenLite.to('#opt_new', SLIDE_DURATION, {
         opacity: 1,
-        right: '130px',
+        right: '135px',
         ease: EASING,
         delay: 0.05
       });
       TweenLite.to('#opt_hot', SLIDE_DURATION, {
         opacity: 1,
-        right: '190px',
+        right: '195px',
         ease: EASING,
         delay: 0
       });

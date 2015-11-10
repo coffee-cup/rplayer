@@ -4,12 +4,7 @@ var EASE_FUNCTION = Power2.easeInOut;
 var tl;
 var pause_next = false;
 
-
-Template.logo.onRendered(function() {
-  var songs = $('.song');
-  TweenLite.to(songs, 2, {
-    width: "10px"
-  });
+Template.logo.rendered = function() {
   tl = new TimelineMax({
     paused: true,
     repeat: -1
@@ -34,8 +29,8 @@ Template.logo.onRendered(function() {
 
   $('#logo-link-svg').on('mouseenter', function() {
     tl.play();
+    pause_next = false;
   }).on('mouseleave', function() {
     pause_next = true;
   });
-
-});
+}

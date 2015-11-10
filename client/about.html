@@ -1,0 +1,56 @@
+<template name="about">
+
+  <div id='about-page'>
+
+    <div id='about-header' class="units-row">
+      <div class="unit-50 unit-centered">
+        <div>
+          {{> logo}}
+
+          <h1>boomz</h1>
+        </div>
+      </div>
+    </div>
+
+    <div id='about-write' class='units-row'>
+      <div class='unit-70 unit-centered'>
+      <div id='write-tight'>
+          <p>
+            Boomz is a minimalistic media player for <a href="https://www.reddit.com/">Reddit</a>.
+          </p>
+          <p>
+            Everyday thousands of people link awesome and interesting songs to <a href="https://www.reddit.com/r/Music/wiki/musicsubreddits">a wide range of subreddits</a> and browsing these is a great way to discover new songs and artists. This site simply displays all of the songs and videos in a scrollable, distraction free interface.
+          </p>
+          <p>
+            Just go to a subreddit or multireddit, and in the url change <span class='change-url'>reddit.com</span> to <span class="change-url">boomz.xyz</span>, and easily browse that pages Youtube and Soundcloud media.
+          </p>
+          <p>
+            You can combine subreddits by adding them together (<a href="{{siteUrl}}/r/chillmusic+woahtunes+futurebeats">chillmusic+woahtunes+futurebeats</a>), or use <a href="{{siteUrl}}/user/evilnight/m/truemusic">a multireddit</a>.
+          </p>
+          <p>
+            Although this was originally created for music, it works with non-music pages too. Check out <a href="http://boomz.xyz/r/videos">r/videos</a>.
+          </p>
+          <p>
+            While the page is loading, pass the time by flipping through gifs from <a href="https://www.reddit.com/r/gifs">r/gifs</a>. The current set of loading gifs can be found <a href="{{siteUrl}}/gifs">here</a>.
+          </p>
+          <p class='hide-on-mobile'>
+            The player can be controlled with the keyboard <br>
+            <span class='control-s'><span id="arrow-up" class='arrow'><img src="/icons/triangle_up_b.png"></span> play</span>
+            <span class='control-s'><span id="arrow-right"><img src="/icons/triangle_right_b.png"></span> next</span>
+            <span class='control-s'><span id="arrow-left"><img src="/icons/triangle_left_b.png"></span> prev</span>
+            <span class='control-s'><span id="arrow-down"><img src="/icons/triangle_down_b.png"></span> scroll</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id='about-foot' class='units-row'>
+      <div class='unit-50 unit-centered'>
+        <p>Made with ❤ by <a href='https://twitter.com/jakerunzer'>@jakerunzer</a></p>
+        <p><a href='https://github.com/coffee-cup/rplayer'>Source</a></p>
+      </div>
+    </div>
+
+  </div>
+
+</template>

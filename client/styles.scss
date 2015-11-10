@@ -125,6 +125,10 @@ html, body {
     padding-left: 1em;
     padding-right: 1em;
   }
+
+  #desc-bar {
+    margin-top: -1em;
+  }
 }
 
 @keyframes logo-zoom {
@@ -182,6 +186,7 @@ html, body {
 
   #name-bar {
     margin-bottom: 0;
+    padding-right: 1em;
 
     @include mq($until: tablet) {
       padding-left: 1em;
@@ -196,7 +201,7 @@ html, body {
 }
 
 .multied {
-  margin-top: 2rem !important;
+  margin-top: 1rem !important;
 }
 
 #name-icon {
@@ -212,7 +217,7 @@ html, body {
 
 #name-text {
   @include mq($from: tablet) {
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-left: 7rem;
   }
 }
@@ -232,6 +237,10 @@ html, body {
   width: 100%;
   max-width: $max-width;
   height: 450px;
+
+  @include mq($until: tablet) {
+    height: 200px;
+  }
 }
 
 #post-row {
@@ -241,7 +250,7 @@ html, body {
 
 .post-title {
   a {
-    font-size: 20pt;
+    font-size: 1.4em;
     font-weight: 600;
     color: $darkgrey-colour;
     text-decoration: none;
@@ -261,7 +270,7 @@ html, body {
   margin-bottom: 0;
 
   a {
-    font-size: 15pt;
+    font-size: 1.4em;
     font-weight: 300;
     color: $darkgrey-colour;
     text-decoration: none;
@@ -299,11 +308,11 @@ html, body {
   right: 0;
   width: 100%;
   text-align: center;
+  z-index: 1000;
 
   img {
     height: $footer-height;
     padding: 20px 1em;
-    z-index: 1000;
     position:relative
   }
 
@@ -337,7 +346,7 @@ html, body {
   bottom: 0;
   right: 12px;
   color: white;
-  font-size: 18pt;
+  font-size: 1.6em;
   font-weight: 300;
   width: 600px;
   height: 60px;
@@ -366,16 +375,16 @@ html, body {
   }
 
   #selection {
-    width: 55px;
+    width: 60px;
     z-index: 1000;
-    font-size: 22pt;
+    font-size: 1.3em;
     bottom: 18px;
     right: 20px;
   }
 
   #t-sort {
-    font-size: 12pt;
-    margin-left: -3px;
+    font-size: 0.7em;
+    margin-left: -6px;
   }
 }
 
@@ -389,6 +398,8 @@ html, body {
   color: $darkgrey-colour;
   font-size: 3rem;
   font-weight: 700;
+  word-wrap: break-word;
+  line-height: 1em;
 }
 
 .sub-link:hover {
@@ -437,7 +448,7 @@ html, body {
   }
 
   label {
-    font-size: 20pt;
+    font-size: 1.7em;
     font-weight: 400;
     margin-bottom: 0.3em;
   }
@@ -448,11 +459,25 @@ html, body {
 }
 
 #desc-bar {
-  margin-top: 2em;
-  background-color: $main-colour;
-  padding: 3em 6em;
   color: white;
   margin-right: 2em;
+
+  #desc-bar-col {
+    background-color: $main-colour;
+    padding: 3em 4em;
+
+    @include mq($until: tablet) {
+      padding: 3em 1em;
+    }
+
+    @include mq($from: tablet) {
+      margin-top: 2em;
+    }
+  }
+
+  @include mq($until: tablet) {
+    margin-right: 0;
+  }
 }
 
 #music-list {
@@ -461,7 +486,7 @@ html, body {
 }
 
 #title {
-  font-size: 35pt;
+  font-size: 3em;
   font-weight: 700;
   text-decoration: none;
 
@@ -477,10 +502,11 @@ html, body {
 
 .search-cat {
   color: white;
+  margin-bottom: 0;
 
   p {
     padding-left: 0.4em;
-    font-size: 20pt;
+    font-size: 1.7em;
     margin-bottom: 0;
     margin-left: 0;
   }
@@ -491,7 +517,7 @@ html, body {
   font-size: 1rem;
 
   ul {
-    font-size: 14pt;
+    font-size: 1.2em;
     font-weight: 300;
     /*margin-left: 2em;*/
   }
@@ -525,13 +551,30 @@ html, body {
   font-size: 2em;
   background-color: $main-colour;
   color: white;
-  padding: 2em;
+  padding: 1em;
+  margin-bottom: 0;
+
+  @include mq($until: tablet) {
+    padding: 0.5em;
+  }
+
+  #busy-reddit-reload {
+    font-size: 0.7em;
+    margin-bottom: 0.8em;
+  }
+
+  #reload-icon {
+    width: 1em;
+    cursor: pointer;
+  }
+
+  #search-form {
+    font-size: 0.5em;
+  }
 }
 
 #displayMessage {
-  border-bottom: solid 1px $darkgrey-colour;
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
+  text-align: center;
 }
 
 #displayLink {
@@ -552,6 +595,20 @@ html, body {
 .multi-link {
   font-size: 1.1em;
   color: $darkgrey-colour;
+}
+
+#about-section {
+  span.control-s {
+  }
+
+  span.about-change {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1rem;
+  }
+
+  a {
+    text-decoration: underline;
+  }
 }
 
 #searchError {
@@ -613,5 +670,131 @@ html, body {
 
   .active-gif {
     display: block;
+  }
+}
+
+#about-page {
+  margin-top: 2em;
+  text-align: center;
+  color: $darkgrey-colour;
+
+  #logo-link-svg {
+    width: 12em;
+    height: 12em;
+    margin-bottom: -1em;
+  }
+
+  h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    color: $darkgrey-colour;
+    font-size: 4rem;
+    margin-bottom: 0;
+  }
+
+  a {
+    color: $darkgrey-colour;
+  }
+
+  a:hover {
+    color: $main-colour;
+  }
+
+  #about-foot {
+    font-weight: 600;
+    font-size: 1em;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  #about-write {
+    font-size: 1.1em;
+    text-align: left;
+
+    #write-tight {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 1.65em;
+      border-top: solid 1px $main-colour;
+      border-bottom: solid 1px $main-colour;
+    }
+
+    p {
+      margin-left: auto;
+      margin-right: auto;
+
+      span.change-url {
+        font-family: "Courier New", Courier, monospace;
+        // font-size: 1.1em;
+      }
+    }
+
+    .control-s {
+      padding-right: 1em;
+    }
+  }
+
+  #about-header {
+    .unit-centered {
+      div {
+        @include mq($until: tablet) {
+          margin-left: 3em !important;
+          margin-right: 3em !important;
+        }
+      }
+    }
+  }
+}
+
+.arrow {
+
+}
+
+.units-row {
+  div {
+    // background-color: blue;
+    // border: solid 10px black;
+  }
+}
+
+#gifs-page {
+  text-align: center;
+  color: $darkgrey-colour;
+  margin-left: 1em;
+  margin-right: 1em;
+
+  #logo-link-svg {
+    width: 12em;
+    height: 12em;
+    margin-bottom: -1em;
+  }
+
+  a {
+    color: $darkgrey-colour;
+  }
+
+  a:hover {
+    color: $main-colour;
+  }
+
+  a:visited {
+    color: $main-colour;
+  }
+
+  .gif {
+    word-wrap: break-word;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 1.65em;
+  }
+
+  #gif-set {
+    margin-top: 1.65em;
+  }
+
+  #gif-header {
+    border-bottom: 1px solid $main-colour;
   }
 }

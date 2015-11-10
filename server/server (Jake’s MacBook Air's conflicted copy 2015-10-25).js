@@ -1,7 +1,5 @@
 var REDDIT = 'https://www.reddit.com'
 
-var messages = [];
-
 Meteor.startup(function() {
   // code to run on server at startup
   Winston.info('starting meteor server');
@@ -17,19 +15,13 @@ Meteor.startup(function() {
       Meteor.call('getGifs');
     }
   });
-  checkGifDB();
   SyncedCron.start();
-  Meteor.call('getGifs');
 
-  var message_data = JSON.parse(Assets.getText('messages.json')).messages;
-  messages = message_data;
+  var need_fetch = checkGifDB();
+  if (need_fetch) {
+    Meteor.call('getGifs');
+  }
 });
-
-// returns a shuffled array
-function shuffle(o) {
-  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-  return o;
-}
 
 Meteor.methods({
   getGifs: function() {
@@ -47,10 +39,6 @@ Meteor.methods({
       success: true,
       messages: messages
     };
-  },
-
-  getRandomSubs: function() {
-    return randomSubs();
   },
 
   isMusic: function(url) {
@@ -99,6 +87,13 @@ Meteor.methods({
         if (!youtubeId && !soundcloudId) {
           return true;
         }
+        var url = p.url;
+        // make url http if possible
+        var r = utils.avalHTTPS(url, false);
+        if (!r || !r.aval || !r.url) {
+          url = r.url;
+        }
+
         var sound_thumb = null;
 
         try {
@@ -119,7 +114,7 @@ Meteor.methods({
             score: p.score,
             title: p.title,
             ups: p.ups,
-            url: p.url,
+            url: url,
             post_subreddit: p.subreddit,
             post_sub_link: Meteor.absoluteUrl() + 'r/' + p.subreddit,
             num_comments: p.num_comments,
@@ -164,24 +159,37 @@ Meteor.methods({
     var url = Meteor.call('parseInput', url);
     Winston.info(sid + ' - making request to ' + url);
 
+    var result = null;
     try {
-      var result = Meteor.http.get(url, {
+      result = Meteor.http.get(url, {
         timeout: 100000
       });
 
-      if (result.statusCode == 200) {
+      if (result && result.statusCode == 200) {
         return Meteor.call('parseSubreddits', result, sid);
       } else {
-        Winston.error('error fetching subreddits');
-        return {
-          success: false,
-          message: 'Error fetching subreddits',
-          sid: sid
-        };
-        // throw new Meteor.Error(result.statusCode, 'error fetching subreddits');
+        if (result && result.statusCode == 503) {
+          return {
+            success: false,
+            message: 'Reddit servers are busy right now',
+            sid: sid
+          }
+        } else {
+          Winston.error('error fetching subreddits');
+          return {
+            success: false,
+            message: 'Error fetching subreddits',
+            sid: sid
+          };
+        }
       }
     } catch (err) {
-      Winston.error(err);
+      Winston.error('error fetching subreddits');
+      return {
+        success: false,
+        message: 'Error fetching subreddits',
+        sid: sid
+      }
     }
   },
 
