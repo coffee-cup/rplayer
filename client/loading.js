@@ -2,13 +2,13 @@ var messages = [];
 var current_message = -1;
 var messages_length = -1;
 
-var getListOfMessages = function() {
-  Meteor.call('getListOfMessages', function(err, data) {
+var getListOfMessages = function () {
+  Meteor.call('getListOfMessages', function (err, data) {
     if (data) {
       if (data.success && data.messages) {
 
         messages = data.messages;
-        messages.forEach(function(obj) {
+        messages.forEach(function (obj) {
 
           if (!obj.title) {
             obj.title = '';
@@ -57,7 +57,7 @@ var getListOfMessages = function() {
 /**
  * returns the current message or null
  */
-var currentMessage = function() {
+var currentMessage = function () {
   if (current_message >= 0 && current_message < messages_length) {
     return messages[current_message];
   }
@@ -67,7 +67,7 @@ var currentMessage = function() {
 /**
  * Start the message story
  */
-var startStory = function() {
+var startStory = function () {
   current_message = 0;
   switchStory();
 }
@@ -75,7 +75,7 @@ var startStory = function() {
 /**
  * Switch the message in the story
  */
-var switchStory = function() {
+var switchStory = function () {
   var cm = currentMessage();
   if (cm) {
     // Session.set('message', cm);
@@ -87,7 +87,7 @@ var switchStory = function() {
       ease: Power2.easeInOut
     }, 0.07);
     current_message += 1;
-    setTimeout(function() {
+    setTimeout(function () {
       switchStory();
     }, cm.dur * 1000);
   }
@@ -102,20 +102,34 @@ loaded_gifs = [];
 // global index
 play_index = -1;
 
+// flag if the user requested the gif but it wasn't loaded yet
+// so load when we can
+need_next = false;
+
 // current jquery gif playing
 current_gif = null;
 
 // number of images to load in at a time
-PRELOAD_COUNT = 3;
+PRELOAD_COUNT = 2;
 
 // returns a shuffled array
 function shuffle(o) {
-  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] =
+    x);
   return o;
 }
 
-Template.load.rendered = function() {
+Template.load.rendered = function () {
   // getListOfMessages();
+
+  play_index = -1;
+  loaded_gifs = [];
+  // if there is gifs already loaded, do not change
+  if (gifs != null && gifs != undefined && gifs.length > 1) {
+    gifs = _.shuffle(gifs);
+    return;
+  }
+
   Session.set('isGif', false);
   Session.set('gifsLoaded', false);
   Session.set('loaded_gifs', []);
@@ -125,7 +139,7 @@ Template.load.rendered = function() {
   if (result && result.length >= 1) {
     var data = result[0];
     if (data && data.gifs) {
-      gifs = shuffle(data.gifs);
+      gifs = _.shuffle(data.gifs);
       Session.set('gifsLoaded', true)
     }
   }
@@ -142,7 +156,7 @@ Template.load.rendered = function() {
 // Called when the place where gifs will be held is loaded
 // Do whatever you need to do after we have the gifs from
 // the server and are ready to display them
-Template.gifStack.rendered = function() {
+Template.gifStack.rendered = function () {
   var count = PRELOAD_COUNT;
   if (gifs && gifs.length < PRELOAD_COUNT) {
     count = gifs.length;
@@ -155,12 +169,22 @@ Template.gifStack.rendered = function() {
     loaded_gifs.push(gifs[i]);
   }
   Session.set('isGif', false);
+
+  if (need_next) {
+    need_next = false;
+    nextGif();
+  }
 }
 
-var createGifElement = function(gif) {
+// create a HTML element from gif object
+// cannot use jquery here for some reason
+// just wasnt working
+// so I did this
+var createGifElement = function (gif) {
   var a = document.createElement('a');
   a.setAttribute('target', '_blank');
   a.setAttribute('id', 'a-' + gif.name);
+  a.setAttribute('href', gif.url);
   a.classList.add('hidden');
 
   var im = document.createElement('img');
@@ -169,13 +193,14 @@ var createGifElement = function(gif) {
   im.setAttribute('id', 'gif-img-' + gif.name);
   im.classList.add('gif-img');
 
-  // a.append(im);
   a.appendChild(im);
+
   return a;
 }
 
-nextGif = function() {
+nextGif = function () {
   if (!gifs || gifs.length == 0) {
+    need_next = true;
     return;
   }
 
@@ -189,7 +214,7 @@ nextGif = function() {
   var pe = $('#yesGif');
   pe = document.getElementById('yesGif');
 
-  if (play_index >= loaded_gifs.length - 1 && loaded_gifs.length < gifs.length) {
+  if (play_index >= loaded_gifs.length - 2 && loaded_gifs.length < gifs.length) {
     // load the next 10 images
     var end = PRELOAD_COUNT + loaded_gifs.length;
     if (end > gifs.length) end = gifs.length;
@@ -203,19 +228,28 @@ nextGif = function() {
 
   if (play_index - 1 >= 0) {
     var og = gifs[play_index - 1];
-    var oge = $('#a-' + og.name);
-    oge.addClass('hidden');
-    oge.remove();
+    var oge = document.getElementById('a-' + og.name);
+    if (oge) {
+      if (oge.parentNode) {
+        oge.parentNode.removeChild(oge);
+      }
+      oge.classList.add('hidden');
+    }
   }
 
   var ge = $('#a-' + g.name);
-  ge.removeClass('hidden');
-  Session.set('gif', g);
-  Session.set('isGif', true);
+  var ge = document.getElementById('a-' + g.name);
+  if (ge) {
+    if (ge.classList.contains('hidden')) {
+      ge.classList.remove('hidden')
+    }
+    Session.set('gif', g);
+    Session.set('isGif', true);
+  }
 }
 
 Template.load.helpers({
-  title: function() {
+  title: function () {
     var cm = Session.get('message');
     if (cm) {
       return sm.title;
@@ -223,23 +257,23 @@ Template.load.helpers({
     return '';
   },
 
-  loaded_gifs: function() {
+  loaded_gifs: function () {
     return Session.get('loaded_gifs');
   },
 
-  isGif: function() {
+  isGif: function () {
     return Session.get('isGif');
   },
 
-  gif: function() {
+  gif: function () {
     return Session.get('gif');
   },
 
-  gifsLoaded: function() {
+  gifsLoaded: function () {
     return Session.get('gifsLoaded');
   },
 
-  message: function() {
+  message: function () {
     var cm = Session.get('message');
     if (cm) {
       return sm.msg;
@@ -249,7 +283,7 @@ Template.load.helpers({
 });
 
 Template.load.events({
-  'click #next-gif img': function() {
+  'click #next-gif img': function () {
     nextGif();
   }
 })

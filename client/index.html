@@ -9,39 +9,28 @@
 
   <div id="wrapper">
 
-    <div class="units-row">
+    <div id='name-bar' class="units-row">
 
-      <div id='name-bar' class="units-row">
+      <div id='name-icon' class="unit-10 unit-push-10">
+        {{> logo}}
+      </div>
 
-        <div id='name-icon' class="unit-10 unit-push-10">
-          {{> logo}}
-        </div>
+      <div id='name-text' class="{{multied}} unit-80 unit-push-10">
 
-        <div id='name-text' class="{{multied}} unit-80 unit-push-10">
-
-          <span id="title-wrapper">
-            <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
-              boomz
-            </a>
-          </span>
-
-        </div>
+        <span id="title-wrapper">
+          <a class='sub-link' href="{{subreddit_link}}" target='__blank'>
+            boomz
+          </a>
+        </span>
 
       </div>
 
-      <div id='desc-bar' class="unit-push-right unit-70">
+    </div>
 
-        <form id='search-form' class="forms">
-          <label>
-            Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
-            <br>
-            <span id="searchError">{{errorMessage}}</span>
-            <input type="text" name='sub_name' class="width-100" autofocus/>
-          </label>
-          <p>
-            <button id='search-button' class="btn btn-red">Search</button>
-          </p>
-        </form>
+    <div id='desc-bar' class="units-row">
+      <div id='desc-bar-col' class="unit-push-right unit-70">
+
+        {{> redBar}}
 
         {{> catBar}}
 
@@ -52,11 +41,25 @@
 
 </template>
 
+<template name='redBar'>
+  <form id='search-form' class="forms">
+    <label>
+      Enter <span class='search-link'>subreddit</span> or <span class='search-link'>multireddit</span> or <span class='search-link'>link</span>
+      <br>
+      <span id="searchError">{{errorMessage}}</span>
+      <input type="text" name='sub_name' class="width-100" autofocus/>
+    </label>
+    <p>
+      <button id='search-button' class="btn btn-red">Search</button>
+    </p>
+  </form>
+</template>
+
 <template name='catBar'>
 
   <div id='cats'>
-    <div class='units-row'>
-      <div id='popular-cat' class="search-cat unit-50">
+    <div class='blocks-2 blocks-mobile-50'>
+      <li id='popular-cat' class="search-cat">
         <p class='cat-title'>Popular</p>
 
         <ul>
@@ -67,9 +70,9 @@
 
         </ul>
 
-      </div>
+      </li>
 
-      <div id='random-cat' class="search-cat unit-50">
+      <li id='random-cat' class="search-cat">
         <p class='cat-title'>Random <img id='random-button' class='pointer' src="/icons/random.svg"> </p>
 
         <ul>
@@ -80,25 +83,43 @@
 
         </ul>
 
-      </div>
+      </li>
     </div>
 
-    <div class="units-row">
+    <div class="blocks-2 blocks-mobile-50">
 
-      <div id="multi-list" class="search-cat unit-50">
+      <li id='multilist' class='search-cat'>
         <p class="cat-title">Multis</p>
-
         <ul>
           {{#each multiList}}
           <li><a href="{{link}}">{{subreddit}}</a></li>
           {{/each}}
         </ul>
-      </div>
+      </li>
 
-      <div id="about-section" class="search-cat unit-50">
-        <!-- <h4>Hello world</h4> -->
-      </div>
-
+      <li id="about-section" class='search-cat'>
+        <p class="cat-title">About</p>
+        <ul>
+          <li>
+            Simple media player for Reddit
+          </li>
+          <li>
+            Change <span class='about-change'>reddit.com</span> to <span class='about-change'>boomz.xyz</span>
+          </li>
+          <li>
+            Discover loads of new music!
+          </li>
+          <li class='hide-on-mobile'>
+            <span class='control-s'><span id="arrow-up" class='arrow'><img src="/icons/triangle_up_w.png"></span> play</span>
+            <span class='control-s'><span id="arrow-right"><img src="/icons/triangle_right_w.png"></span> next</span>
+            <span class='control-s'><span id="arrow-left"><img src="/icons/triangle_left_w.png"></span> prev</span>
+            <span class='control-s'><span id="arrow-down"><img src="/icons/triangle_down_w.png"></span> scroll</span>
+          </li>
+          <li>
+            <a href="/about">more info</a>
+          </li>
+        </ul>
+      </li>
     </div>
   </div>
 
