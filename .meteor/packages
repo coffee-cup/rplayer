@@ -17,7 +17,6 @@ fastclick
 multiply:iron-router-progress
 percolate:synced-cron
 winston
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -31,3 +30,6 @@ random
 ejson
 spacebars
 check
+standard-minifier-css
+standard-minifier-js
+iron:middleware-stack@1.1.0
