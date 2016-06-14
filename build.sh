@@ -1,5 +1,6 @@
 #!/bin/sh
 
+git pull
 rm -rf build/
 meteor build build
 cd build
